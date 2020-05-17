@@ -1,0 +1,57 @@
+﻿<Window x:Class="AdoptOpenJDK_UpdateWatcher.NewVersionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdoptOpenJDK_UpdateWatcher"
+        mc:Ignorable="d"
+        x:Name="_this"
+        Title="AdoptOpenJDK Update Watcher" Height="340.541" Width="800" Icon="assets/iconfinder_Refresh_32541.ico"
+        ResizeMode="NoResize" Topmost="False" WindowStartupLocation="CenterScreen" Loaded="_this_Loaded" Closing="_this_Closing">
+    <Window.Resources>
+        <Style x:Key="LinkButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <TextBlock TextDecorations="Underline" Margin="0,-10,0,0">
+                            <ContentPresenter />
+                        </TextBlock>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="Blue" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="Gray" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <TextBlock x:Name="lblNewVersionHeader" Text=" New Version is available! " Margin="0,18,10,0" FontFamily="Segoe UI Black" FontSize="36" HorizontalAlignment="Right" Width="456" Height="66" VerticalAlignment="Top" />
+        <Image HorizontalAlignment="Left" Height="66" Margin="25,22,0,0" VerticalAlignment="Top" Width="285" Source="assets/openjdk.png"/>
+        <Button x:Name="btnSkip" Content="Skip this release" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="143" Margin="10,0,0,10" Height="34" Click="btnSkip_Click"/>
+
+        <Label Content="Installed version: " HorizontalAlignment="Left" Margin="25,111,0,0" VerticalAlignment="Top"/>
+        <TextBlock MinWidth="10" Text="{Binding Path=(local:LocalInstallation.VersionString)}" HorizontalAlignment="Left" Margin="132,116,0,0" VerticalAlignment="Top"/>
+        <Label Content="Installed in: " HorizontalAlignment="Left" Margin="25,131,0,0" VerticalAlignment="Top"/>
+        <TextBlock Text="{Binding Path=(local:LocalInstallation.InstallationPath)}" HorizontalAlignment="Left" Margin="132,136,0,0" VerticalAlignment="Top"/>
+        <Label Content="New release: " HorizontalAlignment="Left" Margin="25,171,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="txtNewRelease" HorizontalAlignment="Left" Margin="132,176,0,0" VerticalAlignment="Top"/>
+
+
+        <Button x:Name="btnDownloadAndInstallMSI" Content="Download and install MSI" Margin="0,0,10,10" VerticalAlignment="Bottom" Height="34" Click="btnDownloadAndInstallMSI_Click" HorizontalAlignment="Right" Width="178"/>
+
+        <ProgressBar x:Name="pbProgress" Height="24" VerticalAlignment="Top" Margin="10,224,10,0" />
+
+        <Button x:Name="btnDownloadZIP" Style="{StaticResource LinkButton}" Content="Download ZIP" Margin="0,0,275,11" Click="btnDownloadZIP_Click" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="93" />
+        <Button x:Name="btnDownloadMSI" Style="{StaticResource LinkButton}" Content="Download MSI" Margin="0,0,205,11" Click="btnDownloadMSI_Click" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" />
+        <Button x:Name="btnOpenConfig" Style="{StaticResource LinkButton}" Content="Open configuration" Margin="0,0,479,11" Click="btnOpenConfig_Click" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="142" />
+
+
+    </Grid>
+</Window>
+
