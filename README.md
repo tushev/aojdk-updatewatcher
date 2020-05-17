@@ -18,7 +18,7 @@ Ironically, this tool is written in C# + WPF, because I am not a Java developer 
 * .NET Framework 4.7.2 _(the installer will do it for you)_
 
 ## Download
-
+[Latest release](https://github.com/tushev/aojdk-updatewatcher/releases)
 There's a built-in update mechanism.
 
 ## Installation & configuration
