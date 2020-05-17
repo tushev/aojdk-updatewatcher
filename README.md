@@ -18,6 +18,7 @@ Ironically, this tool is written in C# + WPF, because I am not a Java developer 
 * .NET Framework 4.7.2 _(the installer will do it for you)_
 
 ## Download
+[Latest release](https://github.com/tushev/aojdk-updatewatcher/releases)
 
 There's a built-in update mechanism.
 
@@ -38,9 +39,6 @@ There's a built-in update mechanism.
 * There are some Easter Eggs in UI.
 * I'm not going to actively develop this app, it's mostly 'fire-and-forget' thing. However, some functionality may be added in future, there's a built-in update mechanism.
 
-## Known not-a-bugs
-* JAVA_HOME value is updated when the app is launched. If you changed its value while running configuration screen, the value will not be updated in the app. However, you can close the configuration window safely: when the next backround check occurs, actual value of JAVA_HOME at that time will be used 
-
 ## Disclaimer
 The author does not provide any support related to AdoptOpenJDK or OpenJDK. 
 For support, please visit their corresponding websites.
@@ -56,3 +54,8 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 
 ## Codestyle
 Please don't judge my coding style by this project, as I developed this app in less than a working day. It just works :)
+
+
+## Known not-a-bugs
+* JAVA_HOME value is updated when the app is launched. If you changed its value while running configuration screen, the value will not be updated in the app. However, you can close the configuration window safely: when the next backround check occurs, actual value of JAVA_HOME at that time will be used 
+* If the configuration app **continiously** reminds you to turn on scheduled task, this happens because you have not specified your local installation of JDK/JRE and *Release*, *JVM Implementation* and *JVM Image* to watch for. Once you set these, the app will consider itself as 'configured' and will remember your choice.
