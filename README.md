@@ -41,6 +41,7 @@ There's a built-in update mechanism.
 
 ## Known not-a-bugs
 * JAVA_HOME value is updated when the app is launched. If you changed its value while running configuration screen, the value will not be updated in the app. However, you can close the configuration window safely: when the next backround check occurs, actual value of JAVA_HOME at that time will be used 
+* If the configuration app **continiously** reminds you to turn on scheduled task, this happens because you have not specified your local installation of JDK/JRE and *Release*, *JVM Implementation* and *JVM Image* to watch for. Once you set these, the app will consider itself as 'configured' and will stop reminding you.
 
 ## Disclaimer
 The author does not provide any support related to AdoptOpenJDK or OpenJDK. 
