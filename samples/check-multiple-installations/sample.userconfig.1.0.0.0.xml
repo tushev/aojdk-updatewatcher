@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <configSections>
+        <sectionGroup name="userSettings" type="System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
+            <section name="AdoptOpenJDK_UpdateWatcher.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" allowExeDefinition="MachineToLocalUser" requirePermission="false" />
+        </sectionGroup>
+    </configSections>
+    <userSettings>
+        <AdoptOpenJDK_UpdateWatcher.Properties.Settings>
+            <setting name="isConfigured" serializeAs="String">
+                <value>True</value>
+            </setting>
+            <setting name="useJavaHome" serializeAs="String">
+                <value>False</value>
+            </setting>
+            <setting name="doNOTuseJavaHome" serializeAs="String">
+                <value>True</value>
+            </setting>
+            <setting name="FirstSilentRun" serializeAs="String">
+                <value>False</value>
+            </setting>
+            
+            
+			<!-- ======= Edit values starting from here ======= -->
+            <!-- Path to installation that should be checked-->
+            <setting name="LocalInstallationPath" serializeAs="String">
+                <value>C:\Program Files\AdoptOpenJDK\jre-8.0.252.09-hotspot</value>
+            </setting>
+            <!-- 8 is default, see api.adoptopenjdk.net for others -->
+            <setting name="API_MajorVersion" serializeAs="String">
+                <value>8</value>
+            </setting>
+            <!-- UI_JVM_Implementation: 0 = hotspot; 1 = openj9 -->
+            <setting name="UI_JVM_Implementation" serializeAs="String">
+                <value>0</value>
+            </setting>
+            <!-- UI_JVM_ImageType: 0 = JDK; 1 = JRE -->
+            <setting name="UI_JVM_ImageType" serializeAs="String">
+                <value>0</value>
+            </setting>
+            <!-- Architecture: x32, x64, see api.adoptopenjdk.net for others -->
+			<setting name="API_Architecture" serializeAs="String">
+                <value>x64</value>
+            </setting>
+            <setting name="API_OS" serializeAs="String">
+                <value>windows</value>
+            </setting>
+            <!-- Heap: normal, large -->
+            <setting name="API_Heap" serializeAs="String">
+                <value>normal</value>
+            </setting>
+            <!-- // ======= Edit values starting from here ======= -->
+            
+            
+        </AdoptOpenJDK_UpdateWatcher.Properties.Settings>
+    </userSettings>
+</configuration>
