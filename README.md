@@ -21,6 +21,7 @@ Ironically, this tool is written in C# + WPF, because I am not a Java developer 
 [Latest release](https://github.com/tushev/aojdk-updatewatcher/releases)
 
 If you find this app useful, stars are appreciated :)
+
 There's a built-in update mechanism. 
 
 ## Installation & configuration
