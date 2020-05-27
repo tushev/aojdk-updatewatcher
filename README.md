@@ -3,7 +3,7 @@ Automatic update tool for AdoptOpenJDK releases
 ![Update Dialog](/docs/update_dialog.png?raw=true)
 ![Config Dialog](/docs/config_dialog.png?raw=true)
 
-When this app launches, it gets version from **'release'** file in your local installation of OpenJDK.
+When this app launches, it gets version from **'release'** file in your local installation of JDK/JRE.
 Then it queries AdoptOpenJDK API to check if there is a version newer than yours. 
 If there is, you will be notified. Otherwise app quits without showing any windows or alerts.
 
@@ -20,7 +20,7 @@ Ironically, this tool is written in C# + WPF, because I am not a Java developer 
 ## Download
 [Latest release](https://github.com/tushev/aojdk-updatewatcher/releases)
 
-There's a built-in update mechanism.
+There's a built-in update mechanism. If you find this app useful, stars are appreciated :)
 
 ## Installation & configuration
 * Run the downloaded installer
