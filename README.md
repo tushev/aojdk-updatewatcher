@@ -46,7 +46,7 @@ The author does not provide any support related to AdoptOpenJDK or OpenJDK.
 For support, please visit their corresponding websites.
 
 The author is not affiliated with or endorsed by AdoptOpenJDK or OpenJDK projects.
-'AdoptOpenJDK' part of the name is used on fair use conditions, as this app works with AdoptOpenJDK releases.
+'AdoptOpenJDK' part of the name is used on fair use conditions, as this app works with AdoptOpenJDK releases. Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.
 
 **THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,**
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
