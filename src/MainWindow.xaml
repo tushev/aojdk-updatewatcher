@@ -102,7 +102,7 @@
             </Grid>
         </GroupBox>
         <TextBlock HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#ff777777">
-            <Run Text="This app is recommended to run on Windows startup. When this app launches, it gets version from 'release' file in your local installation of OpenJDK." />
+            <Run Text="This app is recommended to run on Windows startup. When this app launches, it gets version from 'release' file in your local installation                of JDK/JRE." />
             <Run Text="Then it queries AdoptOpenJDK API to check if there is a version newer than yours. " />
             <LineBreak/>
             <Run Text="If there is, you will be notified. Otherwise app quits without showing any windows." />

@@ -32,7 +32,7 @@
     </Window.Resources>
     <Grid>
         <TextBlock x:Name="lblNewVersionHeader" Text=" New Version is available! " Margin="0,18,10,0" FontFamily="Segoe UI Black" FontSize="36" HorizontalAlignment="Right" Width="456" Height="66" VerticalAlignment="Top" />
-        <Image HorizontalAlignment="Left" Height="66" Margin="25,22,0,0" VerticalAlignment="Top" Width="285" Source="assets/openjdk.png"/>
+        <Image HorizontalAlignment="Left" Height="66" Margin="25,25,0,0" VerticalAlignment="Top" Width="285" Source="assets/openjdk.png"/>
         <Button x:Name="btnSkip" Content="Skip this release" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="143" Margin="10,0,0,10" Height="34" Click="btnSkip_Click"/>
 
         <Label Content="Installed version: " HorizontalAlignment="Left" Margin="25,111,0,0" VerticalAlignment="Top"/>

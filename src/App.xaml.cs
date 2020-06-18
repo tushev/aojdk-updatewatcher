@@ -97,7 +97,7 @@ namespace AdoptOpenJDK_UpdateWatcher
             {                
                 if (!invoked_from_ui)
                 {
-                    MessageBox.Show("Cannot detect local instalation of OpenJDK. Please configure it.", "AdoptOpenJDK Update Watcher", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Cannot detect local instalation of JDK/JRE. Please configure it.", "AdoptOpenJDK Update Watcher", MessageBoxButton.OK, MessageBoxImage.Error);
                     MainWindow = new MainWindow();
                     MainWindow.Show();
                 } else
