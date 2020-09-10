@@ -1,56 +1,415 @@
-﻿<Window x:Class="AdoptOpenJDK_UpdateWatcher.NewVersionWindow"
+﻿<Window x:Class="Adoptium_UpdateWatcher.NewVersionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AdoptOpenJDK_UpdateWatcher"
+        xmlns:loadin="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
+        xmlns:local="clr-namespace:Adoptium_UpdateWatcher"
+        xmlns:mockups="clr-namespace:Adoptium_UpdateWatcher.Models.Mockups"
         mc:Ignorable="d"
         x:Name="_this"
-        Title="AdoptOpenJDK Update Watcher" Height="340.541" Width="800" Icon="assets/iconfinder_Refresh_32541.ico"
-        ResizeMode="NoResize" Topmost="False" WindowStartupLocation="CenterScreen" Loaded="_this_Loaded" Closing="_this_Closing">
+        Background="#152935"
+        Foreground="White"
+        Title="Eclipse Adoptium Update Watcher" Height="625" Width="1138" Icon="assets/iconfinder_Refresh_32541.ico"
+        ResizeMode="CanMinimize" Topmost="False" WindowStartupLocation="CenterScreen" Closing="NewVersionWindow_Closing" WindowStyle="None">
+
     <Window.Resources>
-        <Style x:Key="LinkButton" TargetType="Button">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <TextBlock TextDecorations="Underline" Margin="0,-10,0,0">
-                            <ContentPresenter />
-                        </TextBlock>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Foreground" Value="Blue" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Foreground" Value="Red" />
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Foreground" Value="Gray" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="Styles/CommonStyles.xaml" />
+                <ResourceDictionary Source="Styles/NewVersionWindow.CustomStyles.xaml" />
+                <ResourceDictionary Source="Styles/AdoptLogo.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingWave.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingThreeDots.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingFlipPlane.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingPulse.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingDoubleBounce.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Colors.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
+
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo 
+            Description="An app with a taskbar info description" 
+            ProgressValue="{Binding Path=TotalProgress1, Mode=OneWay}" 
+            ProgressState="Normal"/>
+    </Window.TaskbarItemInfo>
+
+
     <Grid>
-        <TextBlock x:Name="lblNewVersionHeader" Text=" New Version is available! " Margin="0,18,10,0" FontFamily="Segoe UI Black" FontSize="36" HorizontalAlignment="Right" Width="456" Height="66" VerticalAlignment="Top" />
-        <Image HorizontalAlignment="Left" Height="66" Margin="25,25,0,0" VerticalAlignment="Top" Width="285" Source="assets/openjdk.png"/>
-        <Button x:Name="btnSkip" Content="Skip this release" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="143" Margin="10,0,0,10" Height="34" Click="btnSkip_Click"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
-        <Label Content="Installed version: " HorizontalAlignment="Left" Margin="25,111,0,0" VerticalAlignment="Top"/>
-        <TextBlock MinWidth="10" Text="{Binding Path=(local:LocalInstallation.VersionString)}" HorizontalAlignment="Left" Margin="132,116,0,0" VerticalAlignment="Top"/>
-        <Label Content="Installed in: " HorizontalAlignment="Left" Margin="25,131,0,0" VerticalAlignment="Top"/>
-        <TextBlock Text="{Binding Path=(local:LocalInstallation.InstallationPath)}" HorizontalAlignment="Left" Margin="132,136,0,0" VerticalAlignment="Top"/>
-        <Label Content="New release: " HorizontalAlignment="Left" Margin="25,171,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="txtNewRelease" HorizontalAlignment="Left" Margin="132,176,0,0" VerticalAlignment="Top"/>
+        <Grid Grid.Row="0" Height="30" >
+            <Label x:Name="HeaderArea" Margin="0,0,44,0"/>
+            <Button x:Name="CloseButton" Style="{StaticResource CloseButtonStyle}" HorizontalAlignment="Right" Click="CloseButton_Click" />
+        </Grid>
+
+        <Grid Grid.Row="1">
+
+            <Label x:Name="lblNewVersionHeader" 
+                       Content="{Binding NewVersionsAvailableMessage}" 
+                       Visibility="{Binding ShowNewVersionsAvailableMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                       FontFamily="Segoe UI Black" FontSize="36" HorizontalContentAlignment="Right"
+                       Margin="0,17,25,0" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                       Width="520" Height="51" />
+            <Path 
+                Fill="White" 
+                Data="{StaticResource AdoptLogo}"
+                HorizontalAlignment="Left" VerticalAlignment="Top"
+                Width="593"
+                Height="67"
+                Stretch="Uniform" Margin="25,17,0,0"
+                />
 
 
-        <Button x:Name="btnDownloadAndInstallMSI" Content="Download and install MSI" Margin="0,0,10,10" VerticalAlignment="Bottom" Height="34" Click="btnDownloadAndInstallMSI_Click" HorizontalAlignment="Right" Width="178"/>
+            <ListView x:Name="UIInstallationsToUpdate"
+                ItemsSource="{Binding InstallationsToUpdateSourceCollection}"
+                Visibility="{Binding ShowUIInstallationsToUpdate, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Margin="25,109,25,77" 
+                Background="Transparent" 
+                BorderBrush="Transparent"
+                >
 
-        <ProgressBar x:Name="pbProgress" Height="24" VerticalAlignment="Top" Margin="10,224,10,0" />
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel  MaxWidth="{Binding ActualWidth, ElementName=UIInstallationsToUpdate}" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
 
-        <Button x:Name="btnDownloadZIP" Style="{StaticResource LinkButton}" Content="Download ZIP" Margin="0,0,275,11" Click="btnDownloadZIP_Click" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="93" />
-        <Button x:Name="btnDownloadMSI" Style="{StaticResource LinkButton}" Content="Download MSI" Margin="0,0,205,11" Click="btnDownloadMSI_Click" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" />
-        <Button x:Name="btnOpenConfig" Style="{StaticResource LinkButton}" Content="Open configuration" Margin="0,0,479,11" Click="btnOpenConfig_Click" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="142" />
+                <ListView.ItemTemplate>
+                    <DataTemplate>
 
+                        <Grid Margin="0,0,22,30" Height="105" Width="500">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="29"/>
+                                <ColumnDefinition Width="75"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="55"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="10"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Column="0" Grid.Row="0">
+                                <CheckBox Margin="0,21,0,0" 
+                                          Style="{StaticResource LargeCheckBox}"
+                                          IsChecked="{Binding Path=MarkedForUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          >
+                                    <CheckBox.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}" ConverterParameter="negateSecond">
+                                            <Binding Path="HasNewVersion"/>
+                                            <Binding Path="UpdateInProgress"/>
+                                        </MultiBinding>
+                                    </CheckBox.IsEnabled>
+                                </CheckBox>
+                            </Grid>
+
+                            <Label Grid.Row="1" Grid.Column="0"
+                                   FontFamily="Segoe MDL2 Assets" Content="&#xE7ED;" FontSize="20" 
+                                   Foreground="#aaff9800"
+                                   Visibility="{Binding Path=HasSkippedRelease, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-4,-3,0,0"
+                                   Tag="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                   >
+                                <Label.ToolTip>
+                                    <TextBlock>
+                                        <Run Text="You have previously chosen to skip"/>
+                                        <Run FontWeight="Bold" FontSize="14" Text="{Binding Path=SkippedReleaseName}" />
+                                        <Run Text="release of this branch."/>
+                                        <LineBreak/>
+                                        <Run Text="You will receive no update notifications until any other release will become available."/>
+                                        <LineBreak/>
+                                        <Run Text="You can reset that in configuration window or by right-clicking on this bell icon."/>
+                                    </TextBlock>
+                                </Label.ToolTip>
+                                <Label.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem 
+                                            Command="{Binding PlacementTarget.Tag.RemoveSkippedReleaseCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                            CommandParameter="{Binding}"
+                                            >
+                                            <MenuItem.Header>
+                                                <TextBlock>
+                                                    <Run Text="Do not ignore release"/>
+                                                    <Run Text="{Binding Path=SkippedReleaseName}" FontWeight="Bold"/>
+                                                    <Run Text="any more"/>
+                                                </TextBlock>
+                                            </MenuItem.Header>
+                                            <MenuItem.IsEnabled>
+                                                <MultiBinding Converter="{StaticResource BooleanAndConverter}" ConverterParameter="negateSecond">
+                                                    <Binding Path="HasSkippedRelease"/>
+                                                    <Binding Path="PlacementTarget.Tag.UpdateInProgress" RelativeSource="{RelativeSource AncestorType=ContextMenu}"/>
+                                                </MultiBinding>
+                                            </MenuItem.IsEnabled>
+                                            <MenuItem.Style>
+                                                <Style TargetType="{x:Type MenuItem}">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsEnabled" Value="False">
+                                                            <Setter Property="Foreground" Value="Gray"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </MenuItem.Style>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </Label.ContextMenu>
+                            </Label>
+
+                            <Label Content="{Binding Path=InstalledVersionMajor}" Grid.Column="1" Grid.Row="0" FontSize="50" FontFamily="Segoe UI Black" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-10,0,0"/>
+
+                            <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="0" Margin="5,10,0,0">
+                                <TextBlock Text="{Binding Path=DisplayPath, Converter={StaticResource ShowUnderscoreConverter}}" FontSize="12" Foreground="#bbb"/>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="-5,-2,0,0">
+                                    <Label 
+                                           Content="{Binding Path=InstalledVersionString, Converter={StaticResource ShowUnderscoreConverter}}" 
+                                           ToolTip="{Binding Path=InstalledVersion.VersionString, Converter={StaticResource ShowUnderscoreConverter}}" 
+                                           FontSize="14" VerticalAlignment="Center" Margin="0,-1,0,0"/>
+                                    <Label FontFamily="Segoe MDL2 Assets" Content="&#xE72A;" FontSize="20" VerticalAlignment="Center"/>
+                                    <Label Content="{Binding Path=NewVersion.VersionString, Converter={StaticResource ShowUnderscoreConverter}}" FontWeight="Bold" FontSize="24" VerticalAlignment="Center" Margin="0,-4,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <Label  Grid.Column="1" Grid.Row="1" Style="{StaticResource TagLabelStyle}" 
+                                    Content="{Binding Path=ImageType, Converter={StaticResource StringCapitalizeConverter}}" />
+                            <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" Margin="2,4,0,0" VerticalAlignment="Top" Visibility="Visible">
+                                <Label Content="{Binding Path=JVM_Implementation}" FontSize="12" VerticalAlignment="Center">
+                                    <Label.ToolTip>
+                                        <TextBlock>
+                                            <Run Text="Heap size:"/>
+                                            <Run Text="{Binding Path=HeapSize}" FontWeight="Bold"/>
+                                        </TextBlock>
+                                    </Label.ToolTip>
+                                </Label>
+                                <Label Content="{Binding Path=Arch}" FontSize="12" VerticalAlignment="Center" >
+                                    <Label.ToolTip>
+                                        <TextBlock>
+                                            <Run Text="OS:"/>
+                                            <Run Text="{Binding Path=OS, Mode=OneWay}" FontWeight="Bold"/>
+                                        </TextBlock>
+                                    </Label.ToolTip>
+                                </Label>
+                                <Label Content="Origin:" FontSize="12" VerticalAlignment="Center" Foreground="#777" Margin="5,0,0,0" />
+                                <Label Content="{Binding Path=InstallationTypeText, Converter={StaticResource ShowUnderscoreConverter}}" FontSize="12" VerticalAlignment="Center" Foreground="#888" Margin="-5,0,0,0"  />
+                                <Label Content="Branch:" FontSize="12" VerticalAlignment="Center" Foreground="#777" Margin="5,0,0,0" />
+                                <Label Content="{Binding Path=WatchedRelease}" FontSize="12" VerticalAlignment="Center" Foreground="#888" Margin="-5,0,0,0"  />
+                            </StackPanel>
+
+                            <ProgressBar
+                                Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"                                
+                                Visibility="{Binding Path=UpdateInProgress, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                Value="{Binding Path=UpdateProgressPercentage}"
+                                IsIndeterminate="{Binding Path=UpdateIsIndeterminate}"
+                                Height="5"
+                                Margin="23,0,75,0"
+                                />
+
+                        </Grid>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Focusable" Value="false"/>
+                        <!--<Setter Property="ToolTip" Value="{Binding DocName}"/>-->
+                        <Setter Property="Tag" Value="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu >
+                                    <MenuItem IsEnabled="False">
+                                        <MenuItem.Header>
+                                            <Run Foreground="Gray" Text="{Binding Path=DisplayPath, Converter={StaticResource ShowUnderscoreConverter}}"/>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem IsEnabled="False" 
+                                              Visibility="{Binding Path=HasNewVersion, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <MenuItem.Header>
+                                            <Run Foreground="Gray" Text="{Binding Path=NewVersion.VersionString, StringFormat='New release: v. {0}', Converter={StaticResource ShowUnderscoreConverter}}"/>
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Header="Skip this release" 
+                                              Command="{Binding PlacementTarget.Tag.SkipReleaseCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" 
+                                              CommandParameter="{Binding}">
+                                        <MenuItem.Icon>
+                                            <Image Source="assets/iconfinder_icon-skip-forward_211889.png"/>
+                                        </MenuItem.Icon>
+                                        <MenuItem.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource BooleanAndConverter}" ConverterParameter="negateSecond">
+                                                <Binding Path="HasNewVersion"/>
+                                                <Binding Path="UpdateInProgress"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsEnabled>
+                                    </MenuItem>
+                                    <MenuItem 
+                                            Command="{Binding PlacementTarget.Tag.RemoveSkippedReleaseCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                            CommandParameter="{Binding}"
+                                            Visibility="{Binding Path=HasSkippedRelease, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                            IsEnabled="{Binding PlacementTarget.Tag.UpdateInProgress, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                            >
+                                        <MenuItem.Header>
+                                            <TextBlock>
+                                                    <Run Text="Do not ignore release"/>
+                                                    <Run Text="{Binding Path=SkippedReleaseName}" FontWeight="Bold"/>
+                                                    <Run Text="any more"/>
+                                            </TextBlock>
+                                        </MenuItem.Header>
+                                        <MenuItem.Style>
+                                            <Style TargetType="{x:Type MenuItem}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsEnabled" Value="False">
+                                                        <Setter Property="Foreground" Value="Gray"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </MenuItem.Style>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem Header="Download ZIP" 
+                                              IsEnabled="{Binding Path=HasNewVersion}"
+                                              Command="{Binding PlacementTarget.Tag.OpenReleaseURLCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" 
+                                              CommandParameter="{Binding Converter={StaticResource ObjectToTupleWithParameterConverter}, ConverterParameter=ZIP}" />
+                                    <MenuItem Header="Download MSI" 
+                                              IsEnabled="{Binding Path=HasNewVersion}"
+                                              Command="{Binding PlacementTarget.Tag.OpenReleaseURLCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" 
+                                              CommandParameter="{Binding Converter={StaticResource ObjectToTupleWithParameterConverter}, ConverterParameter=MSI}" />
+                                    <Separator />
+                                    <MenuItem Header="Copy ZIP download URL to clipboard" 
+                                              IsEnabled="{Binding Path=HasNewVersion}"
+                                              Command="{Binding PlacementTarget.Tag.OpenReleaseURLCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" 
+                                              CommandParameter="{Binding Converter={StaticResource ObjectToTupleWithParameterConverter}, ConverterParameter=ZIP2CB}" />
+                                    <MenuItem Header="Copy MSI download URL to clipboard" 
+                                              IsEnabled="{Binding Path=HasNewVersion}"
+                                              Command="{Binding PlacementTarget.Tag.OpenReleaseURLCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" 
+                                              CommandParameter="{Binding Converter={StaticResource ObjectToTupleWithParameterConverter}, ConverterParameter=MSI2CB}" />
+
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Grid Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <!--<Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource ItemBackgroundHover}" />
+                                <Setter Property="BorderBrush" Value="{StaticResource ItemBackgroundHover}" />
+                                <Setter Property="BorderThickness" Value="2" />
+                            </Trigger>
+                        </Style.Triggers>-->
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+            </ListView>
+
+
+            <CheckBox IsChecked="{Binding ShowAllEnabledInstallations}"
+                      Content="Show installations without updates as well" 
+                      ToolTip="Those installations that were disabled in config will not be shown anyway. Open configuration window for a list of all installations."
+                      HorizontalAlignment="Left" Margin="25,0,0,19" VerticalAlignment="Bottom"/>
+
+
+            <Button Command="{Binding RefreshUpdatesCommand}"                    
+                    IsEnabled="{Binding SomethingInProgress, Converter={StaticResource InverseBooleanConverter}}"
+                    Style="{StaticResource LinkButton}"
+                    Margin="525,0,0,16" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="142">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Label FontFamily="Segoe MDL2 Assets" Content="&#xE895;" FontSize="15" VerticalAlignment="Center"/>
+                    <Label Content="Refresh list" />
+                </StackPanel>
+            </Button>
+
+            <!--<Button Content="Select all" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="143" Margin="793,0,0,10" Height="34" Click="btnSkip_Click"/>-->
+
+            <Button x:Name="btnOpenConfig" Style="{StaticResource LinkButton}" Content="Configuration" Margin="0,0,254,11" Click="btnOpenConfig_Click" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" />
+
+            <Button 
+                Content="Download and install MSI's for selected" 
+                Command="{Binding DownloadAndInstallUpdatesCommand}"
+                IsEnabled="{Binding IsButtonDownloadAndInstallUpdatesEnabled}"
+                Margin="0,0,10,10" VerticalAlignment="Bottom" Height="34" HorizontalAlignment="Right" Width="238"/>
+
+            <!-- BOTTOM PROGRESS BAR -->
+            <ProgressBar 
+                Visibility="{Binding UpdateInstallationInProgress, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Height="5" VerticalAlignment="Bottom" Margin="0,0,0,0" 
+                Value="{Binding Path=TotalProgress100, Mode=OneWay}" 
+                BorderBrush="Transparent" />
+
+            <Button Style="{StaticResource LinkButton}" 
+                    Content="Why do I see +NUM at the end?"
+                    Foreground="#777"
+                    Margin="0,-13,52,593" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Width="176" >
+                <ToolTipService.ShowDuration>30000</ToolTipService.ShowDuration>
+                <Button.ToolTip>
+                    <StackPanel Orientation="Vertical" Width="500">
+                        <TextBlock Text="In case you are interested what is +NUM, like this:"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="4,0,0,0">
+                            <TextBlock Text="11.0.7+10" FontSize="12" VerticalAlignment="Center" Margin="0,-1,0,0"/>
+                            <Label FontFamily="Segoe MDL2 Assets" Content="&#xE72A;" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="11.0.8+10" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" Margin="0,-4,0,0"/>
+                        </StackPanel>
+                        <TextBlock Text="- it is build number."/>
+                        <TextBlock Text="Currently, it is not possible to detect build number for manually added installations, thus it will be ignored when checking for new versions."/>
+                        <TextBlock Text="This may be implemented in a future release of this Updater."/>
+                        <TextBlock Text="For installations that are auto-discovered via registry, build number will be detected and accounted for."/>
+                    </StackPanel>
+                </Button.ToolTip>
+                <Button.Resources>
+                    <Style TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
+                        <Setter Property="Background" Value="#152935" />
+                        <Setter Property="BorderBrush" Value="#dadada"/>
+                        <Setter Property="Foreground" Value="#dadada"/>
+                    </Style>
+                    <Style TargetType="Label" >                       
+                        <Setter Property="Foreground" Value="#dadada"/>
+                    </Style>
+                    <Style TargetType="TextBlock" >
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                        <Setter Property="Margin" Value="4"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <!-- LOADING SPINNER + MESSSAGE -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-30,0,0" 
+                        Visibility="{Binding ShowUpdateCheckInProgressMessage, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        >
+                <loadin:LoadingIndicator 
+                    SpeedRatio="1" IsActive="True" 
+                    Style="{DynamicResource LoadingIndicatorArcsStyle}"
+                    Foreground="#dadada"
+                    VerticalAlignment="Center"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="28" Text="Checking for Eclipse Adoptium updates" Margin="20" VerticalAlignment="Center"/>
+            </StackPanel>
+            <!-- ALL UP-TO-DATE -->
+            <TextBlock FontFamily="Segoe UI" FontSize="28"                       
+                       Visibility="{Binding ShowAllInstallationsAreUpToDateMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                       Text="All Eclipse Adoptium installations are up-to-date" 
+                       Margin="0,-30,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <!-- There may be new versions -->
+            <TextBlock FontFamily="Segoe UI" FontSize="14"                       
+                       Visibility="{Binding ShowErrorsOccuredWhileCheckingForUpdatesMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                       Text="One or more errors have occured while checking for updates" 
+                       ToolTip="{Binding ErrorsEncounteredWhileCheckingForUpdatesString}"
+                       Foreground="#ff0000"
+                       Margin="374,0,374,47" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <ToolTipService.ShowDuration>30000</ToolTipService.ShowDuration>
+            </TextBlock>
+
+
+
+        </Grid>
 
     </Grid>
 </Window>

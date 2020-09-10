@@ -5,34 +5,156 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using AdoptOpenJDK_UpdateWatcher.Properties;
+using Adoptium_UpdateWatcher.Properties;
 
-namespace AdoptOpenJDK_UpdateWatcher
+namespace Adoptium_UpdateWatcher
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
-        //static public NewVersionWindow NewVersionWindow;
-        static public MainWindow MainWindow;
+        static public NewVersionWindow NewVersionWindowInstance;
+        static public ConfigurationWindow ConfigurationWindowInstance;
+        static public Machine Machine;
+        static public Updater Updater;
+
+        private EventHandler _app_update_check_complete_eventhandler;
+
+
+        static public AdoptiumAPI_AvailableReleases available_releases;
+        static public AdoptiumAPI_AvailableReleases AvailableReleases
+        {
+            get
+            {
+                if (available_releases == null)
+                    available_releases = AdoptiumAPI.GetAvailableReleases();
+
+                return available_releases;
+            }
+        }
+
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            CheckForEmptySettings();
+            // before doing things, upgrade from previous version
+            Upgrade.UpgradeAppSettings();
 
+            // first, check if there is a new version of this tool (if configured so)
             CheckSelfUpdate();
 
-            if (!Settings.Default.isConfigured || (e.Args.Length > 0 && e.Args[0] == "-config"))
-            {
-                MainWindow = new MainWindow();
-                MainWindow.Show();
+            // load settings
+            Machine = AppDataPersistence.TryLoad();
 
+            // prepare updater class
+            Updater = new Updater(Machine);
+            Updater.RefreshAutoDiscoveredInstancesOnInstallationCompletion = true;
+
+            if (!Settings.Default.isConfigured || (e.Args.Length > 0 && e.Args[0] == "-config"))
+                ShowConfigurationWindow();
+            else
+            {
+                if (Machine.PossiblyHasConfiguredInstallations)
+                {
+                    _app_update_check_complete_eventhandler = (s, _e) =>
+                    {
+                        // remove event handler so this App.xaml.cs-code will never be triggered again from GUI
+                        Updater.UpdatesCheckComplete -= _app_update_check_complete_eventhandler;
+
+                        if (Updater.UpdateCheckResultedInNewVersions)
+                        {
+                            // reset error counter - update is (at least partially) successful
+                            App.SetUpdateCheckErrorCount(0);
+
+                            // show GUI
+                            ShowNewVersionWindow();                            
+                        }
+                        else
+                        {
+                            if (Updater.ErrorsOccuredWhileCheckingForUpdates)
+                            {
+                                // count errors ...
+                                int N = Settings.Default.ErrorsEncounteredSinceLastConfigurationWindowOpened + 1;
+                                SetUpdateCheckErrorCount(N);
+
+                                // ... and warn user if N>X
+                                if (N >= Settings.Default.UserConfigurableSetting_WarnIfNUpdateChecksResultedInErrors)
+                                {
+                                    var ans = MessageBox.Show(
+                                            $"{Branding.ProductName} has encountered {N} sequential errors during background checking for updates (normally, this happens when you login to Windows)." + Environment.NewLine + Environment.NewLine +
+                                            $"Most likely it is caused by persistent internet connection issues - {AdoptiumAPI.baseDOMAIN} may be not reachable. Also this could be caused by misconfiguration." + Environment.NewLine + Environment.NewLine +
+                                            $"Error counter will be reset now and you will see this message again after {Settings.Default.UserConfigurableSetting_WarnIfNUpdateChecksResultedInErrors} new sequential errors." + Environment.NewLine + Environment.NewLine +
+                                            //TODO: $"This can be configured in Settings" + Environment.NewLine + Environment.NewLine +
+                                            $"Would you like to open Configuration Window for {Branding.ProductName}?"
+                                            ,
+                                            Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.No);
+
+                                    if (ans == MessageBoxResult.Yes)
+                                        ShowConfigurationWindow();
+                                    else
+                                    {
+                                        SetUpdateCheckErrorCount(0);
+                                        Application.Current.Shutdown();
+                                    }
+                                }
+                                else
+                                    CheckForFirstRunAndExit(false, $"There were errors while checking for {Branding.TargetProduct} updates. Check your internet connection and ensure {AdoptiumAPI.baseDOMAIN} is reachable.");
+                            }
+                            else
+                            {
+                                // reset error counter - there were no errors (and no updates)
+                                App.SetUpdateCheckErrorCount(0);
+
+                                CheckForFirstRunAndExit(false, $"You already have up-to-date version of {Branding.TargetProduct}");
+                            }
+                        }
+                    };
+                    Updater.UpdatesCheckComplete += _app_update_check_complete_eventhandler;
+
+                    Updater.CheckForUpdatesAsync();
+
+                } else
+                {
+                    var ans = MessageBox.Show(
+                        $"You don't have any configured {Branding.TargetProduct} installations. Would you like to configure them?", 
+                        Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Error);
+                    if (ans == MessageBoxResult.Yes)
+                        ShowConfigurationWindow();
+                    else
+                        Application.Current.Shutdown();
+                }
+            }
+        }
+
+        public static void ShowConfigurationWindow()
+        {
+            if (ConfigurationWindowInstance == null || ConfigurationWindowInstance.IsLoaded == false)
+            {
+                ConfigurationWindowInstance = new ConfigurationWindow();
+                ConfigurationWindowInstance.Show();
             }
             else
-                CheckForUpdates();
+                ConfigurationWindowInstance.Activate();
+        }
+
+        public static void ShowNewVersionWindow(bool invoked_from_ui = false)
+        {
+            if (invoked_from_ui)
+                Updater.SetToInitialState();
+
+            if (NewVersionWindowInstance == null || NewVersionWindowInstance.IsLoaded == false)
+            {
+                NewVersionWindowInstance = new NewVersionWindow(true);
+                NewVersionWindowInstance.Show();
+            }
+            else
+            {
+                NewVersionWindowInstance.Activate();
+                NewVersionWindowInstance.RefreshUpdates();
+            }
+
         }
 
         private void CheckSelfUpdate()
@@ -40,7 +162,7 @@ namespace AdoptOpenJDK_UpdateWatcher
             if (Settings.Default.CheckForSelfUpdates)
                 if (SelfUpdate.HasNewVersion(Settings.Default.SelfUpdatesAPI))
                 {
-                    var ans = MessageBox.Show("New version of AdoptOpenJDK Update Watcher is available. Would you like to download and install it?", "AdoptOpenJDK Update Watcher", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    var ans = MessageBox.Show($"New version of {Branding.ProductName} is available. Would you like to download and install it?", Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (ans == MessageBoxResult.Yes)
                     {
                         SelfUpdate.DownloadCloseAndInstallUpdate();
@@ -49,93 +171,28 @@ namespace AdoptOpenJDK_UpdateWatcher
                 }
         }
 
-        private static void CheckForEmptySettings()
-        {
-
-            if (Settings.Default.API_Architecture == "")
-            {
-                Settings.Default.API_Architecture = Environment.Is64BitOperatingSystem ? "x64" : "x32";
-                Settings.Default.Save();
-            }
-            if (Settings.Default.API_OS == "")
-            {
-                Settings.Default.API_OS = "windows";
-                Settings.Default.Save();
-            }
-            if (Settings.Default.API_Heap == "")
-            {
-                Settings.Default.API_Heap = "normal";
-                Settings.Default.Save();
-            }
-        }
-
-        public static void CheckForUpdates(bool invoked_from_ui = false)
-        {
-            if (LocalInstallation.TryDetect())
-            {
-                var local_version = LocalInstallation.GetVersion();
-
-                var web_version = GetWebVersion();
-                if (web_version.Found)
-                {
-                    if (web_version.Release != Settings.Default.LastSkippedRelease || invoked_from_ui)
-                    {
-                        if (web_version > local_version || invoked_from_ui)
-                        {
-                            //notify + skip suggestion
-                            NewVersionWindow NewVersionWindow = new NewVersionWindow(web_version, invoked_from_ui);
-                            NewVersionWindow.Show();
-                        }
-                        else CheckForFirstRunAndExit(invoked_from_ui, "You already have up-to-date version of AdoptOpenJDK");
-                    }
-                    else CheckForFirstRunAndExit(invoked_from_ui, "You have decided to skip current release of AdoptOpenJDK. Go to Configuration to cancel it");
-                    
-                }
-                else CheckForFirstRunAndExit(invoked_from_ui, "Cannot get latest version of AdoptOpenJDK. Check your internet connection and ensure api.adoptopenjdk.net is online");
-            }
-            else
-            {                
-                if (!invoked_from_ui)
-                {
-                    MessageBox.Show("Cannot detect local instalation of JDK/JRE. Please configure it.", "AdoptOpenJDK Update Watcher", MessageBoxButton.OK, MessageBoxImage.Error);
-                    MainWindow = new MainWindow();
-                    MainWindow.Show();
-                } else
-                {
-                    LatestVersion web_version = GetWebVersion();
-                    if (web_version.Found)
-                    {
-                        //notify + skip suggestion
-                        NewVersionWindow NewVersionWindow = new NewVersionWindow(web_version, invoked_from_ui);
-                        NewVersionWindow.Show();
-                    } else
-                        MessageBox.Show("Cannot find latest version. Make sure you are connected to the internet and api.adoptopenjdk.net server is online.", "AdoptOpenJDK Update Watcher", MessageBoxButton.OK, MessageBoxImage.Error);
-
-                }
-            }
-        }
-
         private static void CheckForFirstRunAndExit(bool invoked_from_ui, string status = "")
         {
             if (!invoked_from_ui)
             {
-                if (Settings.Default.FirstSilentRun)
+                if (!Settings.Default.FirstSilentRunMessageHasBeenDisplayed)
                 {
-                    MessageBox.Show("This is the first background check for updates of AdoptOpenJDK. It resulted in: [" + status + "]. You will receive no such messages in future, background checks will be silent unless there is a new version. If you need to change settings, please use [Configure AdoptOpenJDK Update Watcher] shortcut from Start menu.", "AdoptOpenJDK Update Watcher", MessageBoxButton.OK, MessageBoxImage.Information);
-                    Settings.Default.FirstSilentRun = false;
+                    MessageBox.Show(
+                        $"This is the first background check for updates of {Branding.TargetProduct}." + Environment.NewLine + Environment.NewLine +
+                        $"It resulted in: [ {status} ]." + Environment.NewLine + Environment.NewLine + 
+                        $" You will receive no such messages in future, background checks will be silent unless there is a new version. If you need to change settings, please use [Configure Adoptium Update Watcher] shortcut from Start menu.", 
+                        Branding.MessageBoxHeader, MessageBoxButton.OK, MessageBoxImage.Information);
+                    
+                    Settings.Default.FirstSilentRunMessageHasBeenDisplayed = true;
                     Settings.Default.Save();
                 }
                 System.Windows.Application.Current.Shutdown();
             }
-        }
-
-        private static LatestVersion GetWebVersion()
+        }   
+        public static void SetUpdateCheckErrorCount(int n)
         {
-            return API.GetLatestVersion(
-                Settings.Default.API_MajorVersion,
-                Settings.Default.UI_JVM_Implementation == 0 ? "hotspot" : "openj9",
-                Settings.Default.UI_JVM_ImageType == 0 ? "jdk" : "jre",
-                Settings.Default.API_Heap, Settings.Default.API_Architecture, Settings.Default.API_OS);
+            Settings.Default.ErrorsEncounteredSinceLastConfigurationWindowOpened = n;
+            Settings.Default.Save();
         }
     }
 }

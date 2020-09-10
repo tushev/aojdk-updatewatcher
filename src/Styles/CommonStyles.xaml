@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Adoptium_UpdateWatcher">
+
+
+    <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <local:BooleanAndConverter x:Key="BooleanAndConverter"/>
+    <local:StringCapitalizeConverter x:Key="StringCapitalizeConverter"/>
+    <local:ShowUnderscoreConverter x:Key="ShowUnderscoreConverter"/>
+    <local:InstallationStatusToVisibilityMultiValueConverter x:Key="InstallationStatusToVisibilityMultiValueConverter"/>
+    <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    <local:ObjectToTupleWithParameterConverter x:Key="ObjectToTupleWithParameterConverter"/>
+
+</ResourceDictionary>

@@ -1,7 +1,7 @@
-﻿<Application x:Class="AdoptOpenJDK_UpdateWatcher.App"
+﻿<Application x:Class="Adoptium_UpdateWatcher.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:AdoptOpenJDK_UpdateWatcher"
+             xmlns:local="clr-namespace:Adoptium_UpdateWatcher"
              >
     <Application.Resources>
 

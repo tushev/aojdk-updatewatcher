@@ -1,0 +1,304 @@
+﻿<Window x:Class="Adoptium_UpdateWatcher.ConfigurationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Adoptium_UpdateWatcher"
+        xmlns:properties="clr-namespace:Adoptium_UpdateWatcher.Properties"
+        mc:Ignorable="d"
+        Title="Eclipse Adoptium Update Watcher - Configuration" Height="714" Width="1024" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closing="Window_Closing" Loaded="Window_Loaded" Icon="assets/iconfinder_Refresh_32541.ico">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/CommonStyles.xaml" />
+                <ResourceDictionary Source="Styles/ConfigurationWindow.CustomStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+    <Grid>
+
+        <Grid HorizontalAlignment="Left" Margin="19,14,0,0" VerticalAlignment="Top" x:Name="gridSchedule">
+            <CheckBox x:Name="cbSchedule"
+                  IsChecked="{Binding Path=SchedulerManagerTaskStatus, Mode=TwoWay}"
+                  Content="Check for Eclipse Adoptium updates on Logon [Recommended]"  
+                  ToolTip="If you want another schedule, turn this on and press Edit task to configure it as desired."
+                      FontWeight="Bold"/>
+            <Label Content="(sets up Windows Scheduler task to run this app)" 
+                  ToolTip="If you want another schedule, turn this on and press Edit task to configure it as desired."
+               HorizontalAlignment="Left" Margin="374,-6,-9,0" VerticalAlignment="Top"/>
+
+            <Button x:Name="btnEditTask" Style="{StaticResource LinkButton}" 
+                    Command="{Binding EditTaskCommand}"
+                    IsEnabled="{Binding Path=SchedulerManagerTaskStatus, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    Content="Edit task" HorizontalAlignment="Left" Margin="647,9,0,0" VerticalAlignment="Top" Width="50" Height="8" 
+                    />
+        </Grid>
+
+        <TextBlock HorizontalAlignment="Stretch" Margin="10,44,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#ff777777">
+            <Run Text="This app is recommended to run on Windows startup. When it launches, it gets version from 'release' file for each of your local installations of JDK/JRE." />            
+            <LineBreak/><Run Text="Then it queries Eclipse Adoptium API to check if there is a version newer than yours. " />
+            <Run Text="If there is, you will be notified. Otherwise app quits without showing any windows." />
+            <LineBreak/>
+            <Run Text="This configuration window will appear only if something goes wrong or you have explicitly called it." />
+            <LineBreak/>
+            <LineBreak/>
+            <Run Text="Your installations may be auto-discovered via Windows Registry. If necessary, you can also add other (custom) installations to monitor for updates." />
+            <LineBreak/>
+            <Run Text="If any user-added installation will have the same path as an auto-discovered one, user-added settings will be preferred, and auto-discovered - ignored." />
+
+
+        </TextBlock>
+
+        <Grid HorizontalAlignment="Left" Margin="19,160,0,0" VerticalAlignment="Top" x:Name="gridRegistry">
+            <CheckBox x:Name="cbRegistryMachine"
+                  IsChecked="{Binding DiscoverMachineWideInstallations}"
+                  Content="Discover Eclipse Adoptium (AdoptOpenJDK) installations [machine-wide] via registry and check for updates automatically"  
+                  ToolTip="If you want another schedule, turn this on and press Edit task to configure it as desired."
+                  FontWeight="Bold" Margin="0,1,0,-1"/>
+            <CheckBox x:Name="cbRegistryUser" Margin="0,22,19,-5"
+                  IsChecked="{Binding DiscoverUserScopeInstallations}"
+                  Content="Discover Eclipse Adoptium (AdoptOpenJDK) installations [for current user] via registry and check for updates automatically"  
+                  ToolTip="If you want another schedule, turn this on and press Edit task to configure it as desired."
+                  FontWeight="Bold"/>
+        </Grid>
+        <CheckBox x:Name="cbShowShadowed"
+            IsChecked="{Binding ShowShadowedInstallations}"
+            Content="Show shadowed installations" 
+            ToolTip="Show auto-discovered installations that are shadowed by user-added ones"
+            Foreground="Gray" Style="{DynamicResource GrayCheckBox}"
+            HorizontalAlignment="Right" Margin="0,125,27,0" VerticalAlignment="Top"/>
+
+
+
+
+
+        <Label  x:Name="lblLTS"  Content="{Binding LTSReleasesMessage}"
+                       ToolTip="Long-term support (LTS) versions have a longer support timeframe and are suitable for enterprise or similar use. Click for more info." 
+                       Foreground="Gray" HorizontalAlignment="Left" Margin="476,214,0,0" VerticalAlignment="Top" MouseUp="lblLTS_MouseUp"/>
+        <Button x:Name="btnWhatJREJDK" Content="Help choose"                         
+                    Style="{StaticResource LinkButton}" Margin="702,227,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatJREJDK_Click" />
+        <Button x:Name="btnWhatImpl" Content="Help choose"                         
+                    Style="{StaticResource LinkButton}" Margin="781,227,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatImpl_Click"  />
+        <Label  x:Name="lblYourArchMessage"  Content="{Binding YourArchMessage}"
+                Foreground="LightGray" HorizontalAlignment="Right" Margin="0,214,10,0" VerticalAlignment="Top" />
+
+
+
+        <DataGrid x:Name="UIInstallationList" 
+                  Height="297" Margin="10,240,10,0" VerticalAlignment="Top" 
+                  AutoGenerateColumns="False" 
+                  GridLinesVisibility="None"
+                  DataGridCell.Selected="DataGridCell_Selected" 
+                  Unloaded="DataGrid_Unloaded"
+                  CanUserAddRows="True"
+                  CanUserDeleteRows="False"
+                  RowHeight="23"
+                  VerticalContentAlignment="Center"
+                  ItemsSource="{Binding ConfiguredInstallations}"
+                  SelectedItem="{Binding SelectedItem}"
+                  >
+            <DataGrid.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding RemoveSelectedInstallationCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+            </DataGrid.InputBindings>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="IsEnabled" Value="{Binding IsEditable}"/>
+                    <Setter Property="Visibility">
+                        <Setter.Value>
+                            <MultiBinding Converter="{StaticResource InstallationStatusToVisibilityMultiValueConverter}">
+                                <Binding Path="IsAutodiscoveredInstance"/>
+                                <Binding Path="CheckForUpdatesFlag"/>
+                                <Binding Path="DataContext.ShowShadowedInstallations" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=DataGrid}"/>
+                                <Binding Path="Path"/>
+                            </MultiBinding>
+                        </Setter.Value>
+                    </Setter>
+
+                </Style>
+            </DataGrid.RowStyle>
+
+            <DataGrid.Columns>
+                <!--<DataGridCheckBoxColumn Binding="{Binding Path=MarkedForUpdate, UpdateSourceTrigger=PropertyChanged}"/>-->
+
+                <DataGridTemplateColumn SortMemberPath="CheckForUpdatesFlag">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox ToolTip="Check for updates of this installation?" HorizontalAlignment="Center" IsChecked="{Binding Path=CheckForUpdatesFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="Origin" IsReadOnly="True" Binding="{Binding Path=InstallationTypeText}" />
+
+                <DataGridTemplateColumn Header="Local installation path" Width="*" SortMemberPath="DisplayPath">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=DisplayPath, Converter={StaticResource ShowUnderscoreConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{Binding Path=Path}" 
+                                         Grid.Column="0"                                           
+                                         IsEnabled="{Binding Path=IsPathEditable}"
+                                         IsReadOnly="{Binding Path=IsPathEditable, Converter={StaticResource InverseBooleanConverter}}"
+                                         />
+                                <Button Content="..." 
+                                        Grid.Column="1" 
+                                        Visibility="{Binding IsPathEditable, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                        IsEnabled="{Binding Path=IsPathEditable}"
+                                        Command="{Binding Path=DataContext.BrowsePathCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}" 
+                                        CommandParameter="{Binding}" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding InstalledVersionString, Mode=OneWay}" Header="Installed version"/>
+
+                <DataGridComboBoxColumn Header="API/Feature version" x:Name="lstReleasesInGrid" SelectedItemBinding="{Binding Path=WatchedRelease, Mode=TwoWay}" Width="120"  />
+                <DataGridComboBoxColumn Header="API/Type" x:Name="lstImageTypeInGrid" SelectedItemBinding="{Binding Path=ImageType, Mode=TwoWay}" Width="80" />
+                <DataGridComboBoxColumn Header="API/JVM" x:Name="lstJVMInGrid" SelectedItemBinding="{Binding Path=JVM_Implementation, Mode=TwoWay}" Width="80" />
+                <DataGridComboBoxColumn Header="API/Heap" x:Name="lstHeapSizeInGrid" SelectedItemBinding="{Binding Path=HeapSize, Mode=TwoWay}" Width="78"  />
+                <DataGridComboBoxColumn Header="API/Arch" x:Name="lstArchInGrid" SelectedItemBinding="{Binding Path=Arch, Mode=TwoWay}" Width="60" />
+
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- ADD JAVA_HOME -->
+        <Button ToolTip="This type of installation is" 
+                x:Name="btnAddJAVA_HOMEInstallation" 
+                Command="{Binding AddJAVA_HOMEInstallationCommand}" 
+                IsEnabled="{Binding Path=CanAddJavaHomeInstance, BindsDirectlyToSource=True, FallbackValue=True, UpdateSourceTrigger=PropertyChanged}"
+                Margin="203,547,0,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" Width="144">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEA8A;" FontSize="18" VerticalAlignment="Center"/>
+                <TextBlock Text=" Add JAVA_HOME" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+
+        <!-- ADD PATH -->
+        <Button ToolTip="You'll have to update it manually if it changes" 
+                x:Name="btnAddInstallation"
+                Command="{Binding AddInstallationCommand}" 
+                Margin="10,547,0,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" Width="188" >
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xED25;" FontSize="18" VerticalAlignment="Center"/>
+                <TextBlock Text=" Add custom path" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+
+        <!-- RESET API SETTINGS -->
+        <Button  
+                x:Name="btnResetAPIforSelected"
+                Command="{Binding ResetAPIforSelectedCommand}" 
+                Margin="0,582,10,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Right" Width="213" >
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE773;" FontSize="18" VerticalAlignment="Center"/>
+                <TextBlock Text=" Reset API settings for selected" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+
+        <!-- REMOVE SELECTED -->
+        <Button 
+                x:Name="btnRemoveSelected" 
+                Command="{Binding RemoveSelectedInstallationCommand}" 
+                Margin="0,547,10,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Right" Width="128">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8BB;" FontSize="16" VerticalAlignment="Center"/>
+                <TextBlock Text=" Remove selected" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+        <Label Content="update manually when it changes" Foreground="#FFA2A2A2" HorizontalAlignment="Left" Margin="19,569,0,0" VerticalAlignment="Top" Width="188" FontSize="11"/>
+        <Label Content="JAVA__HOME is already in the list" Foreground="#FFA2A2A2" HorizontalAlignment="Left" Margin="192,570,0,0" VerticalAlignment="Top" FontSize="11"
+               x:Name="lblJAVAHOMEintheList"
+               Visibility="{Binding CanAddJavaHomeInstance, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter='negate'}"/>
+
+        <TextBlock x:Name="lblJAVA_HOME"
+                   Foreground="#ff777777"
+                   Text="{Binding JavaHomeMessage}" 
+                   ToolTip="JAVA_HOME value"
+                   HorizontalAlignment="Left" Margin="356,553,0,0" VerticalAlignment="Top"/>
+
+
+
+
+
+
+
+
+        <Button x:Name="btnShowNewVersionWindow"                 
+                Margin="10,0,10,30" Height="30" 
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Left" 
+                Click="btnShowNewVersionWindow_Click" 
+                >
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label FontFamily="Segoe MDL2 Assets" Content="&#xE895;" FontSize="15" VerticalAlignment="Center"/>
+                <Label Content="{Binding Path=CheckForUpdatesButtonText}" />
+            </StackPanel>
+        </Button>
+
+        <Button
+            x:Name="btnCancelSkippedRelease"
+            Content="Reset all skipped releases"         
+            Command="{Binding ResetAllSkippedReleasesCommand}"
+            IsEnabled="{Binding ThereAreInstallationsWithSkippedReleases, UpdateSourceTrigger=PropertyChanged}"
+            Style="{StaticResource LinkButton}" 
+            Margin="0,0,164,24" Height="20"  
+            VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+
+        <Button x:Name="btnEditEnvironmentVariables" Style="{StaticResource LinkButton}" 
+            Content="Edit Environment Variables" HorizontalAlignment="Right" Margin="10,0,12,25" VerticalAlignment="Bottom" Height="19" Click="btnEditEnvironmentVariables_Click" ToolTip="Click to edit Environment Variables " 
+            />
+        
+
+        <Label
+            x:Name="lblInstallTip"
+            Foreground="Gray"
+            Content="If you don't have JDK/JRE installed, you can install it here"
+            Visibility="{Binding ThereAreNoInstallations, Converter={StaticResource BooleanToVisibilityConverter}}"
+            HorizontalAlignment="Right" Margin="0,388,264,0" VerticalAlignment="Top" 
+            FontFamily="Segoe UI Black" FontSize="16"/>
+        <Image 
+            x:Name="imgInstallTipArrow"           
+            Visibility="{Binding ThereAreNoInstallations, Converter={StaticResource BooleanToVisibilityConverter}}"
+            HorizontalAlignment="Left" VerticalAlignment="Top"
+            Height="225" Width="250"  Margin="530,405,0,0" 
+            Source="assets/arrow.png"  Opacity="0.5" Stretch="Fill"/>
+        <Button
+            x:Name="btnOpenHelpHowToInstallNewWindow"
+            Content="How to download any release from here"         
+            Style="{StaticResource LinkButtonGray}" 
+            Margin="436,0,0,24" Height="20"  Width="250" 
+            VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="btnOpenHelpHowToInstallNewWindow_Click"/>
+
+
+
+
+
+
+
+        <Label x:Name="lblCopyright" Content="Brought to you by (c) Simon Tushev [ https://github.com/tushev ]. If you like this app, say thanks by " Foreground="LightGray" Margin="7,0,409,3" Height="27" VerticalAlignment="Bottom" MouseUp="lblCopyright_MouseUp"/>
+        <Button x:Name="btnStarOnGithub" Style="{StaticResource LinkButton}" 
+            Content="starring it on GitHub" HorizontalAlignment="Left" Margin="540,0,0,-4" VerticalAlignment="Bottom" Width="192" Height="19" Foreground="#FFBBBBFF" Click="btnStarOnGithub_Click" 
+            />
+        <CheckBox x:Name="cbSelfUpdate" 
+                  IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CheckForSelfUpdates, Mode=TwoWay}"
+                  Content="Update this tool regularly" 
+                  ToolTip="If on, this app will check for new releases on GitHub every time it starts."
+                  Foreground="Gray"
+                  Margin="0,0,12,9" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="155" 
+                  Style="{DynamicResource GrayCheckBox}"/>
+        
+
+
+
+    </Grid>
+</Window>

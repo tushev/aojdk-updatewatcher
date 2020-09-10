@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CA4BD54C-A4C8-4897-A115-BE5F83C6BCC5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>AdoptOpenJDK_UpdateWatcher</RootNamespace>
-    <AssemblyName>AdoptOpenJDK-UpdateWatcher</AssemblyName>
+    <RootNamespace>Adoptium_UpdateWatcher</RootNamespace>
+    <AssemblyName>AdoptiumUpdateWatcher</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>AdoptOpenJDK_UpdateWatcher.App</StartupObject>
+    <StartupObject>Adoptium_UpdateWatcher.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>assets\iconfinder_Refresh_32541.ico</ApplicationIcon>
@@ -84,6 +84,12 @@
     <Reference Include="GroupControls, Version=1.8.0.0, Culture=neutral, PublicKeyToken=3726d9da21b6ac8f, processorArchitecture=MSIL">
       <HintPath>packages\GroupControls.1.8.0\lib\net45\GroupControls.dll</HintPath>
     </Reference>
+    <Reference Include="LoadingIndicators.WPF, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\LoadingIndicators.WPF.0.0.1\lib\LoadingIndicators.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.8.18.0, Culture=neutral, PublicKeyToken=c416bc1b32d97233, processorArchitecture=MSIL">
       <HintPath>packages\TaskScheduler.2.8.18\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
     </Reference>
@@ -107,6 +113,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.6.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Tasks.Dataflow.4.11.1\lib\net461\System.Threading.Tasks.Dataflow.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -129,28 +141,72 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Compile Include="Classes\SelfService\Upgrade.cs" />
+    <Compile Include="Settings.cs" />
+    <Page Include="ConfigurationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Classes\API.cs" />
+    <Compile Include="Classes\Adoptium\AdoptiumInstallationsDetector.cs" />
+    <Compile Include="Classes\Adoptium\AdoptiumAPI.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\LocalInstallation.cs" />
-    <Compile Include="Classes\SelfUpdate.cs" />
-    <Compile Include="Classes\Version.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Classes\SelfService\SchedulerManager.cs" />
+    <Compile Include="Classes\Updater\Updater.cs" />
+    <Compile Include="Classes\SelfService\AppDataPersistence.cs" />
+    <Compile Include="Classes\Updater\Workers\UpdateChecker.cs" />
+    <Compile Include="Classes\Updater\Workers\UpdateInstaller.cs" />
+    <Compile Include="Classes\Utilities\Converters\BooleanAndConverter.cs" />
+    <Compile Include="Classes\Utilities\Converters\ObjectToTupleWithParameterConverter.cs" />
+    <Compile Include="Classes\Utilities\Converters\ShowUnderscoreConverter.cs" />
+    <Compile Include="Classes\Utilities\Converters\StringCapitalizeConverter.cs" />
+    <Compile Include="Classes\Models\Installation.cs" />
+    <Compile Include="Classes\Utilities\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Classes\Models\Mockups\NewVersionWindowInstallationsMockup.cs" />
+    <Compile Include="Classes\Utilities\Base\DelegateCommand.cs" />
+    <Compile Include="Classes\SelfService\Branding.cs" />
+    <Compile Include="Classes\Utilities\ExtensionMethods.cs" />
+    <Compile Include="Classes\Utilities\Converters\InstallationStatusToVisibilityMultiValueConverter.cs" />
+    <Compile Include="Classes\Utilities\Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Classes\Utilities\FullyObservableCollection.cs" />
+    <Compile Include="Classes\ViewModels\ConfigurationViewModel.cs" />
+    <Compile Include="Classes\Models\Machine.cs" />
+    <Compile Include="Classes\SelfService\SelfUpdate.cs" />
+    <Compile Include="Classes\DataTypes\AdoptiumReleaseVersion.cs" />
+    <Compile Include="Classes\ViewModels\NewVersionViewModel.cs" />
+    <Compile Include="Classes\Utilities\Base\RelayCommand.cs" />
+    <Compile Include="Classes\Utilities\Base\ViewModelBase.cs" />
+    <Compile Include="ConfigurationWindow.xaml.cs">
+      <DependentUpon>ConfigurationWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="HelpHowToInstallNewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NewVersionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\AdoptLogo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\CommonStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\NewVersionWindow.CustomStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HelpHowToInstallNewWindow.xaml.cs">
+      <DependentUpon>HelpHowToInstallNewWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewVersionWindow.xaml.cs">
       <DependentUpon>NewVersionWindow.xaml</DependentUpon>
     </Compile>
@@ -171,12 +227,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Fakes Include="Fakes\LoadingIndicators.WPF.fakes" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Page Include="Styles\ConfigurationWindow.CustomStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -184,9 +245,6 @@
   <ItemGroup>
     <Resource Include="assets\iconfinder_33.arrow.png" />
     <Resource Include="assets\iconfinder_Refresh_32541.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="assets\openjdk.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -204,6 +262,12 @@
     <None Include="LICENSE.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\iconfinder_icon-skip-forward_211889.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

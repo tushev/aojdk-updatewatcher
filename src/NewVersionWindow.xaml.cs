@@ -1,4 +1,4 @@
-﻿using AdoptOpenJDK_UpdateWatcher.Properties;
+﻿using Adoptium_UpdateWatcher.Properties;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,123 +16,46 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
-namespace AdoptOpenJDK_UpdateWatcher
+namespace Adoptium_UpdateWatcher
 {
     /// <summary>
     /// Interaction logic for NewVersionWindow.xaml
     /// </summary>
     public partial class NewVersionWindow : Window
     {
-        LatestVersion WebVersion;
-        bool invoked_from_ui = false;
+        NewVersionViewModel NewVersionVM;
 
-        public NewVersionWindow(LatestVersion web_version, bool hide_config_link = false)
+        public NewVersionWindow(bool hide_config_link = false)
         {
             InitializeComponent();
 
-            WebVersion = web_version;
-            pbProgress.Visibility = Visibility.Hidden;
+            NewVersionVM = new NewVersionViewModel(hide_config_link);
+            this.DataContext = NewVersionVM;
 
-            invoked_from_ui = hide_config_link;
-            if (invoked_from_ui)
-            {
-                btnOpenConfig.IsEnabled = false;
-                btnSkip.IsEnabled = false;
-            }
+            HeaderArea.MouseLeftButtonDown += (s, e) => { this.DragMove(); };
         }
 
-        private void btnSkip_Click(object sender, RoutedEventArgs e)
+        public void RefreshUpdates()
         {
-            var ans = MessageBox.Show("Are you sure? You will not get notifications until next release will be available.", "AdoptOpenJDK Update Watcher", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (ans == MessageBoxResult.Yes)
-            {
-                Settings.Default.LastSkippedRelease = WebVersion.Release;
-                Settings.Default.Save();
-
-                System.Windows.Application.Current.Shutdown();
-            }
-        }
-
-        private void _this_Loaded(object sender, RoutedEventArgs e)
-        {
-            txtNewRelease.Text = WebVersion.Release + "\t (image_type: " + WebVersion.ImageType + ")";
-
-            btnDownloadZIP.ToolTip = WebVersion.ZIPURL;
-            btnDownloadMSI.ToolTip = WebVersion.MSIURL;
-            btnDownloadAndInstallMSI.ToolTip = GetFileNameFromUrl(WebVersion.MSIURL);
-            //MessageBox.Show((LocalInstallation.GetVersion() == WebVersion).ToString());
-
-            if (LocalInstallation.Detected && !(WebVersion > LocalInstallation.GetVersion()) && invoked_from_ui)
-            {
-                lblNewVersionHeader.Foreground = Brushes.LightGray;
-                lblNewVersionHeader.TextDecorations.Add(TextDecorations.Strikethrough);
-            }
-        }
-
-        static string GetFileNameFromUrl(string url)
-        {
-            Uri uri;
-            Uri SomeBaseUri = new Uri("http://canbeanything");
-
-            if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
-                uri = new Uri(SomeBaseUri, url);
-
-            return System.IO.Path.GetFileName(uri.LocalPath);
-        }
-
-        private void btnDownloadAndInstallMSI_Click(object sender, RoutedEventArgs e)
-        {
-            btnDownloadAndInstallMSI.IsEnabled = false;
-            Uri ur = new Uri(WebVersion.MSIURL);
-            
-            string tempname = System.IO.Path.GetTempPath() + GetFileNameFromUrl(WebVersion.MSIURL);
-
-            pbProgress.Visibility = Visibility.Visible;
-
-            using (WebClient client = new WebClient())
-            {
-                client.DownloadProgressChanged += (o, ep) =>
-                {
-                    Dispatcher.Invoke(() => {
-                        pbProgress.Value = ep.ProgressPercentage;
-                    });
-                };
-                client.DownloadFileCompleted += (o, edp) =>
-                {
-                    DownloadCompleted(tempname);
-                };
-
-                client.DownloadFileAsync(ur, tempname);
-            }
-        }
-
-        private void DownloadCompleted(string tempname)
-        {
-            Process.Start(tempname);
-            System.Windows.Application.Current.Shutdown();
-        }
-
-        private void btnDownloadZIP_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start(WebVersion.ZIPURL);
-        }
-
-        private void btnDownloadMSI_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start(WebVersion.MSIURL);
+            NewVersionVM.ForceUpdateCheck();
         }
 
         private void btnOpenConfig_Click(object sender, RoutedEventArgs e)
         {
-            var m = new MainWindow();
-            m.Show();
-            this.Close();
+            App.ShowConfigurationWindow();
         }
 
-        private void _this_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void NewVersionWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            NewVersionVM.SaveModel();
+            Settings.Default.Save();
+        }
 
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
 
 

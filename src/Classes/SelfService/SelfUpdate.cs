@@ -11,12 +11,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace AdoptOpenJDK_UpdateWatcher
+namespace Adoptium_UpdateWatcher
 {
     static class SelfUpdate
     {
         const string UserAgent = "aojdk-updatewatcher Auto Updater";
-        const string ProductName = "AdoptOpenJDK Update Watcher";
+        const string ProductName = "Adoptium Update Watcher";
 
         static public string DownloadURL = "";
         static public bool Found = false;
@@ -28,39 +28,43 @@ namespace AdoptOpenJDK_UpdateWatcher
 
             try
             {
-                using (var httpClient = new HttpClient())
+                HttpClientHandler hch = new HttpClientHandler();
+                hch.Proxy = null;
+                hch.UseProxy = false;
+
+                var httpClient = new HttpClient(hch);
+
+                httpClient.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
+                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
+
+                var response = httpClient.GetStringAsync(new Uri(api)).Result;
+                JObject o = JObject.Parse(response);
+
+                string tag = (string)o["tag_name"];
+                Version remote_version = new Version(tag);
+
+                var result = remote_version.CompareTo(local_version);
+                if (result > 0)
                 {
-                    httpClient.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
-                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
-
-                    var response = httpClient.GetStringAsync(new Uri(api)).Result;
-                    JObject o = JObject.Parse(response);
-
-                    string tag = (string)o["tag_name"];
-                    Version remote_version = new Version(tag);
-
-                    var result = remote_version.CompareTo(local_version);
-                    if (result > 0)
+                    JArray array = (JArray)o["assets"];
+                    foreach (var a in array)
                     {
-                        JArray array = (JArray)o["assets"];
-                        foreach (var a in array)
+                        string name = (string)a["name"];
+                        if (name.IndexOf("setup", StringComparison.OrdinalIgnoreCase) >= 0)
                         {
-                            string name = (string)a["name"];
-                            if (name.IndexOf("setup", StringComparison.OrdinalIgnoreCase) >= 0)
-                            {
-                                DownloadURL = (string)a["browser_download_url"];
-                                Found = true;
-                                break;
-                            }
-                                
+                            DownloadURL = (string)a["browser_download_url"];
+                            Found = true;
+                            break;
                         }
+
                     }
-                }            
+                }
+
             }
             // better not show anything here as it may interrupt user if checks are being performed as a background task
             catch (Exception ex)
             {
-                //MessageBox.Show("There was an error: " + ex.Message, "AdoptOpenJDK API Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show("There was an error: " + ex.Message, "Adoptium API Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             return Found;

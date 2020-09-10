@@ -3,13 +3,18 @@ Automatic update tool for AdoptOpenJDK releases
 ![Update Dialog](/docs/update_dialog.png?raw=true)
 ![Config Dialog](/docs/config_dialog.png?raw=true)
 
-When this app launches, it gets version from **'release'** file in your local installation of JDK/JRE.
+When this app launches, it gets version from `release` file in your local installation of JDK/JRE.
 Then it queries AdoptOpenJDK API to check if there is a version newer than yours. 
 If there is, you will be notified. Otherwise app quits without showing any windows or alerts.
 
 Configuration window will appear only on first run or if something goes wrong or you have explicitly called it by the corresponding shortcut.
 
 This app is best designed to run on Windows startup. I recommend to turn on **Check for AdoptOpenJDK updates on Logon** setting in configuration. If you want another schedule, turn this on and press Edit task to configure it as desired.
+
+## New in v. 2.0.0
+* Improved speed
+* Multiple installations
+* Redesigned UI
 
 
 ## Requirements
@@ -38,7 +43,6 @@ There's a built-in update mechanism.
 ## Philosophy
 * This app is silent during backround checks. If there is a problem connecting to the internet or AdoptOpenJDK API does not respond, it will be silent. There's nothing more annoyuing than suddenly rising error messages from nowhere.
 * However, it will not be silent in UI.
-* There are some Easter Eggs in UI.
 * I'm not going to actively develop this app, it's mostly 'fire-and-forget' thing. However, some functionality may be added in future, there's a built-in update mechanism.
 
 ## Disclaimer

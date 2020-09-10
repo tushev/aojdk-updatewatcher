@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AdoptOpenJDK_UpdateWatcher.Properties {
+namespace Adoptium_UpdateWatcher.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -37,145 +37,13 @@ namespace AdoptOpenJDK_UpdateWatcher.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LocalInstallationPath {
-            get {
-                return ((string)(this["LocalInstallationPath"]));
-            }
-            set {
-                this["LocalInstallationPath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool useJavaHome {
-            get {
-                return ((bool)(this["useJavaHome"]));
-            }
-            set {
-                this["useJavaHome"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool doNOTuseJavaHome {
+        public bool FirstSilentRunMessageHasBeenDisplayed {
             get {
-                return ((bool)(this["doNOTuseJavaHome"]));
+                return ((bool)(this["FirstSilentRunMessageHasBeenDisplayed"]));
             }
             set {
-                this["doNOTuseJavaHome"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int UI_JVM_Implementation {
-            get {
-                return ((int)(this["UI_JVM_Implementation"]));
-            }
-            set {
-                this["UI_JVM_Implementation"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int UI_JVM_ImageType {
-            get {
-                return ((int)(this["UI_JVM_ImageType"]));
-            }
-            set {
-                this["UI_JVM_ImageType"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastSkippedRelease {
-            get {
-                return ((string)(this["LastSkippedRelease"]));
-            }
-            set {
-                this["LastSkippedRelease"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
-        public string API_MajorVersion {
-            get {
-                return ((string)(this["API_MajorVersion"]));
-            }
-            set {
-                this["API_MajorVersion"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string API_Architecture {
-            get {
-                return ((string)(this["API_Architecture"]));
-            }
-            set {
-                this["API_Architecture"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string API_OS {
-            get {
-                return ((string)(this["API_OS"]));
-            }
-            set {
-                this["API_OS"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string API_Heap {
-            get {
-                return ((string)(this["API_Heap"]));
-            }
-            set {
-                this["API_Heap"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool TaskCreated {
-            get {
-                return ((bool)(this["TaskCreated"]));
-            }
-            set {
-                this["TaskCreated"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool FirstSilentRun {
-            get {
-                return ((bool)(this["FirstSilentRun"]));
-            }
-            set {
-                this["FirstSilentRun"] = value;
+                this["FirstSilentRunMessageHasBeenDisplayed"] = value;
             }
         }
         
@@ -200,6 +68,78 @@ namespace AdoptOpenJDK_UpdateWatcher.Properties {
             }
             set {
                 this["SelfUpdatesAPI"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2.0.0.0")]
+        public string SettingsFormatVersion {
+            get {
+                return ((string)(this["SettingsFormatVersion"]));
+            }
+            set {
+                this["SettingsFormatVersion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SettingsUpgradeComplete_from_V1 {
+            get {
+                return ((bool)(this["SettingsUpgradeComplete_from_V1"]));
+            }
+            set {
+                this["SettingsUpgradeComplete_from_V1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int UserConfigurableSetting_MaxConcurrentMSIDownloads {
+            get {
+                return ((int)(this["UserConfigurableSetting_MaxConcurrentMSIDownloads"]));
+            }
+            set {
+                this["UserConfigurableSetting_MaxConcurrentMSIDownloads"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ErrorsEncounteredSinceLastConfigurationWindowOpened {
+            get {
+                return ((int)(this["ErrorsEncounteredSinceLastConfigurationWindowOpened"]));
+            }
+            set {
+                this["ErrorsEncounteredSinceLastConfigurationWindowOpened"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int UserConfigurableSetting_WarnIfNUpdateChecksResultedInErrors {
+            get {
+                return ((int)(this["UserConfigurableSetting_WarnIfNUpdateChecksResultedInErrors"]));
+            }
+            set {
+                this["UserConfigurableSetting_WarnIfNUpdateChecksResultedInErrors"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UserConfigurableSetting_UseRandomPrefixForDownloadedMSIs {
+            get {
+                return ((bool)(this["UserConfigurableSetting_UseRandomPrefixForDownloadedMSIs"]));
+            }
+            set {
+                this["UserConfigurableSetting_UseRandomPrefixForDownloadedMSIs"] = value;
             }
         }
     }
