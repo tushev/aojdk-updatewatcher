@@ -21,6 +21,7 @@ namespace Adoptium_UpdateWatcher
         private UpdateInstaller updateInstaller = new UpdateInstaller();
 
         private UpdaterState _state;
+        private bool updatecheck_queued = false;
 
         public EventHandler InstallerProgressChanged;
         public EventHandler StateChanged;
@@ -48,8 +49,15 @@ namespace Adoptium_UpdateWatcher
             {
                 State = UpdaterState.UpdateCheckComplete;
                 UpdatesCheckComplete?.Invoke(this, _e);
+
+                if (updatecheck_queued)
+                {
+                    updatecheck_queued = false;
+                    Debug.WriteLine("updateChecker.CheckComplete: running queued CheckForUpdatesAsync");
+                    CheckForUpdatesAsync();
+                };
             };
-            
+
             updateInstaller.UpdateProcessStarted += (s, _e) =>
             {
                 State = UpdaterState.UpdateInstallationInProgress;
@@ -72,6 +80,14 @@ namespace Adoptium_UpdateWatcher
 
         public void CheckForUpdatesAsync()
         {
+            if (_state == UpdaterState.UpdateCheckInProgress)
+            {
+                updatecheck_queued = true;
+                Debug.WriteLine("Updater.CheckForUpdatesAsync: UpdateCheckInProgress => Queued");
+                return;
+            }
+
+
             Debug.WriteLine("Started Updater.CheckForUpdatesAsync...");
             SetToInitialState();
             State = UpdaterState.UpdateCheckInProgress;
@@ -100,7 +116,7 @@ namespace Adoptium_UpdateWatcher
                 }
                 if (_state == UpdaterState.UpdateCheckComplete)
                 {
-                    machine.SkippedReleasesWereChangedAfterUpdateCheck = false;
+                    machine.SomethingHasBeenChangedSinceUpdateCheck = false;
                     UpdateCheckPerformed = true;
                 }
                 if (_state == UpdaterState.UpdateInstallationComplete) 

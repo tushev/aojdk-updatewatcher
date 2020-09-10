@@ -142,6 +142,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\SelfService\Upgrade.cs" />
+    <Compile Include="Classes\Utilities\Converters\Boolean3AndConverter.cs" />
+    <Compile Include="Classes\Utilities\Converters\BooleanAndConverter.cs" />
     <Compile Include="Settings.cs" />
     <Page Include="ConfigurationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -158,7 +160,6 @@
     <Compile Include="Classes\SelfService\AppDataPersistence.cs" />
     <Compile Include="Classes\Updater\Workers\UpdateChecker.cs" />
     <Compile Include="Classes\Updater\Workers\UpdateInstaller.cs" />
-    <Compile Include="Classes\Utilities\Converters\BooleanAndConverter.cs" />
     <Compile Include="Classes\Utilities\Converters\ObjectToTupleWithParameterConverter.cs" />
     <Compile Include="Classes\Utilities\Converters\ShowUnderscoreConverter.cs" />
     <Compile Include="Classes\Utilities\Converters\StringCapitalizeConverter.cs" />
@@ -243,7 +244,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\iconfinder_33.arrow.png" />
     <Resource Include="assets\iconfinder_Refresh_32541.ico" />
   </ItemGroup>
   <ItemGroup>

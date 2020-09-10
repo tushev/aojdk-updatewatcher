@@ -36,7 +36,7 @@
         <TaskbarItemInfo 
             Description="An app with a taskbar info description" 
             ProgressValue="{Binding Path=TotalProgress1, Mode=OneWay}" 
-            ProgressState="Normal"/>
+            ProgressState="{Binding TaskbarItemProgressState}"/>
     </Window.TaskbarItemInfo>
 
 
@@ -104,9 +104,10 @@
                                           IsChecked="{Binding Path=MarkedForUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           >
                                     <CheckBox.IsEnabled>
-                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}" ConverterParameter="negateSecond">
+                                        <MultiBinding Converter="{StaticResource Boolean3AndConverter}" ConverterParameter="negateSecond">
                                             <Binding Path="HasNewVersion"/>
                                             <Binding Path="UpdateInProgress"/>
+                                            <Binding Path="HasMSIInNewVersion"/>
                                         </MultiBinding>
                                     </CheckBox.IsEnabled>
                                 </CheckBox>
@@ -174,6 +175,21 @@
                                            FontSize="14" VerticalAlignment="Center" Margin="0,-1,0,0"/>
                                     <Label FontFamily="Segoe MDL2 Assets" Content="&#xE72A;" FontSize="20" VerticalAlignment="Center"/>
                                     <Label Content="{Binding Path=NewVersion.VersionString, Converter={StaticResource ShowUnderscoreConverter}}" FontWeight="Bold" FontSize="24" VerticalAlignment="Center" Margin="0,-4,0,0"/>
+                                    
+                                    <!-- NoMSI -->
+                                    <Label Style="{StaticResource TagLabelStyleWarning}" 
+                                           Content="No MSI"                                           
+                                           Visibility="{Binding Path=HasMSIInNewVersion, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=negate}">
+                                        <Label.ToolTip>
+                                            <TextBlock>
+                                                <Run Text="There is no MSI package available on Eclipse Adoptium servers."/><LineBreak/>
+                                                <Run Text="Automatic processing is not possible."/>
+                                                <LineBreak/><LineBreak/>
+                                                <Run Text="You have to download ZIP package and perform the update/installation manually."/><LineBreak/>
+                                                <Run Text="You can find ZIP package in context menu here."/>
+                                            </TextBlock>
+                                        </Label.ToolTip>
+                                    </Label>
                                 </StackPanel>
                             </StackPanel>
                             <Label  Grid.Column="1" Grid.Row="1" Style="{StaticResource TagLabelStyle}" 
@@ -275,18 +291,30 @@
                                               Command="{Binding PlacementTarget.Tag.OpenReleaseURLCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" 
                                               CommandParameter="{Binding Converter={StaticResource ObjectToTupleWithParameterConverter}, ConverterParameter=ZIP}" />
                                     <MenuItem Header="Download MSI" 
-                                              IsEnabled="{Binding Path=HasNewVersion}"
                                               Command="{Binding PlacementTarget.Tag.OpenReleaseURLCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" 
-                                              CommandParameter="{Binding Converter={StaticResource ObjectToTupleWithParameterConverter}, ConverterParameter=MSI}" />
+                                              CommandParameter="{Binding Converter={StaticResource ObjectToTupleWithParameterConverter}, ConverterParameter=MSI}">
+                                        <MenuItem.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource BooleanAndConverter}" >
+                                                <Binding Path="HasNewVersion"/>
+                                                <Binding Path="HasMSIInNewVersion"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsEnabled>
+                                    </MenuItem>
                                     <Separator />
                                     <MenuItem Header="Copy ZIP download URL to clipboard" 
                                               IsEnabled="{Binding Path=HasNewVersion}"
                                               Command="{Binding PlacementTarget.Tag.OpenReleaseURLCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" 
                                               CommandParameter="{Binding Converter={StaticResource ObjectToTupleWithParameterConverter}, ConverterParameter=ZIP2CB}" />
                                     <MenuItem Header="Copy MSI download URL to clipboard" 
-                                              IsEnabled="{Binding Path=HasNewVersion}"
                                               Command="{Binding PlacementTarget.Tag.OpenReleaseURLCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" 
-                                              CommandParameter="{Binding Converter={StaticResource ObjectToTupleWithParameterConverter}, ConverterParameter=MSI2CB}" />
+                                              CommandParameter="{Binding Converter={StaticResource ObjectToTupleWithParameterConverter}, ConverterParameter=MSI2CB}" >
+                                        <MenuItem.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource BooleanAndConverter}" >
+                                                <Binding Path="HasNewVersion"/>
+                                                <Binding Path="HasMSIInNewVersion"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsEnabled>
+                                    </MenuItem>
 
                                 </ContextMenu>
                             </Setter.Value>
@@ -333,11 +361,28 @@
 
             <Button x:Name="btnOpenConfig" Style="{StaticResource LinkButton}" Content="Configuration" Margin="0,0,254,11" Click="btnOpenConfig_Click" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" />
 
+            <!-- DOWNLOAD AND INSTALL MSI'S FOR SELECTED -->
             <Button 
+                Style="{StaticResource BigThemedButton}"
                 Content="Download and install MSI's for selected" 
                 Command="{Binding DownloadAndInstallUpdatesCommand}"
                 IsEnabled="{Binding IsButtonDownloadAndInstallUpdatesEnabled}"
-                Margin="0,0,10,10" VerticalAlignment="Bottom" Height="34" HorizontalAlignment="Right" Width="238"/>
+                Margin="0,0,10,10" VerticalAlignment="Bottom" Height="34" HorizontalAlignment="Right" Width="238">
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock Visibility="{Binding ShowThereMayBeNewVersionsMessage, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Run Text="You cannot use this button until you re-check for updates."/>
+                                <LineBreak/>
+                                <LineBreak/>
+                            </TextBlock>
+                            <TextBlock>
+                                <Run Text="Click to download MSI packages for selected installations."/>
+                            </TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
 
             <!-- BOTTOM PROGRESS BAR -->
             <ProgressBar 
@@ -398,6 +443,12 @@
                        Text="All Eclipse Adoptium installations are up-to-date" 
                        Margin="0,-30,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <!-- There may be new versions -->
+            <TextBlock FontFamily="Segoe UI" FontSize="14"                       
+                       Visibility="{Binding ShowThereMayBeNewVersionsMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                       Text="There may be new versions available. Click 'Refresh list' to check for updates" 
+                       Foreground="#ff9800"
+                       Margin="0,0,0,47" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <!-- Errors occured -->
             <TextBlock FontFamily="Segoe UI" FontSize="14"                       
                        Visibility="{Binding ShowErrorsOccuredWhileCheckingForUpdatesMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
                        Text="One or more errors have occured while checking for updates" 

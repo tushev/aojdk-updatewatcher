@@ -32,7 +32,7 @@ namespace Adoptium_UpdateWatcher
             if (!updater.UpdateCheckPerformed)
                 updater.CheckForUpdatesAsync();
 
-            InstallationsToUpdate.CollectionChanged += (s, e) => 
+            InstallationsToUpdate.CollectionChanged += (s, e) =>
             {
                 if (!updater.UpdateInstallationComplete && e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
                 {
@@ -46,8 +46,8 @@ namespace Adoptium_UpdateWatcher
                         }
                     }
 
-                    if (changesContainAtLeastOneDetectedElement)
-                    { 
+                    if (changesContainAtLeastOneDetectedElement && !machine.HoldAutoReCheckForUpdateSuggested)
+                    {
                         //Debug.WriteLine($"Starting update from InstallationsToUpdate.CollectionChanged += (s, e) => .. because changesContainAtLeastOneDetectedElement = true");
                         ForceUpdateCheck();
                     }
@@ -55,9 +55,9 @@ namespace Adoptium_UpdateWatcher
                         RefreshUI();
                 }
                 else
-                    RefreshUI();                
+                    RefreshUI();
             };
-            InstallationsToUpdate.ItemPropertyChanged += (s, e) => 
+            InstallationsToUpdate.ItemPropertyChanged += (s, e) =>
             {
                 //Debug.WriteLine($"Item = {e.CollectionIndex}, PropertyName = {e.PropertyName}");
                 if (e.PropertyName == "CheckForUpdatesFlag")
@@ -73,11 +73,18 @@ namespace Adoptium_UpdateWatcher
                     else
                         RefreshUI();
                 }
+
+                
+
             };
 
             updater.StateChanged += (s, _e) => { RefreshUI(); };
             updater.UpdatesInstallationStarted += (s, _e) => { dispatcherTimer.Start(); };
-            updater.UpdatesInstallationComplete += (s, _e) => { dispatcherTimer.Stop(); };
+            updater.UpdatesInstallationComplete += (s, _e) =>
+            { 
+                dispatcherTimer.Stop();
+                OnPropertyChanged("TaskbarItemProgressState");
+            };
             updater.InstallerProgressChanged += (s, _e) => 
             {
                 var ea = _e as AdoptiumUpdateInstallerEventArgs;
@@ -97,8 +104,11 @@ namespace Adoptium_UpdateWatcher
 
             machine.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == "SkippedReleasesWereChangedAfterUpdateCheck")
+                if (e.PropertyName == "SomethingHasBeenChangedSinceUpdateCheck")
+                {
                     OnPropertyChanged("ShowThereMayBeNewVersionsMessage");
+                    OnPropertyChanged("IsButtonDownloadAndInstallUpdatesEnabled");
+                }
             };
 
             dispatcherTimer.Tick += (s, e) =>
@@ -109,7 +119,7 @@ namespace Adoptium_UpdateWatcher
                     OnPropertyChanged("TotalProgress100");
                 }
             };
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
             
         }
 
@@ -179,7 +189,9 @@ namespace Adoptium_UpdateWatcher
         {
             get
             {
-                return SomethingInProgress ? TaskbarItemProgressState.Normal : TaskbarItemProgressState.None;
+                return SomethingInProgress ? 
+                            (UpdateInstallationInProgress ? TaskbarItemProgressState.Normal : TaskbarItemProgressState.Indeterminate) :
+                            TaskbarItemProgressState.None;
             }
         }
 
@@ -222,19 +234,19 @@ namespace Adoptium_UpdateWatcher
 
         public bool ShowThereMayBeNewVersionsMessage
         {
-            get { return !SomethingInProgress && machine.SkippedReleasesWereChangedAfterUpdateCheck; }
+            get { return !SomethingInProgress && machine.SomethingHasBeenChangedSinceUpdateCheck; }
         }
         public bool ShowAllInstallationsAreUpToDateMessage
         {
             get
             {
                 return (updater.AllInstallationsAreUpToDate || InstallationsWithUpdatesCount == 0) &&
-                        !ShowAllEnabledInstallations && !SomethingInProgress && !machine.SkippedReleasesWereChangedAfterUpdateCheck;
+                        !ShowAllEnabledInstallations && !SomethingInProgress && !machine.SomethingHasBeenChangedSinceUpdateCheck;
             }
         }
         public bool IsButtonDownloadAndInstallUpdatesEnabled
         {
-            get { return !SomethingInProgress && InstallationsWithUpdatesCount > 0; }
+            get { return !SomethingInProgress && InstallationsWithMSIUpdatesCount > 0 && !machine.SomethingHasBeenChangedSinceUpdateCheck; }
         }
         public bool SomethingInProgress
         {
@@ -247,6 +259,7 @@ namespace Adoptium_UpdateWatcher
         #endregion
 
         private int InstallationsWithUpdatesCount { get { return machine.InstallationsWithUpdatesCount; } }
+        private int InstallationsWithMSIUpdatesCount { get { return machine.InstallationsWithMSIUpdatesCount; } }
         
         public void SaveModel()
         {

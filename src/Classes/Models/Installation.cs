@@ -80,7 +80,7 @@ namespace Adoptium_UpdateWatcher
                 {
                     MarkedForUpdate = false;
                     NewVersion = null;
-                    OnPropertyChanged("HasNewVersion");
+                    //OnPropertyChanged("HasNewVersion");
                 }
             }
         }
@@ -357,7 +357,7 @@ namespace Adoptium_UpdateWatcher
             get { return heap_size; }
             set
             {
-                heap_size = value;
+                heap_size = architecture == "openj9" ? value : "normal";
                 OnPropertyChanged("HeapSize");
             }
         }
@@ -387,7 +387,7 @@ namespace Adoptium_UpdateWatcher
             SkippedReleaseName = NewVersion.ReleaseName;
             MarkedForUpdate = false;
             NewVersion = null;
-            OnPropertyChanged("HasNewVersion");
+            //OnPropertyChanged("HasNewVersion");
         }
         internal void RemoveSkippedRelease()
         {
@@ -434,15 +434,18 @@ namespace Adoptium_UpdateWatcher
             {
                 new_available_version = value;
                 OnPropertyChanged("NewVersion");
+                OnPropertyChanged("HasNewVersion");
+                OnPropertyChanged("HasMSIInNewVersion");
             }
         }
-        public bool HasNewVersion { get { return NewVersion?.Found ?? false; } }
+        public bool HasNewVersion { get { return new_available_version?.Found ?? false; } }
+        public bool HasMSIInNewVersion { get { return new_available_version != null ? !String.IsNullOrEmpty(new_available_version.MSIURL) : false; } }
         public bool MarkedForUpdate 
         { 
             get => markedForUpdate;
             set
             {
-                markedForUpdate = value;
+                markedForUpdate = HasMSIInNewVersion ? value : false;
                 OnPropertyChanged("MarkedForUpdate");
             }
         }

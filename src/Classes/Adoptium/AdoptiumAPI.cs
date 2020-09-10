@@ -151,9 +151,11 @@ namespace Adoptium_UpdateWatcher
                         string version_build = (string)o["version"]["build"];
                         string version_string = (string)o["version"]["openjdk_version"];
                         string version_release = (string)o["release_name"];
-
-                        string msi_url = (string)o["binary"]["installer"]["link"];
+                        
                         string zip_url = (string)o["binary"]["package"]["link"];
+
+                        string msi_url = (o["binary"]["installer"] != null && o["binary"]["installer"]["link"] != null) ?
+                                        (string)o["binary"]["installer"]["link"] : null;
 
                         //MessageBox.Show(o.ToString());
 
@@ -180,7 +182,8 @@ namespace Adoptium_UpdateWatcher
                 var ie = ex;
                 while (ie.InnerException != null) ie = ie.InnerException;
 
-                error_message_out = $"GetLatestVersion[{URL}]: {ex.Message} => {ie.Message}";
+                error_message_out = $"GetLatestVersion[{URL}]: {ex.Message}" + (ie.InnerException != null ? $" => {ie.Message}" : "");
+                //if (latest.)
                 Debug.WriteLine(error_message_out);
                 //MessageBox.Show("There was an error: " + ex.Message, "Adoptium API Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }

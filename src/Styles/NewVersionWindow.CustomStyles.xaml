@@ -72,6 +72,12 @@
         </Setter>
     </Style>
 
+    <Style x:Key="TagLabelStyleWarning" TargetType="Label" BasedOn="{StaticResource TagLabelStyle}">
+        <Setter Property="Background" Value="#ff0022"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
     <Style x:Key="ThemedButton" TargetType="Button">
         <Setter Property="Foreground" Value="White" />
         <Setter Property="Background" Value="#1F2F4E" />
@@ -81,6 +87,17 @@
                 <Setter Property="Background" Value="#ff9800" />
                 <Setter Property="Foreground" Value="Black" />
             </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="Gray" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="BigThemedButton" TargetType="Button">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Background" Value="#ff9800" />
+        <Setter Property="BorderBrush" Value="#182336"/>
+        <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="Gray" />
             </Trigger>

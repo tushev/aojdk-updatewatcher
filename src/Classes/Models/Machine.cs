@@ -33,7 +33,24 @@ namespace Adoptium_UpdateWatcher
 
         public Machine()
         {
-            Installations.CollectionChanged += (s, e) => { MantainNoConflictState(); };            
+            Installations.CollectionChanged += (s, e) => { MantainNoConflictState(); };
+            Installations.ItemPropertyChanged += (s, e) =>
+            {
+                if (
+                    e.PropertyName == "WatchedRelease" ||
+                    e.PropertyName == "JVM_Implementation" ||
+                    e.PropertyName == "ImageType" ||
+                    e.PropertyName == "Arch" ||
+                    e.PropertyName == "HeapSize"
+                    )
+                {
+                    var i = Installations[e.CollectionIndex];
+                    if (i.CheckForUpdatesFlag && !i.IsAutodiscoveredInstance)
+                    {
+                        SomethingHasBeenChangedSinceUpdateCheck = true;
+                    }
+                }
+            };
         }
 
         
@@ -92,8 +109,15 @@ namespace Adoptium_UpdateWatcher
             var _installs = user_scope ? AdoptiumInstallationsDetector.DetectInstallationsByRegistryHKCU() :
                                      AdoptiumInstallationsDetector.DetectInstallationsByRegistryHKLM();
 
-            foreach (DetectedInstallation i in _installs)
+            HoldAutoReCheckForUpdateSuggested = true;
+            for (int k=0; k < _installs.Count; k++)
             {
+                DetectedInstallation i = _installs[k];
+
+                // we want to reset HoldAutoReCheckForUpdateSuggested at the last element
+                if (k == _installs.Count - 1)
+                    HoldAutoReCheckForUpdateSuggested = false;
+
                 Installation inst = new Installation(i, true, user_scope);
                 Installations.Add(inst);
             }
@@ -104,12 +128,14 @@ namespace Adoptium_UpdateWatcher
             if (DiscoverMachineWideInstallations) { RemoveRegistryAutoDiscoveredInstallations(false); DiscoverAndAddInstallationsFromRegistry(false); }
             if (DiscoverUserScopeInstallations) { RemoveRegistryAutoDiscoveredInstallations(true); DiscoverAndAddInstallationsFromRegistry(true); }
         }
+        public bool HoldAutoReCheckForUpdateSuggested = false;
 
         
 
         private void MantainNoConflictState()
         {
-            // do not allow duplicates in custom part - postponed ATM, the user is warned when adding new installation
+            // TODO: do not allow duplicates in custom part - postponed ATM, the user is warned when adding new installation
+            // can be done with Installations.ItemPropertyChanged
 
             // disable auto-discovered installations that have the same path as one of custom-set installations            
             foreach (var i in Installations)
@@ -125,27 +151,27 @@ namespace Adoptium_UpdateWatcher
             OnPropertyChanged("Installations");
         }
 
-        private bool _skipped_releases_were_changed_after_update_check;
-        public bool SkippedReleasesWereChangedAfterUpdateCheck 
+        private bool _something_has_been_changed_since_update_check;
+        public bool SomethingHasBeenChangedSinceUpdateCheck 
         {
-            get { return _skipped_releases_were_changed_after_update_check; }
+            get { return _something_has_been_changed_since_update_check; }
             set
             {
-                _skipped_releases_were_changed_after_update_check = value;
-                OnPropertyChanged("SkippedReleasesWereChangedAfterUpdateCheck");
+                _something_has_been_changed_since_update_check = value;
+                OnPropertyChanged("SomethingHasBeenChangedSinceUpdateCheck");
             }
         }
 
         public void SkipDiscoveredNewVersionForInstallation(Installation i)
         {
             i?.SkipDiscoveredNewVersion();
-            //SkippedReleasesWereChangedAfterUpdateCheck = true;
+            //SomethingHasBeenChangedSinceUpdateCheck = true;
         }
 
         public void RemoveSkippedReleaseForInstallation(Installation i)
         {
             i?.RemoveSkippedRelease();
-            SkippedReleasesWereChangedAfterUpdateCheck = true;
+            SomethingHasBeenChangedSinceUpdateCheck = true;
         }
 
         public void ResetAllSkippedReleases()
@@ -153,7 +179,7 @@ namespace Adoptium_UpdateWatcher
             foreach (var i in Installations)
                 i.SkippedReleaseName = null;
 
-            SkippedReleasesWereChangedAfterUpdateCheck = true;
+            SomethingHasBeenChangedSinceUpdateCheck = true;
 
             OnPropertyChanged("Installations");
             OnPropertyChanged("ThereAreInstallationsWithSkippedReleases");
@@ -166,12 +192,13 @@ namespace Adoptium_UpdateWatcher
 
             OnPropertyChanged("Installations");
         }
-        private int InstallationsWithSkippedReleasesCount { get { return Installations.Where(x => x.HasSkippedRelease).Count(); } }
+        private int InstallationsWithSkippedReleasesCount { get { return Installations.Count(x => x.HasSkippedRelease); } }
 
         
 
         public bool ThereAreInstallationsWithSkippedReleases { get { return InstallationsWithSkippedReleasesCount > 0; } }
-        public int InstallationsWithUpdatesCount { get { return Installations.Where(x => x.NewVersion != null).Count(); } }
+        public int InstallationsWithUpdatesCount { get { return Installations.Count(x => x.HasNewVersion); } }
+        public int InstallationsWithMSIUpdatesCount { get { return Installations.Count(x => x.HasMSIInNewVersion); } }
 
         private bool show_shadowed_installations;
         public bool ShowShadowedInstallations
@@ -187,14 +214,14 @@ namespace Adoptium_UpdateWatcher
         {
             get
             {
-                return Installations.Where(x => x.Detected && x.CheckForUpdatesFlag).Count() > 0;
+                return Installations.Count(x => x.Detected && x.CheckForUpdatesFlag) > 0;
             }
         }
         public bool HasConfiguredInstallations
         {
             get
             {
-                return Installations.Where(x => String.IsNullOrEmpty(x.Path)).Count() > 0;
+                return Installations.Count(x => String.IsNullOrEmpty(x.Path)) > 0;
             }
         }
         public bool PossiblyHasConfiguredInstallations

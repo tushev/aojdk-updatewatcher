@@ -124,7 +124,7 @@ namespace Adoptium_UpdateWatcher
                             (machine.Installations.Where(m => m.IsAutodiscoveredInstance && m.Path == ai.Path).First()).SkippedReleaseName = ai.SkippedReleaseName;
                         }
 
-                        machine.SkippedReleasesWereChangedAfterUpdateCheck = false;
+                        machine.SomethingHasBeenChangedSinceUpdateCheck = false;
 
                         return machine;
                     }

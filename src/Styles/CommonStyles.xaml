@@ -4,6 +4,7 @@
 
 
     <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <local:Boolean3AndConverter x:Key="Boolean3AndConverter"/>
     <local:BooleanAndConverter x:Key="BooleanAndConverter"/>
     <local:StringCapitalizeConverter x:Key="StringCapitalizeConverter"/>
     <local:ShowUnderscoreConverter x:Key="ShowUnderscoreConverter"/>
