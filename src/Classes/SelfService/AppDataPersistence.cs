@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -138,8 +139,17 @@ namespace Adoptium_UpdateWatcher
                 }
                 catch (Exception ex) { MessageBox.Show($"There was an error: [ {ex.Message} ].", "Error while loading the configuration", MessageBoxButton.OK, MessageBoxImage.Error); }
             }
+            // quasi - else:
+            Debug.WriteLine($"Machine settings [{filename}] not found, loading default machine with auto-discovery enabled.");
 
-            return new Machine();
+            // create new Machine with default settings
+            Machine default_machine = new Machine();
+
+            default_machine.ActivateAutoDiscoveryOnPropertyChange(); // not needed now, required for further changes
+            default_machine.RefreshAutoDiscoveredInstallations(); // actually try to find the installations
+
+            return default_machine;            
+
         }
     }
 }
