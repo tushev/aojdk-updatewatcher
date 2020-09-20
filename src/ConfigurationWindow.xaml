@@ -211,11 +211,11 @@
         <!-- INSTALL NEW RELEASE -->
         <Button ToolTip="Add new release from the web." 
                 Style="{StaticResource LinkButtonI}" 
-                Command="{Binding AddWebInstallationCommand}" 
+                Command="{Binding AddInstallationFromWebCommand}" 
                 Margin="345,562,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="249" >
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE896;" FontSize="18" VerticalAlignment="Center" />
-                <TextBlock Text="Add new installation from the web" VerticalAlignment="Center" TextDecorations="Underline"/>
+                <TextBlock Text="Download new instance from the web" VerticalAlignment="Center" TextDecorations="Underline"/>
             </StackPanel>
         </Button>
 

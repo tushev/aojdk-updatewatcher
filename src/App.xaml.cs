@@ -16,6 +16,7 @@ namespace AJ_UpdateWatcher
     {
         static public NewVersionWindow NewVersionWindowInstance;
         static public ConfigurationWindow ConfigurationWindowInstance;
+        static public AddInstallationFromWebWindow AddInstallationFromWebWindowInstance;
         static public Machine Machine;
         static public Updater Updater;
 
@@ -128,6 +129,17 @@ namespace AJ_UpdateWatcher
             }
         }
 
+        public static void ShowAddInstallationFromWebWindow()
+        {
+            if (AddInstallationFromWebWindowInstance == null || AddInstallationFromWebWindowInstance.IsLoaded == false)
+            {
+                AddInstallationFromWebWindowInstance = new AddInstallationFromWebWindow();
+                AddInstallationFromWebWindowInstance.Show();
+            }
+            else
+                AddInstallationFromWebWindowInstance.Activate();
+        }
+        
         public static void ShowConfigurationWindow()
         {
             if (ConfigurationWindowInstance == null || ConfigurationWindowInstance.IsLoaded == false)

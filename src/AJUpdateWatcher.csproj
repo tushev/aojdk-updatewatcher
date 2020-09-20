@@ -141,7 +141,11 @@
     <Compile Include="Classes\SelfService\Upgrade.cs" />
     <Compile Include="Classes\Utilities\Converters\Boolean3AndConverter.cs" />
     <Compile Include="Classes\Utilities\Converters\BooleanAndConverter.cs" />
+    <Compile Include="Classes\ViewModels\AddInstallationFromWebViewModel.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Windows\AddInstallationFromWebWindow.xaml.cs">
+      <DependentUpon>AddInstallationFromWebWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="ConfigurationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -197,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\NewVersionWindow.CustomStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AddInstallationFromWebWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

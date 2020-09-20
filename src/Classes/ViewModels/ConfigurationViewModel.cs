@@ -378,6 +378,24 @@ namespace AJ_UpdateWatcher
 
         #endregion
 
+        #region AddInstallationFromWebCommand
+        ICommand add_installation_from_web_command;
+        public ICommand AddInstallationFromWebCommand
+        {
+            get
+            {
+                if (add_installation_from_web_command == null)
+                {
+                    add_installation_from_web_command = new DelegateCommand(CanExecuteAddInstallationFromWebCommand, ExecuteAddInstallationFromWebCommand);
+                }
+                return add_installation_from_web_command;
+            }
+        }
+        private void ExecuteAddInstallationFromWebCommand(object parameter) { App.ShowAddInstallationFromWebWindow(); }
+        private bool CanExecuteAddInstallationFromWebCommand(object parameter) { return true; }
+
+        #endregion
+
         public string TargetProduct { get { return Branding.TargetProduct; } }
         public string ProductName { get { return Branding.ProductName; } }
         

@@ -1,0 +1,92 @@
+﻿<Window x:Class="AJ_UpdateWatcher.AddInstallationFromWebWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AJ_UpdateWatcher"
+        mc:Ignorable="d"
+        Title="Download new instance" Height="300" Width="700" Icon="/AJUpdateWatcher;component/assets/logo.ico" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/CommonStyles.xaml" />
+                <ResourceDictionary Source="../Styles/ConfigurationWindow.CustomStyles.xaml" />
+                <ResourceDictionary Source="../Styles/AdoptLogo.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.DataContext>
+        <local:AddInstallationFromWebViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Path 
+                Fill="#152935" 
+                Data="{StaticResource AdoptLogo}"
+                HorizontalAlignment="Left" VerticalAlignment="Top"
+                Width="378"
+                Height="52"
+                Stretch="Uniform" Margin="20,15,0,0" MouseLeftButtonUp="Path_MouseLeftButtonUp"
+                />
+
+        <TextBlock 
+            FontFamily="Segoe MDL2 Assets" 
+            Text="&#xE896;" 
+            FontSize="200" 
+            Opacity="0.05"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right" Margin="0,15,114,0"/>
+
+        <Label Content="Feature version" HorizontalAlignment="Left" Margin="32,88,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <ComboBox 
+            ItemsSource="{Binding Path=AvailableReleases}"
+            SelectedItem="{Binding Path=NewItem.WatchedRelease, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            HorizontalAlignment="Left" Margin="134,91,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label  x:Name="lblLTS"  Content="{Binding LTSReleasesMessage}"
+                       ToolTip="Long-term support (LTS) versions have a longer support timeframe and are suitable for enterprise or similar use. Click for more info." 
+                       Foreground="Gray" HorizontalAlignment="Left" Margin="256,88,0,0" VerticalAlignment="Top" MouseUp="lblLTS_MouseUp"/>
+
+        <Label Content="Image type" HorizontalAlignment="Right" Margin="0,88,177,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <ComboBox 
+            ItemsSource="{Binding Path=ImageTypes}"
+            SelectedItem="{Binding Path=NewItem.ImageType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            HorizontalAlignment="Right" Margin="0,91,105,0" VerticalAlignment="Top" Width="69"/>
+        <Button x:Name="btnWhatJREJDK" Content="Help choose"                         
+                    Style="{StaticResource LinkButton}" Margin="0,103,24,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="70" Click="btnWhatJREJDK_Click" />
+
+        <Label Content="JVM Implementation" HorizontalAlignment="Left" Margin="8,148,0,0" VerticalAlignment="Top"/>
+        <ComboBox 
+            ItemsSource="{Binding Path=JVMs}"
+            SelectedItem="{Binding Path=NewItem.JVM_Implementation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            HorizontalAlignment="Left" Margin="134,151,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnWhatImpl" Content="Help choose"                         
+                    Style="{StaticResource LinkButton}" Margin="261,162,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatImpl_Click"  />
+
+        <Label Content="Heap size (openj9)" HorizontalAlignment="Left" Margin="20,179,0,0" VerticalAlignment="Top"/>
+        <ComboBox 
+            ItemsSource="{Binding Path=HeapSizes}"
+            SelectedItem="{Binding Path=NewItem.HeapSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            HorizontalAlignment="Left" Margin="134,181,0,0" VerticalAlignment="Top" Width="120"/>
+
+        <Label Content="Architecture" HorizontalAlignment="Left" Margin="54,208,0,0" VerticalAlignment="Top"/>
+        <ComboBox 
+            ItemsSource="{Binding Path=Archs}"
+            SelectedItem="{Binding Path=NewItem.Arch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            HorizontalAlignment="Left" Margin="134,211,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label  x:Name="lblYourArchMessage"  Content="{Binding YourArchMessage}"
+                Foreground="Gray" HorizontalAlignment="Left" Margin="256,208,0,0" VerticalAlignment="Top" RenderTransformOrigin="26.6,0.2" />
+
+
+        <!-- ADD PATH -->
+        <Button ToolTip="One you click this button, new installation will be added to the list and all installations (including this one) will be checked for updates." 
+                x:Name="btnAddInstallation"
+                Command="{Binding AddInstallationCommand}" 
+                Margin="0,0,10,10" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="235" >
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xED0E;" FontSize="18" VerticalAlignment="Center"/>
+                <TextBlock Text=" Add selected release to list" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+        <CheckBox Content="Download immediately" IsChecked="{Binding DownloadImmediately}" Opacity="0.8" HorizontalAlignment="Right" Margin="0,0,10,51" VerticalAlignment="Bottom" />
+
+    </Grid>
+</Window>
