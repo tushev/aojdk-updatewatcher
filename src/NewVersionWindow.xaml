@@ -171,10 +171,13 @@
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="-5,-2,0,0">
                                     <Label 
                                            Content="{Binding Path=InstalledVersionString, Converter={StaticResource ShowUnderscoreConverter}}" 
-                                           ToolTip="{Binding Path=InstalledVersion.VersionString, Converter={StaticResource ShowUnderscoreConverter}}" 
+                                           ToolTip="{Binding Path=InstalledVersion.VersionString}" 
                                            FontSize="14" VerticalAlignment="Center" Margin="0,-1,0,0"/>
                                     <Label FontFamily="Segoe MDL2 Assets" Content="&#xE72A;" FontSize="20" VerticalAlignment="Center"/>
-                                    <Label Content="{Binding Path=NewVersion.VersionString, Converter={StaticResource ShowUnderscoreConverter}}" FontWeight="Bold" FontSize="24" VerticalAlignment="Center" Margin="0,-4,0,0"/>
+                                    <Label 
+                                           Content="{Binding Path=NewVersion.ParsedVersionString, Converter={StaticResource ShowUnderscoreConverter}}"
+                                           ToolTip="{Binding Path=NewVersion.VersionString}"
+                                           FontWeight="Bold" FontSize="24" VerticalAlignment="Center" Margin="0,-4,0,0"/>
                                     
                                     <!-- NoMSI -->
                                     <Label Style="{StaticResource TagLabelStyleWarning}" 

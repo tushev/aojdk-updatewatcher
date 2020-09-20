@@ -26,6 +26,14 @@ namespace AJ_UpdateWatcher
             Found = false;
         }
 
+        public string ParsedVersionString
+        {
+            get
+            {
+                return $"{Major}.{Minor}.{Security}" + (String.IsNullOrEmpty(Build) || Build == "-1" ? "" : $"+{Build}");
+            }
+        }
+
         public static bool operator > (AdoptiumReleaseVersion a, AdoptiumReleaseVersion b)
         {
             if (Convert.ToInt32(a.Major) > Convert.ToInt32(b.Major)) return true;
