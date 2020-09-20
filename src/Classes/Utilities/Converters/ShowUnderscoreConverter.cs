@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     public class ShowUnderscoreConverter : IValueConverter
     {

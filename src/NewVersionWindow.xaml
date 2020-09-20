@@ -1,16 +1,16 @@
-﻿<Window x:Class="Adoptium_UpdateWatcher.NewVersionWindow"
+﻿<Window x:Class="AJ_UpdateWatcher.NewVersionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:loadin="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
-        xmlns:local="clr-namespace:Adoptium_UpdateWatcher"
-        xmlns:mockups="clr-namespace:Adoptium_UpdateWatcher.Models.Mockups"
+        xmlns:local="clr-namespace:AJ_UpdateWatcher"
+        xmlns:mockups="clr-namespace:AJ_UpdateWatcher.Models.Mockups"
         mc:Ignorable="d"
         x:Name="_this"
         Background="#152935"
         Foreground="White"
-        Title="Eclipse Adoptium Update Watcher" Height="625" Width="1138" Icon="assets/iconfinder_Refresh_32541.ico"
+        Title="Update Watcher for AdoptOpenJDK" Height="625" Width="1138" Icon="assets/logo.ico"
         ResizeMode="CanMinimize" Topmost="False" WindowStartupLocation="CenterScreen" Closing="NewVersionWindow_Closing" WindowStyle="None">
 
     <Window.Resources>
@@ -182,7 +182,8 @@
                                            Visibility="{Binding Path=HasMSIInNewVersion, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=negate}">
                                         <Label.ToolTip>
                                             <TextBlock>
-                                                <Run Text="There is no MSI package available on Eclipse Adoptium servers."/><LineBreak/>
+                                                <Run Text="There is no MSI package available for download."/>
+                                                <LineBreak/>
                                                 <Run Text="Automatic processing is not possible."/>
                                                 <LineBreak/><LineBreak/>
                                                 <Run Text="You have to download ZIP package and perform the update/installation manually."/><LineBreak/>
@@ -435,13 +436,20 @@
                     Style="{DynamicResource LoadingIndicatorArcsStyle}"
                     Foreground="#dadada"
                     VerticalAlignment="Center"/>
-                <TextBlock FontFamily="Segoe UI" FontSize="28" Text="Checking for Eclipse Adoptium updates" Margin="20" VerticalAlignment="Center"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="28" Margin="20" VerticalAlignment="Center">
+                    <Run Text="Checking for"/>
+                    <Run Text="{Binding TargetProduct, Mode=OneWay}"/>
+                    <Run Text="updates"/>
+                </TextBlock>
             </StackPanel>
             <!-- ALL UP-TO-DATE -->
             <TextBlock FontFamily="Segoe UI" FontSize="28"                       
                        Visibility="{Binding ShowAllInstallationsAreUpToDateMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
-                       Text="All Eclipse Adoptium installations are up-to-date" 
-                       Margin="0,-30,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                       Margin="0,-30,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Run Text="All"/>
+                    <Run Text="{Binding TargetProduct, Mode=OneWay}"/>
+                    <Run Text="installations are up-to-date"/>
+            </TextBlock>
             <!-- There may be new versions -->
             <TextBlock FontFamily="Segoe UI" FontSize="14"                       
                        Visibility="{Binding ShowThereMayBeNewVersionsMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"

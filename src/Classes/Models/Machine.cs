@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Serialization;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     // Machine is the "core" of updater
     // It represents the state of current machine with Adoptium installations there

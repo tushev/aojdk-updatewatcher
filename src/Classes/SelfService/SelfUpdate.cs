@@ -11,12 +11,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     static class SelfUpdate
     {
         const string UserAgent = "aojdk-updatewatcher Auto Updater";
-        const string ProductName = "Adoptium Update Watcher";
+        static string ProductName = $"Update Watcher for {Branding.TargetProduct}";
 
         static public string DownloadURL = "";
         static public bool Found = false;

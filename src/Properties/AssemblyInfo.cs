@@ -7,11 +7,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Adoptium Update Watcher")]
-[assembly: AssemblyDescription("Automatic update tool for Eclipse Adoptium releases")]
+[assembly: AssemblyTitle("Update Watcher for AdoptOpenJDK")]
+[assembly: AssemblyDescription("Independent automatic update tool for AdoptOpenJDK releases")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("tushev.org")]
-[assembly: AssemblyProduct("Adoptium Update Watcher")]
+[assembly: AssemblyProduct("Update Watcher for AdoptOpenJDK")]
 [assembly: AssemblyCopyright("Copyright © Simon A. Tushev, 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

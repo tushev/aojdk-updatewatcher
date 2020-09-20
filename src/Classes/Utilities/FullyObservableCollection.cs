@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     public class FullyObservableCollection<T> : ObservableCollection<T>
         where T : INotifyPropertyChanged

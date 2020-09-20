@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     static public class AdoptiumAPI_ParameterEnumeration
     {
@@ -97,7 +97,7 @@ namespace Adoptium_UpdateWatcher
                 MessageBox.Show(
                     $"Unable to get list of {Branding.TargetProduct} releases. Make sure you are connected to the internet and {baseDOMAIN} is online." + Environment.NewLine + Environment.NewLine + Environment.NewLine +
                     $"Tech details:{Environment.NewLine}{error_message}"
-                    , "Adoptium API Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    , $"{Branding.TargetProduct} API Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             AdoptiumAPI_AvailableReleases info = new AdoptiumAPI_AvailableReleases();

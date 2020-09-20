@@ -1,4 +1,4 @@
-﻿using Adoptium_UpdateWatcher.Properties;
+﻿using AJ_UpdateWatcher.Properties;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,7 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     /// <summary>
     /// Interaction logic for NewVersionWindow.xaml

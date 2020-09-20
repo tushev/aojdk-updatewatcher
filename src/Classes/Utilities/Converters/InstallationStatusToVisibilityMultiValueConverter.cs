@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     public class InstallationStatusToVisibilityMultiValueConverter : IMultiValueConverter
     {

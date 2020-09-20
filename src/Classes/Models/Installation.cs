@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     public enum InstallationUpdateStatus
     {
@@ -331,6 +331,9 @@ namespace Adoptium_UpdateWatcher
             set
             {
                 jvm_implementation = value;
+                if (jvm_implementation != "openj9" && HeapSize == "large")
+                    HeapSize = "normal";
+
                 OnPropertyChanged("JVM_Implementation");
             }
         }
@@ -357,7 +360,7 @@ namespace Adoptium_UpdateWatcher
             get { return heap_size; }
             set
             {
-                heap_size = architecture == "openj9" ? value : "normal";
+                heap_size = jvm_implementation == "openj9" ? value : "normal";
                 OnPropertyChanged("HeapSize");
             }
         }

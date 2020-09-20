@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     class ConfigurationViewModel : ViewModelBase
     {
@@ -122,8 +122,8 @@ namespace Adoptium_UpdateWatcher
             get
             {
                 return machine.Installations.Where(i => i.NotInstalled && i.CheckForUpdatesFlag).Count() == 0 ?
-                   "Check for Eclipse Adoptium updates" :
-                   "Install new Eclipse Adoptium releases and update existing ones";
+                   $"Check for {Branding.TargetProduct} updates" :
+                   $"Install new {Branding.TargetProduct} releases and update existing ones";
             }
         }
 
@@ -378,5 +378,8 @@ namespace Adoptium_UpdateWatcher
 
         #endregion
 
+        public string TargetProduct { get { return Branding.TargetProduct; } }
+        public string ProductName { get { return Branding.ProductName; } }
+        
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Adoptium_UpdateWatcher.Properties {
+﻿namespace AJ_UpdateWatcher.Properties {
     
     
     // This class allows you to handle specific events on the settings class:

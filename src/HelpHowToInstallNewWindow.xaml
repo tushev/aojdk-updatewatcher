@@ -1,9 +1,9 @@
-﻿<Window x:Class="Adoptium_UpdateWatcher.HelpHowToInstallNewWindow"
+﻿<Window x:Class="AJ_UpdateWatcher.HelpHowToInstallNewWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Adoptium_UpdateWatcher"
+        xmlns:local="clr-namespace:AJ_UpdateWatcher"
         mc:Ignorable="d" 
         Background="LightYellow"
         BorderBrush="#dadada"
@@ -46,7 +46,9 @@
             FontFamily="Segoe UI"
             FontSize="14"
             Foreground="#ff333333">
-            <Run Text="To install any Eclipse Adoptium release from this app, please do the folowing:" FontWeight="Black"/>            
+            <Run Text="To install any" FontWeight="Black"/>            
+            <Run x:Name="runTargetProduct1" FontWeight="Black"/>            
+            <Run Text="release from this app, please do the folowing:" FontWeight="Black"/>            
             <LineBreak/>
             <LineBreak/>
             <Run Text="1. Click on an empty line in" />

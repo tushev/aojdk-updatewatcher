@@ -14,12 +14,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using Adoptium_UpdateWatcher.Properties;
+using AJ_UpdateWatcher.Properties;
 using Microsoft.Win32.TaskScheduler;
 using System.Diagnostics;
 using System.Configuration;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -44,7 +44,7 @@ namespace Adoptium_UpdateWatcher
             if (!Settings.Default.isConfigured && (bool)cbSchedule.IsChecked == false)
             {
                 var ans = MessageBox.Show(
-                    "Did you forget to configure to check for Eclipse Adoptium JDK/JRE Updates on User Logon?" + Environment.NewLine + Environment.NewLine +
+                    $"Did you forget to configure to check for {Branding.TargetProduct} JDK/JRE Updates on User Logon?" + Environment.NewLine + Environment.NewLine +
                     "Click Yes to go back and enable this feature," + Environment.NewLine + "No to exit without enabling scheduled tasks.", 
                     Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
                 if (ans == MessageBoxResult.Yes)
@@ -136,7 +136,7 @@ namespace Adoptium_UpdateWatcher
                 "HotSpot is the VM from the OpenJDK community." + Environment.NewLine +
                 "It is the most widely used VM today and is used in Oracle’s JDK. It is suitable for all workloads." + Environment.NewLine + Environment.NewLine +
                 "Eclipse OpenJ9 is the VM from the Eclipse community." + Environment.NewLine +
-                "It is an enterprise-grade VM designed for low memory footprint and fast start-up and is used in IBM’s JDK. It is suitable for running all workloads.", "An advice from ApdptOpenJDK.net", MessageBoxButton.OK, MessageBoxImage.Information);
+                "It is an enterprise-grade VM designed for low memory footprint and fast start-up and is used in IBM’s JDK. It is suitable for running all workloads.", "An advice from AdoptOpenJDK.net", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void lblLTS_MouseUp(object sender, MouseButtonEventArgs e)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     public class AdoptiumReleaseVersion
     {

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     static public class Branding
     {
-        static public readonly string MessageBoxHeader = "Adoptium Update Watcher";
-        static public readonly string ProductName = "Adoptium Update Watcher";
-        static public readonly string TargetProduct = "Eclipse Adoptium (AdoptOpenJDK)";
+        static public readonly string MessageBoxHeader = "Update Watcher for AdoptOpenJDK";
+        static public readonly string ProductName = "Update Watcher for AdoptOpenJDK";
+        static public readonly string TargetProduct = "AdoptOpenJDK";
     }
 }

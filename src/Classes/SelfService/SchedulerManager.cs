@@ -3,13 +3,13 @@ using System;
 using System.Diagnostics;
 using System.Windows;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     public class SchedulerManager : ViewModelBase
     {
         // https://github.com/dahall/TaskScheduler/wiki/Examples
 
-        const string defaultTaskName = "Adoptium_UpdateWatcher";
+        const string defaultTaskName = "Adopt_UpdateWatcher_TskV2";
 
         string app_path = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
 

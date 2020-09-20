@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

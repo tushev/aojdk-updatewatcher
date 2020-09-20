@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adoptium_UpdateWatcher.Models.Mockups
+namespace AJ_UpdateWatcher.Models.Mockups
 {
     public class NewVersionWindowInstallationsMockup
     {

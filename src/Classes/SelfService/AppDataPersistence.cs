@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Serialization;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     static class AppDataPersistence
     {
@@ -71,7 +71,7 @@ namespace Adoptium_UpdateWatcher
         }
         static public Machine TryLoad(string filename)
         {
-            if (File.Exists(filename))
+            if (!File.Exists(filename))
             {
                 try
                 {

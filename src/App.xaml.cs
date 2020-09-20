@@ -5,9 +5,9 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Adoptium_UpdateWatcher.Properties;
+using AJ_UpdateWatcher.Properties;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -180,7 +180,7 @@ namespace Adoptium_UpdateWatcher
                     MessageBox.Show(
                         $"This is the first background check for updates of {Branding.TargetProduct}." + Environment.NewLine + Environment.NewLine +
                         $"It resulted in: [ {status} ]." + Environment.NewLine + Environment.NewLine + 
-                        $" You will receive no such messages in future, background checks will be silent unless there is a new version. If you need to change settings, please use [Configure Adoptium Update Watcher] shortcut from Start menu.", 
+                        $" You will receive no such messages in future, background checks will be silent unless there is a new version. If you need to change settings, please use [Configure Update Watcher for {Branding.TargetProduct}] shortcut from Start menu.", 
                         Branding.MessageBoxHeader, MessageBoxButton.OK, MessageBoxImage.Information);
                     
                     Settings.Default.FirstSilentRunMessageHasBeenDisplayed = true;

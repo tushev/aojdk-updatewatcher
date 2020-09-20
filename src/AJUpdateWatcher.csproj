@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CA4BD54C-A4C8-4897-A115-BE5F83C6BCC5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Adoptium_UpdateWatcher</RootNamespace>
-    <AssemblyName>AdoptiumUpdateWatcher</AssemblyName>
+    <RootNamespace>AJ_UpdateWatcher</RootNamespace>
+    <AssemblyName>AJUpdateWatcher</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -51,10 +51,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Adoptium_UpdateWatcher.App</StartupObject>
+    <StartupObject>AJ_UpdateWatcher.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>assets\iconfinder_Refresh_32541.ico</ApplicationIcon>
+    <ApplicationIcon>assets\logo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>EBE82976237C190124CB64C7ED735A276E1F6B30</ManifestCertificateThumbprint>
@@ -244,9 +244,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\iconfinder_Refresh_32541.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
@@ -268,6 +265,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\iconfinder_icon-skip-forward_211889.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Shell;
 using System.Windows.Threading;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     class NewVersionViewModel : ViewModelBase
     {
@@ -377,5 +377,8 @@ namespace Adoptium_UpdateWatcher
         }
         public bool CanExecuteDownloadAndInstallUpdatesCommand(object parameter) { return true; }
         #endregion
+
+        public string TargetProduct { get { return Branding.TargetProduct; } }
+        public string ProductName { get { return Branding.ProductName; } }
     }
 }

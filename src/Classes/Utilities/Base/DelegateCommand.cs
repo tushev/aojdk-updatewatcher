@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     class DelegateCommand : ICommand
     {

@@ -1,4 +1,4 @@
-﻿using Adoptium_UpdateWatcher.Properties;
+﻿using AJ_UpdateWatcher.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     public static class Upgrade
     {

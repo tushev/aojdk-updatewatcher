@@ -1,4 +1,4 @@
-﻿using Adoptium_UpdateWatcher.Properties;
+﻿using AJ_UpdateWatcher.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using System.Windows.Threading;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     public class AdoptiumUpdateInstallerEventArgs : EventArgs
     {

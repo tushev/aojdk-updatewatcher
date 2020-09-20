@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Adoptium_UpdateWatcher
+namespace AJ_UpdateWatcher
 {
     /// <summary>
     /// Interaction logic for HelpHowToInstallNewWindow.xaml
@@ -23,6 +23,7 @@ namespace Adoptium_UpdateWatcher
         {
             InitializeComponent();
             this.MouseLeftButtonDown += (s, e) => { this.DragMove(); };
+            runTargetProduct1.Text = Branding.TargetProduct;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

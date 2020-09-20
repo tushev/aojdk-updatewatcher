@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Adoptium_UpdateWatcher.Styles">
+                    xmlns:local="clr-namespace:AJ_UpdateWatcher.Styles">
 
     <Geometry x:Key="AdoptLogo">
         M3 8h8.727v9H3zm11.636 0h8.728v9h-8.728zm11.637 0H35v9h-8.727zM3 20h8.727v9H3zm11.636 0h8.728v9h-8.728zm11.637 0H35v9h-8.727z
