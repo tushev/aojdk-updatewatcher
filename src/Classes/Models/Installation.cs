@@ -439,10 +439,12 @@ namespace AJ_UpdateWatcher
                 OnPropertyChanged("NewVersion");
                 OnPropertyChanged("HasNewVersion");
                 OnPropertyChanged("HasMSIInNewVersion");
+                OnPropertyChanged("HasNewVersionButNoMSI");
             }
         }
         public bool HasNewVersion { get { return new_available_version?.Found ?? false; } }
         public bool HasMSIInNewVersion { get { return new_available_version != null ? !String.IsNullOrEmpty(new_available_version.MSIURL) : false; } }
+        public bool HasNewVersionButNoMSI { get { return new_available_version != null && String.IsNullOrEmpty(new_available_version.MSIURL); } }
         public bool MarkedForUpdate 
         { 
             get => markedForUpdate;

@@ -179,7 +179,7 @@
                                     <!-- NoMSI -->
                                     <Label Style="{StaticResource TagLabelStyleWarning}" 
                                            Content="No MSI"                                           
-                                           Visibility="{Binding Path=HasMSIInNewVersion, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=negate}">
+                                           Visibility="{Binding Path=HasNewVersionButNoMSI, Converter={StaticResource BooleanToVisibilityConverter}}">
                                         <Label.ToolTip>
                                             <TextBlock>
                                                 <Run Text="There is no MSI package available for download."/>
