@@ -31,10 +31,10 @@
         <TextBlock 
             FontFamily="Segoe MDL2 Assets" 
             Text="&#xE896;" 
-            FontSize="200" 
+            FontSize="70" 
             Opacity="0.05"
             VerticalAlignment="Top"
-            HorizontalAlignment="Right" Margin="0,15,114,0"/>
+            HorizontalAlignment="Right" Margin="0,0,10,0"/>
 
         <Label Content="Feature version" HorizontalAlignment="Left" Margin="32,88,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <ComboBox 
