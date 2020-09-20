@@ -194,8 +194,8 @@ namespace AJ_UpdateWatcher
             // we found the file
             if (seems_to_be_adoptopenjdk)
             {
-                Regex java_version_regex = new Regex("JAVA_VERSION=\\\"(([0-9]+)\\.([0-9]+)\\.([0-9]+)(_([0-9]+))?.*)\\\"", RegexOptions.IgnoreCase);
-                Regex os_arch_regex = new Regex("OS_ARCH=\\\"(.*)\\\"", RegexOptions.IgnoreCase);
+                Regex java_version_regex = new Regex(@"JAVA_VERSION=""(([0-9]+)(\.([0-9]+))?(\.([0-9]+))?(_([0-9]+))?(\+([0-9]+))?.*)""", RegexOptions.IgnoreCase);
+                Regex os_arch_regex = new Regex("OS_ARCH =\\\"(.*)\\\"", RegexOptions.IgnoreCase);
                 Regex source_regex = new Regex("SOURCE=\\\"(.*)\\\"", RegexOptions.IgnoreCase);
 
                 installed_version_arch = "";
@@ -212,29 +212,39 @@ namespace AJ_UpdateWatcher
 
                         installed_version_string = match_java_version.Groups[1].Value;
 
-                        int a = Convert.ToInt32(match_java_version.Groups[2].Value);
-                        int b = Convert.ToInt32(match_java_version.Groups[3].Value);
-                        int c = Convert.ToInt32(match_java_version.Groups[4].Value);
+                        string _a = match_java_version.Groups[2].Value;
+                        int a = Convert.ToInt32(String.IsNullOrEmpty(_a) ? "0" : _a);
 
-                        int d = -1;
-                        if (match_java_version.Groups[6].Value != "")
-                            d = Convert.ToInt32(match_java_version.Groups[6].Value);
-
-
-                        if (a == 1)
+                        if (a != 0)
                         {
-                            installed_version_major = b;
-                            installed_version_minor = c;
-                            installed_version_security = d;
-                        }
-                        else
-                        {
-                            installed_version_major = a;
-                            installed_version_minor = b;
-                            installed_version_security = c;
-                        }
+                            string _b = match_java_version.Groups[4].Value;
+                            int b = Convert.ToInt32(String.IsNullOrEmpty(_b) ? "0" : _b);
 
-                        found = true;
+                            string _c = match_java_version.Groups[6].Value;
+                            int c = Convert.ToInt32(String.IsNullOrEmpty(_c) ? "0" : _c);
+
+                            string _d = match_java_version.Groups[8].Value;
+                            int d = Convert.ToInt32(String.IsNullOrEmpty(_d) ? "-1" : _d);
+
+
+                            if (a == 1)
+                            {
+                                installed_version_major = b;
+                                installed_version_minor = c;
+                                installed_version_security = d;
+                            }
+                            else
+                            {
+                                installed_version_major = a;
+                                installed_version_minor = b;
+                                installed_version_security = c;
+                            }
+
+                            if (match_java_version.Groups[10].Value != "")
+                                installed_version_build = Convert.ToInt32(match_java_version.Groups[10].Value);
+
+                            found = true;
+                        }
                     }
 
                     Match match_arch = os_arch_regex.Match(line);
