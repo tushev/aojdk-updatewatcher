@@ -37,17 +37,30 @@ namespace AJ_UpdateWatcher
         public static bool operator > (AdoptiumReleaseVersion a, AdoptiumReleaseVersion b)
         {
             if (Convert.ToInt32(a.Major) > Convert.ToInt32(b.Major)) return true;
-            else if (Convert.ToInt32(a.Minor) > Convert.ToInt32(b.Minor)) return true;
-            else if (Convert.ToInt32(a.Security) > Convert.ToInt32(b.Security)) return true;
-            else if (!String.IsNullOrEmpty(a.Build) && !String.IsNullOrEmpty(b.Build) && Convert.ToInt32(a.Build) > Convert.ToInt32(b.Build)) return true;
+            if (Convert.ToInt32(a.Major) < Convert.ToInt32(b.Major)) return false;
+
+            if (Convert.ToInt32(a.Minor) > Convert.ToInt32(b.Minor)) return true;
+            if (Convert.ToInt32(a.Minor) < Convert.ToInt32(b.Minor)) return false;
+
+            if (Convert.ToInt32(a.Security) > Convert.ToInt32(b.Security)) return true;
+            if (Convert.ToInt32(a.Security) < Convert.ToInt32(b.Security)) return false;
+
+            if (!String.IsNullOrEmpty(a.Build) && !String.IsNullOrEmpty(b.Build) && Convert.ToInt32(a.Build) > Convert.ToInt32(b.Build)) return true;
             else return false;
         }
         public static bool operator < (AdoptiumReleaseVersion a, AdoptiumReleaseVersion b)
         {
             if (Convert.ToInt32(a.Major) < Convert.ToInt32(b.Major)) return true;
-            else if (Convert.ToInt32(a.Minor) < Convert.ToInt32(b.Minor)) return true;
-            else if (Convert.ToInt32(a.Security) < Convert.ToInt32(b.Security)) return true;
-            else if (!String.IsNullOrEmpty(a.Build) && !String.IsNullOrEmpty(b.Build) && Convert.ToInt32(a.Build) < Convert.ToInt32(b.Build)) return true;
+            if (Convert.ToInt32(a.Major) > Convert.ToInt32(b.Major)) return false;
+
+            if (Convert.ToInt32(a.Minor) < Convert.ToInt32(b.Minor)) return true;
+            if (Convert.ToInt32(a.Minor) > Convert.ToInt32(b.Minor)) return false;
+
+            if (Convert.ToInt32(a.Security) < Convert.ToInt32(b.Security)) return true;
+            if (Convert.ToInt32(a.Security) > Convert.ToInt32(b.Security)) return false;
+
+
+            if (!String.IsNullOrEmpty(a.Build) && !String.IsNullOrEmpty(b.Build) && Convert.ToInt32(a.Build) < Convert.ToInt32(b.Build)) return true;
             else return false;
         }
     }
