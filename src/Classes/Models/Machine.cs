@@ -36,6 +36,9 @@ namespace AJ_UpdateWatcher
             Installations.CollectionChanged += (s, e) => { MantainNoConflictState(); };
             Installations.ItemPropertyChanged += (s, e) =>
             {
+                if (e.PropertyName == "Detected")
+                    MantainNoConflictState();
+
                 if (
                     e.PropertyName == "WatchedRelease" ||
                     e.PropertyName == "JVM_Implementation" ||

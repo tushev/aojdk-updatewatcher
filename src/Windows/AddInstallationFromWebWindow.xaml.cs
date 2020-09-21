@@ -52,5 +52,15 @@ namespace AJ_UpdateWatcher
 
             Process.Start("https://adoptopenjdk.net/");
         }
+
+        private void btnWhatHeap_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(
+              @"What are the OpenJ9 ""Large Heap"" variants ?" + Environment.NewLine + Environment.NewLine +
+              @"The Large Heap variants of the OpenJ9 builds" + Environment.NewLine +
+              @"(also known as the ""non-compressed references builds"")" + Environment.NewLine +
+              @"allow for Java heap sizes greater than 57Gb." + Environment.NewLine + Environment.NewLine +
+              @"If you need heap sizes that large, then pick the large heap versions.", "An advice from AdoptOpenJDK.net/faq.html", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }

@@ -169,10 +169,10 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Binding="{Binding InstalledVersionString, Mode=OneWay}" Header="Installed version"/>
 
-                <DataGridComboBoxColumn Header="API/Feature version" x:Name="lstReleasesInGrid" SelectedItemBinding="{Binding Path=WatchedRelease, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120"  />
+                <DataGridComboBoxColumn Header="API/Major version" x:Name="lstReleasesInGrid" SelectedItemBinding="{Binding Path=WatchedRelease, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120"  />
                 <DataGridComboBoxColumn Header="API/Type" x:Name="lstImageTypeInGrid" SelectedItemBinding="{Binding Path=ImageType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="80" />
                 <DataGridComboBoxColumn Header="API/JVM" x:Name="lstJVMInGrid" SelectedItemBinding="{Binding Path=JVM_Implementation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="80" />
-                <DataGridComboBoxColumn Header="API/Heap" x:Name="lstHeapSizeInGrid" SelectedItemBinding="{Binding Path=HeapSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="78"  />
+                <DataGridComboBoxColumn Header="API/Heap" x:Name="lstHeapSizeInGrid" SelectedItemBinding="{Binding Path=HeapSize, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="78"  />
                 <DataGridComboBoxColumn Header="API/Arch" x:Name="lstArchInGrid" SelectedItemBinding="{Binding Path=Arch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="60" />
 
 

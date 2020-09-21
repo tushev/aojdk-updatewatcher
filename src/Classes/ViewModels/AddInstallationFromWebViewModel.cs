@@ -22,6 +22,8 @@ namespace AJ_UpdateWatcher
             available_releases = App.AvailableReleases;
             NewItem = new Installation();
 
+            NewItem.PropertyChanged += (s, e) => { OnPropertyChanged("CanSelectHeapSize"); };
+
             DownloadImmediately = true;
         }
 
@@ -35,7 +37,8 @@ namespace AJ_UpdateWatcher
                 newItem = value;
                 OnPropertyChanged("NewItem");
             }
-        }
+        }           
+
         public FullyObservableCollection<Installation> InstallationsList
         {
             get { return machine.Installations; }
@@ -46,6 +49,8 @@ namespace AJ_UpdateWatcher
         }
 
         public bool DownloadImmediately { get; set; }
+
+        public bool CanSelectHeapSize { get { return NewItem.JVM_Implementation == "openj9"; } }
        
         public string LTSReleasesMessage { get { return "LTS Releases: " + string.Join(", ", available_releases.LTSReleases.ToArray()); } }
         public string YourArchMessage { get { return "Your system: " + (Environment.Is64BitOperatingSystem ? "x64" : "x32"); } }
