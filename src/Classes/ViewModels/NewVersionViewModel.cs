@@ -107,6 +107,7 @@ namespace AJ_UpdateWatcher
                 if (e.PropertyName == "SomethingHasBeenChangedSinceUpdateCheck")
                 {
                     OnPropertyChanged("ShowThereMayBeNewVersionsMessage");
+                    OnPropertyChanged("ThereMayBeNewVersionsMessageMargin");
                     OnPropertyChanged("IsButtonDownloadAndInstallUpdatesEnabled");
                 }
             };
@@ -174,6 +175,7 @@ namespace AJ_UpdateWatcher
             OnPropertyChanged("ShowErrorsOccuredWhileCheckingForUpdatesMessage");
             OnPropertyChanged("ErrorsEncounteredWhileCheckingForUpdatesString");
             OnPropertyChanged("ShowThereMayBeNewVersionsMessage");
+            OnPropertyChanged("ThereMayBeNewVersionsMessageMargin");
             OnPropertyChanged("ShowAllInstallationsAreUpToDateMessage");
             OnPropertyChanged("IsButtonDownloadAndInstallUpdatesEnabled");
             OnPropertyChanged("SomethingInProgress");
@@ -206,6 +208,7 @@ namespace AJ_UpdateWatcher
                 OnFilterChanged();
                 OnPropertyChanged("ShowAllInstallationsAreUpToDateMessage");
                 OnPropertyChanged("ShowThereMayBeNewVersionsMessage");
+                OnPropertyChanged("ThereMayBeNewVersionsMessageMargin");
             }
         }
         #endregion
@@ -232,6 +235,13 @@ namespace AJ_UpdateWatcher
             get { return string.Join(Environment.NewLine, updater.ErrorsEncounteredWhileCheckingForUpdates ?? new List<string>()); }
         }
 
+        public Thickness ThereMayBeNewVersionsMessageMargin
+        {
+            get { return (ShowErrorsOccuredWhileCheckingForUpdatesMessage && ShowThereMayBeNewVersionsMessage) ? 
+                    new Thickness(0, 0, 0, 67)  :
+                    new Thickness(0, 0, 0, 47); 
+            }
+        }
         public bool ShowThereMayBeNewVersionsMessage
         {
             get { return !SomethingInProgress && machine.SomethingHasBeenChangedSinceUpdateCheck; }

@@ -217,7 +217,7 @@
         <Button ToolTip="Download latest package through the API and install it on your machine." 
                 Style="{StaticResource LinkButtonI}" 
                 Command="{Binding AddInstallationFromWebCommand}" 
-                Margin="345,562,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left">
+                Margin="343,562,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE896;" FontSize="18" VerticalAlignment="Center" />
                 <TextBlock Text="Download and install new instance from the web" VerticalAlignment="Center" TextDecorations="Underline"/>
@@ -229,7 +229,7 @@
         <Button 
                 x:Name="btnRemoveSelected" 
                 Command="{Binding RemoveSelectedInstallationCommand}" 
-                Margin="0,547,10,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Right" Width="128">
+                Margin="0,547,10,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Right" Width="122">
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8BB;" FontSize="16" VerticalAlignment="Center"/>
                 <TextBlock Text=" Remove selected" VerticalAlignment="Center"/>
@@ -241,10 +241,12 @@
         <Button  
                 x:Name="btnResetAPIforSelected"
                 Command="{Binding ResetAPIforSelectedCommand}" 
-                Margin="0,547,143,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Right" Width="204" >
+                Margin="0,547,137,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Right" Width="240" 
+                ToolTip="Replace API settings with the auto-guessed ones."
+            >
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE773;" FontSize="18" VerticalAlignment="Center"/>
-                <TextBlock Text=" Reset API settings for selected" VerticalAlignment="Center"/>
+                <TextBlock Text=" Detect (reset) API settings for selected" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
 

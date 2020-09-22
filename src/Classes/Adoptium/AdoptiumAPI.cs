@@ -123,7 +123,7 @@ namespace AJ_UpdateWatcher
                 hch.UseProxy = false;
 
                 var httpClient = new HttpClient(hch);
-                //Debug.WriteLine($"Querying API: {URL}");
+                Debug.WriteLine($"Querying API: {URL}");
 
                 httpClient.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
                 var response = httpClient.GetStringAsync(new Uri(URL)).Result;
@@ -175,14 +175,15 @@ namespace AJ_UpdateWatcher
                     }
                 }
 
-
+                if (!latest.Found)
+                    error_message_out = "Nothing matches release parameters set.";
             }
             catch (Exception ex)
             {
                 var ie = ex;
                 while (ie.InnerException != null) ie = ie.InnerException;
 
-                error_message_out = $"GetLatestVersion[{URL}]: {ex.Message}" + (ie.InnerException != null ? $" => {ie.Message}" : "");
+                error_message_out += $"GetLatestVersion[{URL}]: {ex.Message}" + (ie.InnerException != null ? $" => {ie.Message}" : "");
                 //if (latest.)
                 Debug.WriteLine(error_message_out);
                 //MessageBox.Show("There was an error: " + ex.Message, "Adoptium API Error", MessageBoxButton.OK, MessageBoxImage.Error);

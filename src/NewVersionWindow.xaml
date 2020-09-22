@@ -409,9 +409,9 @@
                             <TextBlock Text="11.0.8+10" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" Margin="0,-4,0,0"/>
                         </StackPanel>
                         <TextBlock Text="- it is build number."/>
-                        <TextBlock Text="Currently, it is not possible to detect build number for manually added installations, thus it will be ignored when checking for new versions."/>
-                        <TextBlock Text="This may be implemented in a future release of this Updater."/>
                         <TextBlock Text="For installations that are auto-discovered via registry, build number will be detected and accounted for."/>
+                        <TextBlock Text="For manually added installations that were released prior to Sep 15 2020, it may be not always possible to detect build number."/>
+                        <TextBlock Text="If local build number cannot be detected, it will be ignored when checking for new versions: the updater will compare only AA.BB.CC version literals, not AA.BB.CC+NUM."/>
                     </StackPanel>
                 </Button.ToolTip>
                 <Button.Resources>
@@ -458,14 +458,14 @@
                        Visibility="{Binding ShowThereMayBeNewVersionsMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
                        Text="There may be new versions available. Click 'Refresh list' to check for updates" 
                        Foreground="#ff9800"
-                       Margin="0,0,0,47" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                       Margin="{Binding ThereMayBeNewVersionsMessageMargin}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             <!-- Errors occured -->
             <TextBlock FontFamily="Segoe UI" FontSize="14"                       
                        Visibility="{Binding ShowErrorsOccuredWhileCheckingForUpdatesMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
-                       Text="One or more errors have occured while checking for updates" 
+                       Text="One or more errors have occured while checking for updates. Hover for more info." 
                        ToolTip="{Binding ErrorsEncounteredWhileCheckingForUpdatesString}"
                        Foreground="#ff0000"
-                       Margin="374,0,374,47" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                       Margin="0,0,0,47" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                 <ToolTipService.ShowDuration>30000</ToolTipService.ShowDuration>
             </TextBlock>
 

@@ -61,7 +61,7 @@ namespace AJ_UpdateWatcher
                         else if (release == AdoptiumAPI_MostRecentVerbs.MostRecentLTSVerb)
                             release = App.AvailableReleases.MostRecentLTSRelease;
 
-                        //Debug.WriteLine($"Checking for updates for {i.Path}");
+                        Debug.WriteLine($"Checking for updates for {i.Path}");
                         string error_message = "";
                         var api_version = AdoptiumAPI.GetLatestVersion(release, i.JVM_Implementation, i.ImageType, i.HeapSize, out error_message, i.Arch, i.OS);
                         if (api_version.Found)
@@ -82,7 +82,9 @@ namespace AJ_UpdateWatcher
                         else
                         {
                             errors_occured = true;
-                            ErrorsEncountered.Add($"[{i.InstalledVersionString}]@[{i.Path}] => {error_message}");
+                            string name = (i.NotInstalled ?  $"New installation " : $"[{i.InstalledVersionString}]@[{i.Path}]")
+                                        + $"[{ i.WatchedRelease}/{ i.ImageType}/{ i.JVM_Implementation}/{ i.HeapSize}/{ i.Arch}/{ i.OS}]";
+                            ErrorsEncountered.Add($"{name} => New Version not found: {error_message}");
                         }
                     }
 

@@ -39,6 +39,13 @@ namespace AJ_UpdateWatcher
                 if (e.PropertyName == "Detected")
                     MantainNoConflictState();
 
+                if (e.PropertyName == "CheckForUpdatesFlag")
+                {
+                    var i = Installations[e.CollectionIndex];
+                    if (i.CheckForUpdatesFlag && i.IsAutodiscoveredInstance)
+                        SomethingHasBeenChangedSinceUpdateCheck = true;
+                }
+
                 if (
                     e.PropertyName == "WatchedRelease" ||
                     e.PropertyName == "JVM_Implementation" ||

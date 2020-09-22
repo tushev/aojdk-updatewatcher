@@ -45,6 +45,8 @@ namespace AJ_UpdateWatcher
         private string installed_version_jvm_implementation = "";
         private string installed_version_image_type = "";
         private string installed_version_heap = "";
+        private string installed_version_full_version_string = "";
+        private string installed_version_os_name = "";
 
         private AdoptiumReleaseVersion new_available_version;
         private string skipped_release_name;
@@ -191,62 +193,80 @@ namespace AJ_UpdateWatcher
             ////            seems_to_be_adoptopenjdk = true;
             ////}
 
-            // we found the file
+            // we found the file - let's check its format
             if (seems_to_be_adoptopenjdk)
             {
                 Regex java_version_regex = new Regex(@"JAVA_VERSION\s*=\s*""(([0-9]+)(\.([0-9]+))?(\.([0-9]+))?(_([0-9]+))?(\+([0-9]+))?.*)""", RegexOptions.IgnoreCase);
+                Regex semantic_version_regex = new Regex(@"SEMANTIC_VERSION\s*=\s*""(([0-9]+)(\.([0-9]+))?(\.([0-9]+))?(_([0-9]+))?(\+([0-9]+))?.*)""", RegexOptions.IgnoreCase);
+                Regex full_version_string_regex = new Regex(@"FULL_VERSION\s*=\s*""(.*)""", RegexOptions.IgnoreCase);
+                Regex image_type_regex = new Regex(@"IMAGE_TYPE\s*=\s*""(.*)""", RegexOptions.IgnoreCase);
+                Regex jvm_impl_regex = new Regex(@"JVM_VARIANT\s*=\s*""(.*)""", RegexOptions.IgnoreCase);
+                Regex heap_size_regex = new Regex(@"HEAP_SIZE\s*=\s*""(.*)""", RegexOptions.IgnoreCase);
                 Regex os_arch_regex = new Regex(@"OS_ARCH\s*=\s*""(.*)""", RegexOptions.IgnoreCase);
+                Regex os_name_regex = new Regex(@"OS_NAME\s*=\s*""(.*)""", RegexOptions.IgnoreCase);
                 Regex source_regex = new Regex(@"SOURCE\s*=\s*""(.*)""", RegexOptions.IgnoreCase);
+
+                bool semantic_processed = false;
+                bool full_version_processed = false;
 
                 installed_version_arch = "";
                 installed_version_jvm_implementation = "";
+                installed_version_image_type = "";
+                installed_version_heap = "";
 
                 StreamReader reader = File.OpenText(System.IO.Path.Combine(path, "release"));
 
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
+                    // JAVA_VERSION
                     Match match_java_version = java_version_regex.Match(line);
-                    if (match_java_version.Success)
+                    if (match_java_version.Success && !semantic_processed)
                     {
-
-                        installed_version_string = match_java_version.Groups[1].Value;
-
-                        string _a = match_java_version.Groups[2].Value;
-                        int a = Convert.ToInt32(String.IsNullOrEmpty(_a) ? "0" : _a);
-
-                        if (a != 0)
-                        {
-                            string _b = match_java_version.Groups[4].Value;
-                            int b = Convert.ToInt32(String.IsNullOrEmpty(_b) ? "0" : _b);
-
-                            string _c = match_java_version.Groups[6].Value;
-                            int c = Convert.ToInt32(String.IsNullOrEmpty(_c) ? "0" : _c);
-
-                            string _d = match_java_version.Groups[8].Value;
-                            int d = Convert.ToInt32(String.IsNullOrEmpty(_d) ? "-1" : _d);
-
-
-                            if (a == 1)
-                            {
-                                installed_version_major = b;
-                                installed_version_minor = c;
-                                installed_version_security = d;
-                            }
-                            else
-                            {
-                                installed_version_major = a;
-                                installed_version_minor = b;
-                                installed_version_security = c;
-                            }
-
-                            if (match_java_version.Groups[10].Value != "")
-                                installed_version_build = Convert.ToInt32(match_java_version.Groups[10].Value);
-
-                            found = true;
-                        }
+                        found = TryParseVersionREGEX(found, full_version_processed, match_java_version);
                     }
 
+                    // SEMANTIC_VERSION
+                    Match match_semantic_version = semantic_version_regex.Match(line);
+                    if (match_semantic_version.Success)
+                    {
+                        found = TryParseVersionREGEX(found, full_version_processed, match_semantic_version);
+                        semantic_processed = found;
+                    }
+
+                    // FULL_VERSION (string -> installed_version_string)
+                    Match match_full_version = full_version_string_regex.Match(line);
+                    if (match_full_version.Success)
+                    {
+                        installed_version_full_version_string = match_full_version.Groups[1].Value;
+                        installed_version_string = installed_version_full_version_string;
+                        full_version_processed = true;
+                    }
+
+                    // IMAGE_TYPE
+                    Match match_image_type = image_type_regex.Match(line);
+                    if (match_image_type.Success)
+                    {
+                        installed_version_image_type = match_image_type.Groups[1].Value.ToLowerInvariant();
+                    }
+
+                    // JVM_VARIANT
+                    Match match_jvm_impl = jvm_impl_regex.Match(line);
+                    if (match_jvm_impl.Success)
+                    {
+                        installed_version_jvm_implementation = match_jvm_impl.Groups[1].Value.ToLowerInvariant();
+                    }
+
+                    // HEAP_SIZE
+                    Match match_heap_size = heap_size_regex.Match(line);
+                    if (match_heap_size.Success)
+                    {
+                        installed_version_heap = "normal";
+                        if (match_heap_size.Groups[1].Value.ToLowerInvariant() == "large")
+                            installed_version_heap = "large";
+                    }
+
+                    // OS_ARCH
                     Match match_arch = os_arch_regex.Match(line);
                     if (match_arch.Success)
                     {
@@ -259,8 +279,16 @@ namespace AJ_UpdateWatcher
                             installed_version_arch = "x32";
                     }
 
+                    // OS_NAME
+                    Match match_os_name = os_name_regex.Match(line);
+                    if (match_os_name.Success)
+                    {
+                        installed_version_os_name = match_os_name.Groups[1].Value.ToLowerInvariant();
+                    }
+
+                    // SOURCE (failsafe for installed_version_jvm_implementation)
                     Match match_source = source_regex.Match(line);
-                    if (match_source.Success)
+                    if (match_source.Success && String.IsNullOrEmpty(installed_version_jvm_implementation))
                     {
                         string source_string = match_source.Groups[1].Value;
 
@@ -295,11 +323,15 @@ namespace AJ_UpdateWatcher
                     installed_version_image_type = suggested_image_type.ToLowerInvariant();
                 else
                 {
-                    installed_version_image_type = "";
-                    if (File.Exists(System.IO.Path.Combine(path, @"bin\javac.exe")))
-                        installed_version_image_type = "jdk";
-                    else if (File.Exists(System.IO.Path.Combine(path, @"bin\java.exe")))
-                        installed_version_image_type = "jre";
+                    // if we still do not know image type, let's try this:
+                    if (String.IsNullOrEmpty(installed_version_image_type))
+                    {
+                        installed_version_image_type = "";
+                        if (File.Exists(System.IO.Path.Combine(path, @"bin\javac.exe")))
+                            installed_version_image_type = "jdk";
+                        else if (File.Exists(System.IO.Path.Combine(path, @"bin\java.exe")))
+                            installed_version_image_type = "jre";
+                    }
                 }
 
                 // same for JVM Implementation
@@ -312,19 +344,68 @@ namespace AJ_UpdateWatcher
                         installed_version_jvm_implementation = Directory.Exists(System.IO.Path.Combine(path, @"bin\j9vm")) ? "openj9" : "hotspot";
                 }
 
-                installed_version_heap = "normal";
-                if (installed_version_jvm_implementation == "openj9" && Directory.Exists(System.IO.Path.Combine(path, @"bin\default")))
-                    installed_version_heap = "large";
+                // same for arch:
+                if (suggested_x64.HasValue && suggested_x64 != null)
+                {
+                    installed_version_arch = suggested_x64 == true ? "x64" : "x32";
+                }
+
+
+                // if we still do not know heap size, let's try this:
+                if (String.IsNullOrEmpty(installed_version_heap))
+                {
+                    installed_version_heap = "normal";
+                    if (installed_version_jvm_implementation == "openj9" && Directory.Exists(System.IO.Path.Combine(path, @"bin\default")))
+                        installed_version_heap = "large";
+                }
+
+
             }
 
             return found;
         }
 
+        private bool TryParseVersionREGEX(bool found, bool full_version_processed, Match match_version)
+        {
+            if (!full_version_processed)
+                installed_version_string = match_version.Groups[1].Value;
+
+            string _a = match_version.Groups[2].Value;
+            int a = Convert.ToInt32(String.IsNullOrEmpty(_a) ? "0" : _a);
+
+            if (a != 0)
+            {
+                string _b = match_version.Groups[4].Value;
+                int b = Convert.ToInt32(String.IsNullOrEmpty(_b) ? "0" : _b);
+
+                string _c = match_version.Groups[6].Value;
+                int c = Convert.ToInt32(String.IsNullOrEmpty(_c) ? "0" : _c);
+
+                string _d = match_version.Groups[8].Value;
+                int d = Convert.ToInt32(String.IsNullOrEmpty(_d) ? "-1" : _d);
 
 
+                if (a == 1)
+                {
+                    installed_version_major = b;
+                    installed_version_minor = c;
+                    installed_version_security = d;
+                }
+                else
+                {
+                    installed_version_major = a;
+                    installed_version_minor = b;
+                    installed_version_security = c;
+                }
 
+                if (match_version.Groups[10].Value != "")
+                    installed_version_build = Convert.ToInt32(match_version.Groups[10].Value);
 
+                found = true;
+            }
 
+            return found;
+        }
 
         public string WatchedRelease
         {
