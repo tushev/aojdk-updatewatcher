@@ -194,9 +194,9 @@ namespace AJ_UpdateWatcher
             // we found the file
             if (seems_to_be_adoptopenjdk)
             {
-                Regex java_version_regex = new Regex(@"JAVA_VERSION=""(([0-9]+)(\.([0-9]+))?(\.([0-9]+))?(_([0-9]+))?(\+([0-9]+))?.*)""", RegexOptions.IgnoreCase);
-                Regex os_arch_regex = new Regex("OS_ARCH =\\\"(.*)\\\"", RegexOptions.IgnoreCase);
-                Regex source_regex = new Regex("SOURCE=\\\"(.*)\\\"", RegexOptions.IgnoreCase);
+                Regex java_version_regex = new Regex(@"JAVA_VERSION\s*=\s*""(([0-9]+)(\.([0-9]+))?(\.([0-9]+))?(_([0-9]+))?(\+([0-9]+))?.*)""", RegexOptions.IgnoreCase);
+                Regex os_arch_regex = new Regex(@"OS_ARCH\s*=\s*""(.*)""", RegexOptions.IgnoreCase);
+                Regex source_regex = new Regex(@"SOURCE\s*=\s*""(.*)""", RegexOptions.IgnoreCase);
 
                 installed_version_arch = "";
                 installed_version_jvm_implementation = "";

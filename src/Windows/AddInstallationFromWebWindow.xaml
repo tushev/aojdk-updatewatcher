@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AJ_UpdateWatcher"
         mc:Ignorable="d"
-        Title="Download new instance" Height="319" Width="700" Icon="/AJUpdateWatcher;component/assets/logo.ico" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+        Title="Select one of release branches, download latest package from it and install it on your machine" 
+        Height="319" Width="700" Icon="/AJUpdateWatcher;component/assets/logo.ico" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -88,10 +89,19 @@
 
 
         <!-- ADD PATH -->
-        <Button ToolTip="One you click this button, new installation will be added to the list and all installations (including this one) will be checked for updates." 
+        <Button  
                 x:Name="btnAddInstallation"
                 Command="{Binding AddInstallationCommand}" 
                 Margin="0,234,10,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235" >
+            <Button.ToolTip>
+                <StackPanel Orientation="Horizontal">
+                    
+                    <TextBlock Text="Once you click this button, new (pending) installation will be added to the list"/>
+                    <TextBlock Text=" and all installations (including new one) will be checked for updates" 
+                         Visibility="{Binding DownloadImmediately, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <TextBlock Text="."/>
+                </StackPanel>
+            </Button.ToolTip>
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xED0E;" FontSize="18" VerticalAlignment="Center"/>
                 <TextBlock Text=" Add selected release to list" VerticalAlignment="Center"/>

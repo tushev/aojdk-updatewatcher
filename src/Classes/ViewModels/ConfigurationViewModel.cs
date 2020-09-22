@@ -96,7 +96,7 @@ namespace AJ_UpdateWatcher
         }
 
         public string LTSReleasesMessage { get { return "LTS Releases: " + string.Join(", ", available_releases.LTSReleases.ToArray()); } }
-        public string YourArchMessage { get { return "Your system: " + (Environment.Is64BitOperatingSystem ? "x64" : "x32"); } }
+        public string YourArchMessage { get { return "Yours: " + (Environment.Is64BitOperatingSystem ? "x64" : "x32"); } }
 
         private AdoptiumAPI_AvailableReleases available_releases;
         public ObservableCollection<string> AvailableReleases

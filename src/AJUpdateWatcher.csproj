@@ -138,6 +138,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Adoptium\AdoptiumHelpMessagesActions.cs" />
     <Compile Include="Classes\SelfService\Upgrade.cs" />
     <Compile Include="Classes\Utilities\Converters\Boolean3AndConverter.cs" />
     <Compile Include="Classes\Utilities\Converters\BooleanAndConverter.cs" />

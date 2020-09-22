@@ -38,14 +38,15 @@
         </Grid>
 
         <TextBlock HorizontalAlignment="Stretch" Margin="10,44,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#ff777777">
-            <Run Text="This app is recommended to run on Windows startup. When it launches, it gets version from 'release' file for each of your local installations of JDK/JRE." />            
+            <Run Text="This app is recommended to run on Windows startup. When it launches, it gets version from Windows Registry or 'release' file for each of your local installations of" />
+            <Run Text="{Binding Path=TargetProduct, Mode=OneWay}"/><Run Text="."/>
             <LineBreak/><Run Text="Then it queries "/><Run Text="{Binding Path=TargetProduct, Mode=OneWay}"/><Run Text=" API to check if there is a version newer than yours. " />
             <Run Text="If there is, you will be notified. Otherwise app quits without showing any windows." />
             <LineBreak/>
             <Run Text="This configuration window will appear only if something goes wrong or you have explicitly called it." />
             <LineBreak/>
             <LineBreak/>
-            <Run Text="Your installations may be auto-discovered via Windows Registry. If necessary, you can also add other (custom) installations to monitor for updates." />
+            <Run Text="Your installations may be auto-discovered via Windows Registry - this is the recommended way. If necessary, you can also add other (custom) installations to monitor for updates." />
             <LineBreak/>
             <Run Text="If any user-added installation will have the same path as an auto-discovered one, user-added settings will be preferred, and auto-discovered - ignored." />
 
@@ -88,7 +89,10 @@
                     Style="{StaticResource LinkButton}" Margin="702,227,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatJREJDK_Click" />
         <Button x:Name="btnWhatImpl" Content="Help choose"                         
                     Style="{StaticResource LinkButton}" Margin="781,227,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatImpl_Click"  />
+        <Button x:Name="btnWhatHeap" Content="Help choose"                         
+            Style="{StaticResource LinkButton}" Margin="861,227,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatHeap_Click"  />
         <Label  x:Name="lblYourArchMessage"  Content="{Binding YourArchMessage}"
+                ToolTip="Architecture of your system (OS)"
                 Foreground="LightGray" HorizontalAlignment="Right" Margin="0,214,10,0" VerticalAlignment="Top" />
 
 
@@ -102,6 +106,7 @@
                   CanUserAddRows="True"
                   CanUserDeleteRows="False"
                   RowHeight="23"
+                  SelectionMode="Single"
                   VerticalContentAlignment="Center"
                   ItemsSource="{Binding ConfiguredInstallations}"
                   SelectedItem="{Binding SelectedItem}"
@@ -209,13 +214,13 @@
         <Label Content="update manually when it changes" Foreground="#FFA2A2A2" HorizontalAlignment="Left" Margin="169,570,0,0" VerticalAlignment="Top" Width="188" FontSize="11"/>
 
         <!-- INSTALL NEW RELEASE -->
-        <Button ToolTip="Add new release from the web." 
+        <Button ToolTip="Download latest package through the API and install it on your machine." 
                 Style="{StaticResource LinkButtonI}" 
                 Command="{Binding AddInstallationFromWebCommand}" 
-                Margin="345,562,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="249" >
+                Margin="345,562,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE896;" FontSize="18" VerticalAlignment="Center" />
-                <TextBlock Text="Download new instance from the web" VerticalAlignment="Center" TextDecorations="Underline"/>
+                <TextBlock Text="Download and install new instance from the web" VerticalAlignment="Center" TextDecorations="Underline"/>
             </StackPanel>
         </Button>
 

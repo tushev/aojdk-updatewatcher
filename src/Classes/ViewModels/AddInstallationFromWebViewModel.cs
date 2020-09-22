@@ -92,6 +92,33 @@ namespace AJ_UpdateWatcher
             NewItem = new Installation();
 
             installationToAdd.CheckForUpdatesFlag = true;
+
+            var same = from i in InstallationsList 
+                       where
+                            i.WatchedRelease == installationToAdd.WatchedRelease &&
+                            i.ImageType == installationToAdd.ImageType &&
+                            i.JVM_Implementation == installationToAdd.JVM_Implementation &&
+                            i.HeapSize == installationToAdd.HeapSize &&
+                            i.Arch == installationToAdd.Arch /*&&
+                            ((i.IsAutodiscoveredInstance && i.CheckForUpdatesFlag) || !i.IsAutodiscoveredInstance)*/
+
+                       select i;
+
+            if (same.Count() > 0) {
+                var same_paths = from i in same 
+                                 /*where (i.IsAutodiscoveredInstance && i.CheckForUpdatesFlag) || !i.IsAutodiscoveredInstance*/
+                                 select $"[{i.InstallationTypeText}{(i.CheckForUpdatesFlag?"":", Disabled")}] (set to {i.WatchedRelease}):{Environment.NewLine}{i.DisplayPath}";
+                if (MessageBox.Show(
+                    $"You already have {same_paths.Count()} installation{(same_paths.Count() > 1 ? "s" : "")} with the same parameters in the list:" + Environment.NewLine + Environment.NewLine +
+                    $"{String.Join(Environment.NewLine, same_paths)}" + Environment.NewLine + Environment.NewLine +
+                    $"Do you really want to add one more? [not recommended]", Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No
+                    ) == MessageBoxResult.No)
+                {
+                    NewItem = installationToAdd;
+                    return;
+                }
+            }
+
             InstallationsList.Add(installationToAdd);
 
             if (DownloadImmediately)
