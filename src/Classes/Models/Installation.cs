@@ -496,7 +496,7 @@ namespace AJ_UpdateWatcher
         public Installation(bool _java_home_instance = false) : this("", AdoptiumAPI_MostRecentVerbs.MostRecentLTSVerb, "hotspot", "jre", "x64", "normal", _java_home_instance)
         { }
 
-        public Installation(DetectedInstallation detectedInstallation, bool _registry_autodiscovered_instance, bool _registry_user_scope = false)
+        public Installation(DiscoveredInstallation detectedInstallation, bool _registry_autodiscovered_instance, bool _registry_user_scope = false)
             : this(detectedInstallation.Path, AdoptiumAPI_MostRecentVerbs.MostRecentLTSVerb, "hotspot", "jre", "x64", "normal", false, _registry_autodiscovered_instance, _registry_user_scope, 
                   detectedInstallation.Version, detectedInstallation.JVM_Implementation, detectedInstallation.ImageType, detectedInstallation.x64) { }
         public Installation(string _path, bool _registry_autodiscovered_instance, bool _registry_user_scope = false, string _suggested_version_string = null)

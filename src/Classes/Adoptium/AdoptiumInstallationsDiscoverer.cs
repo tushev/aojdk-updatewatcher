@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AJ_UpdateWatcher
 {
-    public class DetectedInstallation
+    public class DiscoveredInstallation
     {
         public string Path;
         public string Version;
@@ -16,15 +16,15 @@ namespace AJ_UpdateWatcher
         public string LastElement;
         public bool x64;
     }
-    static class AdoptiumInstallationsDetector
+    static class AdoptiumInstallationsDiscoverer
     {
         static string AdoptiumRegistryRoot = @"SOFTWARE\AdoptOpenJDK";
 
-        public static List<DetectedInstallation> DetectInstallationsByRegistryHKLM() { return DetectInstallationsByRegistry(RegistryHive.LocalMachine); }
-        public static List<DetectedInstallation> DetectInstallationsByRegistryHKCU() { return DetectInstallationsByRegistry(RegistryHive.CurrentUser); }
-        public static List<DetectedInstallation> DetectInstallationsByRegistry(RegistryHive hive)
+        public static List<DiscoveredInstallation> DiscoverInstallationsByRegistryHKLM() { return DiscoverInstallationsByRegistry(RegistryHive.LocalMachine); }
+        public static List<DiscoveredInstallation> DiscoverInstallationsByRegistryHKCU() { return DiscoverInstallationsByRegistry(RegistryHive.CurrentUser); }
+        public static List<DiscoveredInstallation> DiscoverInstallationsByRegistry(RegistryHive hive)
         {
-            List<DetectedInstallation> paths = new List<DetectedInstallation>();
+            List<DiscoveredInstallation> paths = new List<DiscoveredInstallation>();
 
             var RegistryViews = new List<RegistryView> { RegistryView.Registry32, RegistryView.Registry64 };
             foreach (var view in RegistryViews)
@@ -40,7 +40,7 @@ namespace AJ_UpdateWatcher
                                     var path = key.OpenSubKey(AdoptiumRegistryRoot + $@"\{image}\{version}\{JVM}\{last_el}").GetValue("Path");
                                     if (path != null)
                                         if ((string)path != "")
-                                            paths.Add(new DetectedInstallation() 
+                                            paths.Add(new DiscoveredInstallation() 
                                             { 
                                                 Path = (string)path, Version = version, 
                                                 JVM_Implementation = JVM, 

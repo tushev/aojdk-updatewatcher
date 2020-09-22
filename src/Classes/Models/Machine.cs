@@ -109,13 +109,13 @@ namespace AJ_UpdateWatcher
         {
             RemoveRegistryAutoDiscoveredInstallations(user_scope);
 
-            var _installs = user_scope ? AdoptiumInstallationsDetector.DetectInstallationsByRegistryHKCU() :
-                                     AdoptiumInstallationsDetector.DetectInstallationsByRegistryHKLM();
+            var _installs = user_scope ? AdoptiumInstallationsDiscoverer.DiscoverInstallationsByRegistryHKCU() :
+                                     AdoptiumInstallationsDiscoverer.DiscoverInstallationsByRegistryHKLM();
 
             HoldAutoReCheckForUpdateSuggested = true;
             for (int k=0; k < _installs.Count; k++)
             {
-                DetectedInstallation i = _installs[k];
+                DiscoveredInstallation i = _installs[k];
 
                 // we want to reset HoldAutoReCheckForUpdateSuggested at the last element
                 if (k == _installs.Count - 1)

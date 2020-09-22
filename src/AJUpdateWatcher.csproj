@@ -151,7 +151,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Classes\Adoptium\AdoptiumInstallationsDetector.cs" />
+    <Compile Include="Classes\Adoptium\AdoptiumInstallationsDiscoverer.cs" />
     <Compile Include="Classes\Adoptium\AdoptiumAPI.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
