@@ -1,5 +1,11 @@
 
 # Update Watcher for AdoptOpenJDK                        [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)[¹](#codestyle)		
+[![GitHub license](https://img.shields.io/github/license/tushev/aojdk-updatewatcher)](https://github.com/tushev/aojdk-updatewatcher/blob/master/LICENSE.txt) 
+[![Maintenance](https://img.shields.io/badge/maintained%3F-yes-brightgreen.svg)](https://GitHub.com/Naereen/tushev/aojdk-updatewatcher/graphs/commit-activity)
+![Language](https://img.shields.io/badge/lang-c%23-blue)
+[![GitHub release](https://img.shields.io/github/release/tushev/aojdk-updatewatcher.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/releases/)
+[![Github all releases](https://img.shields.io/github/downloads/tushev/aojdk-updatewatcher/total.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/releases/)
+
 Automatic update tool for AdoptOpenJDK releases                                                                                       [Download](#download)
 
 ![Update Dialog](/docs/update_dialog.png?raw=true)
@@ -29,7 +35,8 @@ Ironically, this tool is written in C# 6 + WPF, because I am not a Java develope
 `[!!!]` **Version 2, described here, has not been released yet. Currently you can download v.1, which will update itself to v.2 once it will be released.**
 [Latest release](https://github.com/tushev/aojdk-updatewatcher/releases)
 
-
+ [![GitHub stars](https://img.shields.io/github/stars/tushev/aojdk-updatewatcher.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/tushev/aojdk-updatewatcher/stargazers/)
+ 
 **If you find this app useful, stars are appreciated :)**
 
 There's a built-in update mechanism. 
