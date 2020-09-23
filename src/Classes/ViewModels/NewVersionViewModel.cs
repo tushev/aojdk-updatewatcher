@@ -34,6 +34,8 @@ namespace AJ_UpdateWatcher
 
             InstallationsToUpdate.CollectionChanged += (s, e) =>
             {
+                //here we should do stuff that require immediate 
+
                 if (!updater.UpdateInstallationComplete && e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
                 {
                     bool changesContainAtLeastOneDetectedElement = false;
@@ -107,7 +109,9 @@ namespace AJ_UpdateWatcher
                 if (e.PropertyName == "SomethingHasBeenChangedSinceUpdateCheck")
                 {
                     OnPropertyChanged("ShowThereMayBeNewVersionsMessage");
+                    OnPropertyChanged("ShowInstallationCompleteMessage");
                     OnPropertyChanged("ThereMayBeNewVersionsMessageMargin");
+                    OnPropertyChanged("InstallationCompleteMessageMargin");
                     OnPropertyChanged("IsButtonDownloadAndInstallUpdatesEnabled");
                 }
             };
@@ -177,6 +181,8 @@ namespace AJ_UpdateWatcher
             OnPropertyChanged("ShowThereMayBeNewVersionsMessage");
             OnPropertyChanged("ThereMayBeNewVersionsMessageMargin");
             OnPropertyChanged("ShowAllInstallationsAreUpToDateMessage");
+            OnPropertyChanged("ShowInstallationCompleteMessage");
+            OnPropertyChanged("InstallationCompleteMessageMargin");
             OnPropertyChanged("IsButtonDownloadAndInstallUpdatesEnabled");
             OnPropertyChanged("SomethingInProgress");
             OnPropertyChanged("TaskbarItemProgressState");
@@ -209,6 +215,7 @@ namespace AJ_UpdateWatcher
                 OnPropertyChanged("ShowAllInstallationsAreUpToDateMessage");
                 OnPropertyChanged("ShowThereMayBeNewVersionsMessage");
                 OnPropertyChanged("ThereMayBeNewVersionsMessageMargin");
+                OnPropertyChanged("InstallationCompleteMessageMargin");
             }
         }
         #endregion
@@ -232,7 +239,7 @@ namespace AJ_UpdateWatcher
         }
         public string ErrorsEncounteredWhileCheckingForUpdatesString
         {
-            get { return string.Join(Environment.NewLine, updater.ErrorsEncounteredWhileCheckingForUpdates ?? new List<string>()); }
+            get { return string.Join(Environment.NewLine+Environment.NewLine, updater.ErrorsEncounteredWhileCheckingForUpdates ?? new List<string>()); }
         }
 
         public Thickness ThereMayBeNewVersionsMessageMargin
@@ -240,6 +247,18 @@ namespace AJ_UpdateWatcher
             get { return (ShowErrorsOccuredWhileCheckingForUpdatesMessage && ShowThereMayBeNewVersionsMessage) ? 
                     new Thickness(0, 0, 0, 67)  :
                     new Thickness(0, 0, 0, 47); 
+            }
+        }
+        public Thickness InstallationCompleteMessageMargin
+        {
+            get
+            {
+                int base_margin = 47;
+
+                if (ShowErrorsOccuredWhileCheckingForUpdatesMessage) base_margin += 20;
+                if (ShowThereMayBeNewVersionsMessage) base_margin += 20;
+
+                return new Thickness(0, 0, 0, base_margin);
             }
         }
         public bool ShowThereMayBeNewVersionsMessage
@@ -250,8 +269,15 @@ namespace AJ_UpdateWatcher
         {
             get
             {
-                return (updater.AllInstallationsAreUpToDate || InstallationsWithUpdatesCount == 0) &&
+                return (updater.AllInstallationsAreUpToDate && InstallationsWithUpdatesCount == 0) &&
                         !ShowAllEnabledInstallations && !SomethingInProgress && !machine.SomethingHasBeenChangedSinceUpdateCheck;
+            }
+        }
+        public bool ShowInstallationCompleteMessage
+        {
+            get
+            {
+                return (updater.State == UpdaterState.UpdateInstallationComplete) && !SomethingInProgress && !machine.SomethingHasBeenChangedSinceUpdateCheck;
             }
         }
         public bool IsButtonDownloadAndInstallUpdatesEnabled
@@ -276,7 +302,7 @@ namespace AJ_UpdateWatcher
             AppDataPersistence.Save(machine);
         }
 
-        
+        public string APIBaseDomain {  get { return AdoptiumAPI.baseDOMAIN; } }
 
 
         #region OpenReleaseURLCommand

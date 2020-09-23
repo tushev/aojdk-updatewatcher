@@ -176,7 +176,7 @@ namespace AJ_UpdateWatcher
                 }
 
                 if (!latest.Found)
-                    error_message_out = "Nothing matches release parameters set.";
+                    error_message_out = $"Nothing in API response ({version}/{implementation}) matches your set of release parameters ({desired_os}/{desired_arch}/{desired_image_type}/{desired_heap} heap).";
             }
             catch (Exception ex)
             {

@@ -53,6 +53,8 @@ namespace AJ_UpdateWatcher
                         if (!i.CheckForUpdatesFlag)
                             continue;
 
+                        i.NewVersion = null;
+
                         var release = i.WatchedRelease;
 
                         // check for verbs

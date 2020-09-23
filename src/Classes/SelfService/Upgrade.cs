@@ -28,18 +28,33 @@ namespace AJ_UpdateWatcher
                         $"Upgrade to v.{Assembly.GetExecutingAssembly().GetName().Version} - {Branding.MessageBoxHeader}", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes)
                         == MessageBoxResult.Yes)
                     {
-                        try
-                        {
-                            sm.DeleteTask(v1TaskName);
-                            sm.InstallTask();
-                        }
-                        catch (Exception ex) { MessageBox.Show($"There was an error: [{ex.Message}]", Branding.MessageBoxHeader); };
+                        ExecuteTryUpdateScheduledTask(v1TaskName, sm);
+                    }
+                    else
+                        if (MessageBox.Show(
+                        $"In is highly important that the scheduled task will be upgraded. We ask you to reconsider your choice." + Environment.NewLine + Environment.NewLine +
+                        "Yes = Please upgrade" + Environment.NewLine +
+                        "No  = Keep as is. I'me really sure what I'm doing and I will take full responsibility for upcoming errors." ,
+                        $"Upgrade to v.{Assembly.GetExecutingAssembly().GetName().Version} - {Branding.MessageBoxHeader}", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.Yes)
+                        == MessageBoxResult.Yes)
+                    {
+                        ExecuteTryUpdateScheduledTask(v1TaskName, sm);
                     }
                 }
 
                 Settings.Default.SettingsUpgradeComplete_from_V1 = true;
                 Settings.Default.Save();
             }
+        }
+
+        private static void ExecuteTryUpdateScheduledTask(string v1TaskName, SchedulerManager sm)
+        {
+            try
+            {
+                sm.DeleteTask(v1TaskName);
+                sm.InstallTask();
+            }
+            catch (Exception ex) { MessageBox.Show($"There was an error: [{ex.Message}]", Branding.MessageBoxHeader); };
         }
     }
 }

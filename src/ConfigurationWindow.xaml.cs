@@ -95,6 +95,10 @@ namespace AJ_UpdateWatcher
             lstImageTypeInGrid.ItemsSource = ConfigurationVM.ImageTypes;
             lstArchInGrid.ItemsSource = ConfigurationVM.Archs;
             lstHeapSizeInGrid.ItemsSource = ConfigurationVM.HeapSizes;
+
+            if (!Settings.Default.isConfigured && (bool)cbSchedule.IsChecked == false)
+                gridSchedule.Background = Brushes.LightGoldenrodYellow;
+
         }
 
         private void btnEditEnvironmentVariables_Click(object sender, RoutedEventArgs e)

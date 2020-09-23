@@ -48,7 +48,8 @@
             <LineBreak/>
             <Run Text="Your installations may be auto-discovered via Windows Registry - this is the recommended way. If necessary, you can also add other (custom) installations to monitor for updates." />
             <LineBreak/>
-            <Run Text="If any user-added installation will have the same path as an auto-discovered one, user-added settings will be preferred, and auto-discovered - ignored." />
+            <Run Text="If any user-added installation will have the same path as an auto-discovered one," FontWeight="Medium"/>
+            <Run Text="user-added settings will be preferred, and auto-discovered - ignored." />
 
 
         </TextBlock>
@@ -76,8 +77,13 @@
             Content="Show shadowed installations" 
             ToolTip="Show auto-discovered installations that are shadowed by user-added ones"
             Foreground="Gray" Style="{DynamicResource GrayCheckBox}"
-            HorizontalAlignment="Right" Margin="0,125,27,0" VerticalAlignment="Top"/>
-
+            HorizontalAlignment="Right" Margin="0,125,13,0" VerticalAlignment="Top"/>
+        
+        <Label Content="All auto-discovered installations are grayed out." 
+               ToolTip="If you need to change settings for auto-discovered installation, add it manually."
+               Foreground="Gray"
+               HorizontalAlignment="Left" Margin="7,214,0,0" VerticalAlignment="Top"/>
+        
 
 
 
@@ -197,7 +203,7 @@
                 <TextBlock Text=" Add JAVA_HOME" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
-        <Label Content="JAVA__HOME is already in the list" Foreground="#FFA2A2A2" HorizontalAlignment="Left" Margin="8,570,0,0" VerticalAlignment="Top" FontSize="11"
+        <Label Content="{Binding CannotAddJavaHomeMessage}" Foreground="#FFA2A2A2" HorizontalAlignment="Left" Margin="8,570,0,0" VerticalAlignment="Top" FontSize="11"
                x:Name="lblJAVAHOMEintheList"
                Visibility="{Binding CanAddJavaHomeInstance, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter='negate'}"/>
 
@@ -308,7 +314,7 @@
             x:Name="imgInstallTipArrow"           
             Visibility="{Binding ThereAreNoInstallations, Converter={StaticResource BooleanToVisibilityConverter}}"
             HorizontalAlignment="Left" VerticalAlignment="Top"
-            Height="157" Width="305"  Margin="476,405,0,0" 
+            Height="157" Width="305"  Margin="484,405,0,0" 
             Source="assets/arrow.png"  Opacity="0.5" Stretch="Fill"/>
 
         <Button

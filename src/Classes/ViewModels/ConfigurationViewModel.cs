@@ -162,6 +162,15 @@ namespace AJ_UpdateWatcher
                 return true;
             }
         }
+        public string CannotAddJavaHomeMessage
+        {
+            get
+            {
+                return String.IsNullOrEmpty(Environment.GetEnvironmentVariable("JAVA_HOME")) ? 
+                    "JAVA__HOME is not set" :
+                    "JAVA__HOME is already in the list";
+            }
+        }
 
         #region AddJAVA_HOMEInstallationCommand
         ICommand add_javahome_installation_command;

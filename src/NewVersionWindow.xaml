@@ -399,26 +399,32 @@
                     Content="Why do I see +NUM at the end?"
                     Foreground="#777"
                     Margin="0,-13,52,593" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Width="176" >
-                <ToolTipService.ShowDuration>30000</ToolTipService.ShowDuration>
+                <ToolTipService.ShowDuration>90000</ToolTipService.ShowDuration>
                 <Button.ToolTip>
-                    <StackPanel Orientation="Vertical" Width="500">
+                    <StackPanel Orientation="Vertical" Width="600">
                         <TextBlock Text="In case you are interested what is +NUM, like this:"/>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="4,0,0,0">
-                            <TextBlock Text="11.0.7+10" FontSize="12" VerticalAlignment="Center" Margin="0,-1,0,0"/>
-                            <Label FontFamily="Segoe MDL2 Assets" Content="&#xE72A;" FontSize="16" VerticalAlignment="Center"/>
-                            <TextBlock Text="11.0.8+10" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" Margin="0,-4,0,0"/>
+                            <TextBlock Text="11.0.7+10" FontSize="20" VerticalAlignment="Center" Margin="0,-1,0,0" Foreground="#ff9800"/>
+                            <Label FontFamily="Segoe MDL2 Assets" Content="&#xE72A;" FontSize="24" VerticalAlignment="Center" Foreground="#ff9800"/>
+                            <TextBlock Text="11.0.8+10" FontWeight="Bold" FontSize="22" VerticalAlignment="Center" Margin="0,-4,0,0" Foreground="#ff9800"/>
                         </StackPanel>
                         <TextBlock Text="- it is build number."/>
-                        <TextBlock Text="For installations that are auto-discovered via registry, build number will be detected and accounted for."/>
-                        <TextBlock Text="For manually added installations that were released prior to Sep 15 2020, it may be not always possible to detect build number."/>
-                        <TextBlock Text="If local build number cannot be detected, it will be ignored when checking for new versions: the updater will compare only AA.BB.CC version literals, not AA.BB.CC+NUM."/>
+                        <TextBlock Text="For installations that are auto-discovered via registry, build number will be (almost always) detected and accounted for."/>
+                        <TextBlock Text="For manually added installations that were released prior to Sep 16 2020, it may be not always possible to detect build number."/>
+                        <TextBlock>
+                            <Run Text="If local build number cannot be detected, it will be ignored when checking for new versions: the updater will compare only AA.BB.CC version literals, not AA.BB.CC+NUM. Thus you may miss update, say, from 8.0.265+1 to 8.0.265+2"/>
+                            <Run Text="- for manually added installations." FontStyle="Italic"/>
+                        </TextBlock>
+                        <TextBlock Text="It is highly recommended to use automatic discovery (which detects build numbers) for releases downloaded and installed prior to 16 September 2020."/>
                     </StackPanel>
                 </Button.ToolTip>
                 <Button.Resources>
                     <Style TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
                         <Setter Property="Background" Value="#152935" />
                         <Setter Property="BorderBrush" Value="#dadada"/>
-                        <Setter Property="Foreground" Value="#dadada"/>
+                        <Setter Property="Foreground" Value="#f5f5f5"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="ToolTipService.Placement" Value="Left" />
                     </Style>
                     <Style TargetType="Label" >                       
                         <Setter Property="Foreground" Value="#dadada"/>
@@ -453,6 +459,12 @@
                     <Run Text="{Binding TargetProduct, Mode=OneWay}"/>
                     <Run Text="installations are up-to-date"/>
             </TextBlock>
+            <!-- Installation of selected updates has been complete -->
+            <TextBlock FontFamily="Segoe UI" FontSize="14"                       
+                       Visibility="{Binding ShowInstallationCompleteMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                       Text="Installation of selected updates has been complete." 
+                       Foreground="#fff"
+                       Margin="{Binding InstallationCompleteMessageMargin}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             <!-- There may be new versions -->
             <TextBlock FontFamily="Segoe UI" FontSize="14"                       
                        Visibility="{Binding ShowThereMayBeNewVersionsMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
@@ -463,10 +475,34 @@
             <TextBlock FontFamily="Segoe UI" FontSize="14"                       
                        Visibility="{Binding ShowErrorsOccuredWhileCheckingForUpdatesMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
                        Text="One or more errors have occured while checking for updates. Hover for more info." 
-                       ToolTip="{Binding ErrorsEncounteredWhileCheckingForUpdatesString}"
                        Foreground="#ff0000"
                        Margin="0,0,0,47" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                 <ToolTipService.ShowDuration>30000</ToolTipService.ShowDuration>
+                <TextBlock.ToolTip>
+                    <StackPanel Orientation="Vertical" Width="1000">
+                        <TextBlock Text="Following errors occured:" FontSize="20"/>
+                        <TextBlock Text="{Binding ErrorsEncounteredWhileCheckingForUpdatesString}" FontSize="13" Foreground="#ff9800"/>
+                        <TextBlock Text="This may be caused by:" FontSize="16"/>
+                        <TextBlock FontSize="13">
+                            <Run Text="  * Internet connection issues" /><LineBreak/>
+                            <Run Text="  * " /><Run Text="{Binding APIBaseDomain, Mode=OneWay}" /><Run Text=" may be down" /><LineBreak/>
+                            <Run Text="  * There is no such release that you are asking for :)" /><LineBreak/>
+                        </TextBlock>
+                    </StackPanel>
+                </TextBlock.ToolTip>
+                <TextBlock.Resources>
+                    <Style TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
+                        <Setter Property="Background" Value="#152935" />
+                        <Setter Property="BorderBrush" Value="#ff9800"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="Foreground" Value="#fff"/>
+                        <Setter Property="ToolTipService.Placement" Value="Center" />
+                    </Style>
+                    <Style TargetType="TextBlock" >
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                        <Setter Property="Margin" Value="4"/>
+                    </Style>
+                </TextBlock.Resources>
             </TextBlock>
 
 

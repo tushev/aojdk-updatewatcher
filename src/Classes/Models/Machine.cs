@@ -20,6 +20,7 @@ namespace AJ_UpdateWatcher
         // should be turned on when data is loaded
         bool auto_discovery_activated = false;
 
+
         private FullyObservableCollection<Installation> installations = new FullyObservableCollection<Installation>();
         public FullyObservableCollection<Installation> Installations
         {
@@ -33,13 +34,32 @@ namespace AJ_UpdateWatcher
 
         public Machine()
         {
-            Installations.CollectionChanged += (s, e) => { MantainNoConflictState(); };
+            Installations.CollectionChanged += (s, e) => 
+            {
+                if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add && !HoldInternalReCheckForUpdateSuggested)
+                {
+                    bool changesContainAtLeastOneCheckedManualElement = false;
+                    foreach (Installation i in e.NewItems)
+                    {
+                        if (i.CheckForUpdatesFlag && !i.IsAutodiscoveredInstance)
+                        {
+                            //Debug.WriteLine($"changesContainAtLeastOneCheckedManualElement = true for {i.Path}");
+                            changesContainAtLeastOneCheckedManualElement = true;
+                        }
+                    }
+
+                    if (changesContainAtLeastOneCheckedManualElement)
+                        SomethingHasBeenChangedSinceUpdateCheck = true;
+                }
+
+                MantainNoConflictState(); 
+            };
             Installations.ItemPropertyChanged += (s, e) =>
             {
                 if (e.PropertyName == "Detected")
                     MantainNoConflictState();
 
-                if (e.PropertyName == "CheckForUpdatesFlag")
+                if (e.PropertyName == "CheckForUpdatesFlag" && !HoldInternalReCheckForUpdateSuggested)
                 {
                     var i = Installations[e.CollectionIndex];
                     if (i.CheckForUpdatesFlag && i.IsAutodiscoveredInstance)
@@ -61,6 +81,7 @@ namespace AJ_UpdateWatcher
                     }
                 }
             };
+           
         }
 
         
@@ -134,11 +155,14 @@ namespace AJ_UpdateWatcher
         }
         public void RefreshAutoDiscoveredInstallations()
         {
+            HoldInternalReCheckForUpdateSuggested = true;
             Debug.WriteLine("Refreshing Auto-Discovered Installations...");
             if (DiscoverMachineWideInstallations) { RemoveRegistryAutoDiscoveredInstallations(false); DiscoverAndAddInstallationsFromRegistry(false); }
             if (DiscoverUserScopeInstallations) { RemoveRegistryAutoDiscoveredInstallations(true); DiscoverAndAddInstallationsFromRegistry(true); }
+            HoldInternalReCheckForUpdateSuggested = false;
         }
         public bool HoldAutoReCheckForUpdateSuggested = false;
+        public bool HoldInternalReCheckForUpdateSuggested = false;
 
         
 
@@ -147,15 +171,23 @@ namespace AJ_UpdateWatcher
             // TODO: do not allow duplicates in custom part - postponed ATM, the user is warned when adding new installation
             // can be done with Installations.ItemPropertyChanged
 
+            if (!auto_discovery_activated) return;
+
             // disable auto-discovered installations that have the same path as one of custom-set installations            
             foreach (var i in Installations)
                 if (i.IsAutodiscoveredInstance)
                 {
                     var same_pathed = Installations.Where(x => x.Path.TrimEnd('\\') == i.Path.TrimEnd('\\') && x.IsAutodiscoveredInstance == false);
                     if (same_pathed.Count() > 0)
-                        i.CheckForUpdatesFlag = false;
+                    {
+                        if (i.CheckForUpdatesFlag != false)
+                            i.CheckForUpdatesFlag = false;
+                    }
                     else
-                        i.CheckForUpdatesFlag = true;
+                    {
+                        if (i.CheckForUpdatesFlag != true)
+                            i.CheckForUpdatesFlag = true;
+                    }
                 }
 
             OnPropertyChanged("Installations");
@@ -210,7 +242,7 @@ namespace AJ_UpdateWatcher
         public int InstallationsWithUpdatesCount { get { return Installations.Count(x => x.HasNewVersion); } }
         public int InstallationsWithMSIUpdatesCount { get { return Installations.Count(x => x.HasMSIInNewVersion); } }
 
-        private bool show_shadowed_installations;
+        private bool show_shadowed_installations = true;
         public bool ShowShadowedInstallations
         {
             get { return show_shadowed_installations; }
