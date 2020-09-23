@@ -38,6 +38,7 @@ There's a built-in update mechanism.
 * Run the downloaded installer
 * Run the app _(internet connection highly recommended on first run :)_
 * It is recommended to turn on **Check for AdoptOpenJDK updates on Logon**. _(If you want another schedule, turn this on and press Edit task to configure it as desired)._
+
 ![Check for AdoptOpenJDK updates on Logon](/docs/check_on_logon.png?raw=true)
 * It is recommended to turn on automatic discovery of AdoptOpenJDK installations
 ![Auto_Discovery](/docs/autodiscovery_settings.png?raw=true)
@@ -45,7 +46,7 @@ There's a built-in update mechanism.
 * `[optional]` Add other directories with AdoptOpenJDK installations. This may be **JAVA_HOME** environment variable _(queried at the time of each app launch)_ or other **custom directories** *(for instance, with releases extracted from ZIP files; please keep in mind that you have to update path manually if it changes)*. 
 ![Buttons](/docs/config_lower_buttons.png?raw=true)
 * `[optional, power users only]` For manually added installations, adjust **API/Major version**, **API/Type** and other parameters. If not sure, leave default values.
-* If you don't have any JDKs/JREs installed, click on **Download and install new instance from the web** and the app will download and install them for you. 
+* If you don't have any JDKs/JREs installed, click on **Download and install new instance from the web** and the app will download and install them for you: 
 ![First Run](/docs/first_run.png?raw=true)
 ![Download and install new instance from the web](/docs/download_new_1.png?raw=true)
 
@@ -56,7 +57,8 @@ There's a built-in update mechanism.
 
 ## Disclaimer
 The author does not provide any support related to AdoptOpenJDK. 
-For support, please visit their corresponding website - https://adoptopenjdk.net
+
+For support, please visit https://github.com/AdoptOpenJDK/openjdk-support/issues or their corresponding website - https://adoptopenjdk.net
 
 **THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
