@@ -18,7 +18,7 @@ Configuration window will appear only on first run or if something goes wrong or
 
 This app is designed to run on Windows startup. I recommend to turn on **Check for AdoptOpenJDK updates on Logon** setting in configuration. If you want another schedule, turn this on and press Edit task to configure it as desired.
 
-## New in v. 2.0.0
+## 🔃 New in v. 2.0.0
 * Support for multiple AdoptOpenJDK installations
 * Redesigned UI/UX
 * App warns if `N` last *consecutive* update checks were unsuccessful *(default N=10)*
@@ -26,12 +26,12 @@ This app is designed to run on Windows startup. I recommend to turn on **Check f
 * Other improvements, perfomance optimisations etc.
 
 
-## Requirements
+## ℹ Requirements
 Ironically, this tool is written in C# 6 + WPF, because I am not a Java developer xD
 * Windows 10 _(earlier versions are likely to work as well, but I did not test that)_
 * .NET Framework 4.7.2 _(the installer will do it for you)_
 
-## Download
+## 📩 Download
 `[!!!]` **Version 2, described here, has not been released yet. Currently you can download v.1, which will update itself to v.2 once it will be released.**
 [Latest release](https://github.com/tushev/aojdk-updatewatcher/releases)
 
@@ -41,7 +41,7 @@ Ironically, this tool is written in C# 6 + WPF, because I am not a Java develope
 
 There's a built-in update mechanism. 
 
-## Installation & configuration
+## 🛠 Installation & configuration
 * Run the downloaded installer
 * Run the app _(internet connection highly recommended on first run :)_
 * It is recommended to turn on **Check for AdoptOpenJDK updates on Logon**. _(If you want another schedule, turn this on and press Edit task to configure it as desired)._:
@@ -56,12 +56,12 @@ There's a built-in update mechanism.
 ![First Run](/docs/first_run.png?raw=true)
 ![Download and install new instance from the web](/docs/download_new_1.png?raw=true)
 
-## Philosophy
+## 💡 Philosophy
 * This app is silent during background checks. If there is a problem connecting to the internet or AdoptOpenJDK API does not respond, it will be silent, unless `N` *consecutive* update checks were unsuccessful *(default N=10)*
 * However, it will not be silent in UI.
 * I'm not going to actively develop this app, it's mostly 'fire-and-forget' thing. However, some functionality may be added in future, there's a built-in update mechanism.
 
-## Disclaimer
+## ℹ Disclaimer
 The author does not provide any support related to AdoptOpenJDK. 
 
 For support, please visit https://github.com/AdoptOpenJDK/openjdk-support/issues or their corresponding website - https://adoptopenjdk.net
@@ -76,9 +76,9 @@ The author is not affiliated with or endorsed by AdoptOpenJDK project.
 Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.
 Other names may be trademarks of their respective owners.
 
-## License: MIT
+## ⚖ License: MIT
 
-## Codestyle
+## 💻 Codestyle
 v.1.0: Please don't judge my coding style by this project, as I developed this app in less than a working day. It just works :)
 
 v.2.0: The app was refactored. However, some codestyle issues still remain - for a single-person-maintained project, they are not a major issue. My top priority is app stability and robustness.
@@ -87,6 +87,6 @@ v.2.0: The app was refactored. However, some codestyle issues still remain - for
 (`¹`) Please note that _blank-line related rules_ such as `The code must not contain multiple blank lines in a row.`, `A closing curly bracket must not be preceded by a blank line.`,  `An opening curly bracket must not be followed by a blank line` etc **are disabled** in CodeFactor.
 
 
-## Known not-a-bugs
+## 🔕 Known not-a-bugs
 * **JAVA_HOME** value is updated when the *app is launched* (either in configuration mode or during background check). If you change JAVA_HOME value while running configuration screen, the value will not be updated in the app. However, you can close the configuration window safely: when the next background check occurs, actual value of JAVA_HOME at that time will be used 
 * If the configuration app **continiously** reminds you to turn on scheduled task (even if you opted out before), this happens because you have not either added some installations manually, or turned auto-discovery on. Once you set at least one of these, the app will consider itself as 'configured' and will remember your opt-out.
