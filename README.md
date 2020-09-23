@@ -1,6 +1,7 @@
 
 # AdoptOpenJDK Update Watcher
 Automatic update tool for AdoptOpenJDK releases
+
 ![Update Dialog](/docs/update_dialog.png?raw=true)
 ![Config Dialog](/docs/config_dialog.png?raw=true)
 
