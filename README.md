@@ -1,6 +1,12 @@
 
-# AdoptOpenJDK Update Watcher                              [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)¹		
-Automatic update tool for AdoptOpenJDK releases
+# Update Watcher for AdoptOpenJDK                        [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)[¹](#codestyle)		
+[![GitHub license](https://img.shields.io/github/license/tushev/aojdk-updatewatcher)](https://github.com/tushev/aojdk-updatewatcher/blob/master/LICENSE.txt) 
+[![Maintenance](https://img.shields.io/badge/maintained%3F-yes-brightgreen.svg)](https://GitHub.com/Naereen/tushev/aojdk-updatewatcher/graphs/commit-activity)
+![Language](https://img.shields.io/badge/lang-c%23-blue)
+[![GitHub release](https://img.shields.io/github/release/tushev/aojdk-updatewatcher.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/releases/)
+[![Github all releases](https://img.shields.io/github/downloads/tushev/aojdk-updatewatcher/total.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/releases/)
+
+Automatic update tool for AdoptOpenJDK releases                                                                                       [Download](#download)
 
 ![Update Dialog](/docs/update_dialog.png?raw=true)
 ![Config Dialog](/docs/config_dialog.png?raw=true)
@@ -29,21 +35,21 @@ Ironically, this tool is written in C# 6 + WPF, because I am not a Java develope
 `[!!!]` **Version 2, described here, has not been released yet. Currently you can download v.1, which will update itself to v.2 once it will be released.**
 [Latest release](https://github.com/tushev/aojdk-updatewatcher/releases)
 
-
-If you find this app useful, stars are appreciated :)
+ [![GitHub stars](https://img.shields.io/github/stars/tushev/aojdk-updatewatcher.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/tushev/aojdk-updatewatcher/stargazers/)
+ 
+**If you find this app useful, stars are appreciated :)**
 
 There's a built-in update mechanism. 
 
 ## Installation & configuration
 * Run the downloaded installer
 * Run the app _(internet connection highly recommended on first run :)_
-* It is recommended to turn on **Check for AdoptOpenJDK updates on Logon**. _(If you want another schedule, turn this on and press Edit task to configure it as desired)._
-
+* It is recommended to turn on **Check for AdoptOpenJDK updates on Logon**. _(If you want another schedule, turn this on and press Edit task to configure it as desired)._:
 ![Check for AdoptOpenJDK updates on Logon](/docs/check_on_logon.png?raw=true)
-* It is recommended to turn on automatic discovery of AdoptOpenJDK installations
+* It is recommended to turn on automatic discovery of AdoptOpenJDK installations:
 ![Auto_Discovery](/docs/autodiscovery_settings.png?raw=true)
 	* Please note that only MSI-installed JDKs/JREs can be discovered (because only MSIs add corresponding registry keys automatically)
-* `[optional]` Add other directories with AdoptOpenJDK installations. This may be **JAVA_HOME** environment variable _(queried at the time of each app launch)_ or other **custom directories** *(for instance, with releases extracted from ZIP files; please keep in mind that you have to update path manually if it changes)*. 
+* `[optional]` Add other directories with AdoptOpenJDK installations. This may be **JAVA_HOME** environment variable _(queried at the time of each app launch)_ or other **custom directories** *(for instance, with releases extracted from ZIP files; please keep in mind that you have to update path manually if it changes)*: 
 ![Buttons](/docs/config_lower_buttons.png?raw=true)
 * `[optional, power users only]` For manually added installations, adjust **API/Major version**, **API/Type** and other parameters. If not sure, leave default values.
 * If you don't have any JDKs/JREs installed, click on **Download and install new instance from the web** and the app will download and install them for you: 
@@ -78,7 +84,7 @@ v.1.0: Please don't judge my coding style by this project, as I developed this a
 v.2.0: The app was refactored. However, some codestyle issues still remain - for a single-person-maintained project, they are not a major issue. My top priority is app stability and robustness.
 
 [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)
-(`¹`) Please note that _blank-line related rules_ such as `The code must not contain multiple blank lines in a row.`, `A closing curly bracket must not be preceded by a blank line.`,  `An opening curly bracket must not be followed by a blank line` etc ** are disabled** in CodeFactor.
+(`¹`) Please note that _blank-line related rules_ such as `The code must not contain multiple blank lines in a row.`, `A closing curly bracket must not be preceded by a blank line.`,  `An opening curly bracket must not be followed by a blank line` etc **are disabled** in CodeFactor.
 
 
 ## Known not-a-bugs
