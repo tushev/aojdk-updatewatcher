@@ -1,6 +1,6 @@
 
 # AdoptOpenJDK Update Watcher
-Automatic update tool for AdoptOpenJDK releases
+Automatic update tool for AdoptOpenJDK releases [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher) *
 
 ![Update Dialog](/docs/update_dialog.png?raw=true)
 ![Config Dialog](/docs/config_dialog.png?raw=true)
@@ -72,7 +72,11 @@ Other names may be trademarks of their respective owners.
 
 ## Codestyle
 v.1.0: Please don't judge my coding style by this project, as I developed this app in less than a working day. It just works :)
+
 v.2.0: The app was refactored. However, some codestyle issues still remain - for a single-person-maintained project, they are not a major issue. My top priority is app stability and robustness.
+
+[![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)
+[*] Please note that blank-line related rules such as consecutive blank lines, blank lines preceding brackets etc were disables in CodeFactor.
 
 
 ## Known not-a-bugs
