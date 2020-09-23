@@ -1,5 +1,5 @@
 
-# Update Watcher for AdoptOpenJDK                              [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)[¹](#codestyle)		
+# Update Watcher for AdoptOpenJDK                        [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)[¹](#codestyle)		
 Automatic update tool for AdoptOpenJDK releases                                                                                       [Download](#download)
 
 ![Update Dialog](/docs/update_dialog.png?raw=true)
