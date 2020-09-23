@@ -1,6 +1,6 @@
 
-# AdoptOpenJDK Update Watcher
-Automatic update tool for AdoptOpenJDK releases [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher) *
+# AdoptOpenJDK Update Watcher                              [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)¹		
+Automatic update tool for AdoptOpenJDK releases
 
 ![Update Dialog](/docs/update_dialog.png?raw=true)
 ![Config Dialog](/docs/config_dialog.png?raw=true)
@@ -76,7 +76,7 @@ v.1.0: Please don't judge my coding style by this project, as I developed this a
 v.2.0: The app was refactored. However, some codestyle issues still remain - for a single-person-maintained project, they are not a major issue. My top priority is app stability and robustness.
 
 [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)
-[*] Please note that blank-line related rules such as consecutive blank lines, blank lines preceding brackets etc were disables in CodeFactor.
+(`¹`) Please note that blank-line related rules such as `The code must not contain multiple blank lines in a row.`, `A closing curly bracket must not be preceded by a blank line. `, `An opening curly bracket must not be followed by a blank line` etc were **disabled** in CodeFactor.
 
 
 ## Known not-a-bugs
