@@ -1,6 +1,6 @@
 
-# AdoptOpenJDK Update Watcher                              [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)¹		
-Automatic update tool for AdoptOpenJDK releases
+# AdoptOpenJDK Update Watcher                              [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)[¹](#codestyle)		
+Automatic update tool for AdoptOpenJDK releases                                                                                       [Download](#download)
 
 ![Update Dialog](/docs/update_dialog.png?raw=true)
 ![Config Dialog](/docs/config_dialog.png?raw=true)
@@ -30,7 +30,7 @@ Ironically, this tool is written in C# 6 + WPF, because I am not a Java develope
 [Latest release](https://github.com/tushev/aojdk-updatewatcher/releases)
 
 
-If you find this app useful, stars are appreciated :)
+**If you find this app useful, stars are appreciated :)**
 
 There's a built-in update mechanism. 
 
