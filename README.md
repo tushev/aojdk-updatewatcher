@@ -32,8 +32,8 @@ Ironically, this tool is written in C# 6 + WPF, because I am not a Java develope
 * .NET Framework 4.7.2 _(the installer will do it for you)_
 
 ## 📩 Download
-`[!!!]` **Version 2, described here, has not been released yet. Currently you can download v.1, which will update itself to v.2 once it will be released.**
-[Latest release](https://github.com/tushev/aojdk-updatewatcher/releases)
+`[!!!]` **⚠ Version 2, described here, has not been released yet. New release is expected in 1-2 days. Currently you can download v.1, which will update itself to v.2 once it will be released.**
+[Download version 1, that supports only 1 installation](https://github.com/tushev/aojdk-updatewatcher/releases)
 
  [![GitHub stars](https://img.shields.io/github/stars/tushev/aojdk-updatewatcher.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/tushev/aojdk-updatewatcher/stargazers/)
  
