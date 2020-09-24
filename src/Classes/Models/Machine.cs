@@ -242,7 +242,7 @@ namespace AJ_UpdateWatcher
         public int InstallationsWithUpdatesCount { get { return Installations.Count(x => x.HasNewVersion); } }
         public int InstallationsWithMSIUpdatesCount { get { return Installations.Count(x => x.HasMSIInNewVersion); } }
 
-        private bool show_shadowed_installations = true;
+        private bool show_shadowed_installations = false;
         public bool ShowShadowedInstallations
         {
             get { return show_shadowed_installations; }

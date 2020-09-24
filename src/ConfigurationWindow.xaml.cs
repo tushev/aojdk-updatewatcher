@@ -103,7 +103,7 @@ namespace AJ_UpdateWatcher
                 gridSchedule.Background = Brushes.LightGoldenrodYellow;
 
             //if (!Settings.Default.isConfigured)
-                lblGrayedOut.Foreground = Brushes.IndianRed;
+                //lblGrayedOut.Foreground = Brushes.IndianRed;
 
         }
 
@@ -127,7 +127,7 @@ namespace AJ_UpdateWatcher
 
         private void lblCopyright_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Process.Start("https://github.com/tushev");
+            //Process.Start("https://github.com/tushev");
         }
 
         private void btnShowNewVersionWindow_Click(object sender, RoutedEventArgs e)

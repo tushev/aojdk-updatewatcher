@@ -21,23 +21,23 @@
         <Button x:Name="btnOpenSettings"  
                 Style="{StaticResource LinkButtonI}" 
                 Opacity="1"
-                Margin="0,22,70,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnOpenSettings_Click" >
+                Margin="0,25,70,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnOpenSettings_Click" >
             <StackPanel Orientation="Horizontal">
-                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE713;" FontSize="18" VerticalAlignment="Center" Margin="0,0,5,0" />
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE713;" FontSize="16" VerticalAlignment="Center" Margin="0,0,5,0" />
                 <TextBlock Text="Settings" VerticalAlignment="Center" TextDecorations="Underline"/>
             </StackPanel>
         </Button>
         <Button x:Name="btnOpenHelp"  Click="btnOpenHelp_Click" 
                 Style="{StaticResource LinkButtonI}" 
                 Opacity="1"
-                Margin="0,22,13,0" HorizontalAlignment="Right" VerticalAlignment="Top" >
+                Margin="0,25,13,0" HorizontalAlignment="Right" VerticalAlignment="Top" >
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE897;" FontSize="18" VerticalAlignment="Center" Margin="0,0,1,0" />
                 <TextBlock Text="Help" VerticalAlignment="Center" TextDecorations="Underline"/>
             </StackPanel>
         </Button>
 
-        <Grid HorizontalAlignment="Left" Margin="19,14,0,0" VerticalAlignment="Top" x:Name="gridSchedule">
+        <Grid HorizontalAlignment="Left" Margin="28,17,0,0" VerticalAlignment="Top" x:Name="gridSchedule">
             <CheckBox x:Name="cbSchedule" FontWeight="Bold" 
                   IsChecked="{Binding Path=SchedulerManagerTaskStatus, Mode=TwoWay}"                    
                   ToolTip="If you want another schedule, turn this on and press Edit task to configure it as desired." Checked="cbSchedule_Checked">
@@ -52,28 +52,11 @@
             <Button x:Name="btnEditTask" Style="{StaticResource LinkButton}" 
                     Command="{Binding EditTaskCommand}"
                     IsEnabled="{Binding Path=SchedulerManagerTaskStatus, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                    Content="Edit task" HorizontalAlignment="Left" Margin="647,9,0,0" VerticalAlignment="Top" Width="50" Height="8" 
+                    Content="Edit task / change schedule" HorizontalAlignment="Left" Margin="647,9,0,0" VerticalAlignment="Top"  Height="8" 
                     />
         </Grid>
 
-        <TextBlock HorizontalAlignment="Stretch" Margin="10,95,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#ff777777">
-            <Run Text="This app is recommended to run on Windows startup. When it launches, it gets version from Windows Registry or 'release' file for each of your local installations of" />
-            <Run Text="{Binding Path=TargetProduct, Mode=OneWay}"/><Run Text="."/>
-            <LineBreak/><Run Text="Then it queries "/><Run Text="{Binding Path=TargetProduct, Mode=OneWay}"/><Run Text=" API to check if there is a version newer than yours. " />
-            <Run Text="If there is, you will be notified. Otherwise app quits without showing any windows." />
-            <LineBreak/>
-            <Run Text="This configuration window will appear only if something goes wrong or you have explicitly called it." />
-            <LineBreak/>
-            <LineBreak/>
-            <Run Text="Your installations may be auto-discovered via Windows Registry - this is the recommended way. If necessary, you can also add other (custom) installations to monitor for updates." />
-            <LineBreak/>
-            <Run Text="If any user-added installation will have the same path as an auto-discovered one," FontWeight="Medium"/>
-            <Run Text="user-added settings will be preferred, and auto-discovered - ignored." />
-
-
-        </TextBlock>
-
-        <Grid HorizontalAlignment="Left" Margin="19,50,0,0" VerticalAlignment="Top" x:Name="gridRegistry">
+        <Grid HorizontalAlignment="Left" Margin="28,55,0,0" VerticalAlignment="Top" x:Name="gridRegistry">
             <CheckBox x:Name="cbRegistryMachine"
                   IsChecked="{Binding DiscoverMachineWideInstallations}"
                   ToolTip="If you want another schedule, turn this on and press Edit task to configure it as desired."
@@ -91,17 +74,44 @@
                 </CheckBox.Content>
             </CheckBox>
         </Grid>
+
+
+
+        <TextBlock FontSize="13" TextWrapping="Wrap"  Foreground="#222"
+                   HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                   Margin="45,110,10,0">
+            <!--<Run Text="This app is recommended to run on Windows startup. When it launches, it gets version from Windows Registry or 'release' file for each of your local installations of" />
+            <Run Text="{Binding Path=TargetProduct, Mode=OneWay}"/><Run Text="."/>
+            <LineBreak/><Run Text="Then it queries "/><Run Text="{Binding Path=TargetProduct, Mode=OneWay}"/><Run Text=" API to check if there is a version newer than yours. " />
+            <Run Text="If there is, you will be notified. Otherwise app quits without showing any windows." />
+            <LineBreak/>
+            <Run Text="This configuration window will appear only if something goes wrong or you have explicitly called it." />
+            <LineBreak/>
+            <LineBreak/>-->
+            <Run Text="⚠ All"/>
+            <Run Text="auto-discovered installations are grayed out." FontWeight="Bold"/>
+            <Run Text="You cannot edit them."/>
+            <LineBreak/>
+            <LineBreak/>
+            <Run Text="You can also add other (custom) installations to monitor for updates." />
+            <LineBreak/>
+            <Run Text="If any user-added installation will have the same path as an auto-discovered one," FontWeight="Medium"/>
+            <Run Text="user-added one will be preferred, and auto-discovered - ignored." />
+            <LineBreak/>
+            <Run Foreground="#777" FontStyle="Italic" Text="So, if you add manually an entry with the same path as an auto-discovered one, and then turn 'Upd?' off - neither will be checked for updates." />
+        </TextBlock>
+
         <CheckBox x:Name="cbShowShadowed"
             IsChecked="{Binding ShowShadowedInstallations}"
-            Content="Show shadowed installations" 
+            Content="Show ignored" 
             ToolTip="Show auto-discovered installations that are shadowed by user-added ones"
             Foreground="Gray" Style="{DynamicResource GrayCheckBox}"
-            HorizontalAlignment="Right" Margin="0,125,13,0" VerticalAlignment="Top"/>
+            HorizontalAlignment="Right" Margin="0,163,12,0" VerticalAlignment="Top"/>
 
-        <Label x:Name="lblGrayedOut"
+        <!--<Label x:Name="lblGrayedOut"
                Content="All auto-discovered installations are grayed out. Click here to learn how to edit them." 
                Foreground="Gray"
-               HorizontalAlignment="Left" Margin="7,214,0,0" VerticalAlignment="Top" MouseDown="Label_MouseDown"/>
+               HorizontalAlignment="Left" Margin="7,214,0,0" VerticalAlignment="Top" MouseDown="Label_MouseDown"/>-->
 
 
 
@@ -351,10 +361,31 @@
 
 
 
-        <Label x:Name="lblCopyright" Content="Brought to you by (c) Simon Tushev [ https://github.com/tushev ]. If you like this app, say thanks by " Foreground="LightGray" Margin="7,0,409,3" Height="27" VerticalAlignment="Bottom" MouseUp="lblCopyright_MouseUp"/>
-        <Button x:Name="btnStarOnGithub" Style="{StaticResource LinkButton}" 
-            Content="starring it on GitHub" HorizontalAlignment="Left" Margin="540,0,0,-4" VerticalAlignment="Bottom" Width="192" Height="19" Foreground="#FFBBBBFF" Click="btnStarOnGithub_Click" 
+        <Label x:Name="lblCopyright" 
+               Opacity="0.8"
+               Content="Brought to you by (c) Simon Tushev [ https://github.com/tushev ]. If you like this app, say thanks by " 
+               Foreground="Gray" 
+               Margin="7,0,409,3" Height="27" VerticalAlignment="Bottom" 
+               MouseUp="lblCopyright_MouseUp">
+            <Label.Resources>
+                <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Foreground" Value="Red" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Resources>
+        </Label>
+        <Button x:Name="btnStarOnGithub" 
+                Style="{StaticResource LinkButton}"
+               Opacity="0.8"
+                Content="starring it on GitHub" 
+                HorizontalAlignment="Left" Margin="540,0,0,-4" VerticalAlignment="Bottom" Width="192" Height="19"
+               
+                Click="btnStarOnGithub_Click" 
             />
+        
         <CheckBox x:Name="cbSelfUpdate" 
                   IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CheckForSelfUpdates, Mode=TwoWay}"
                   Content="Update this tool regularly" 
