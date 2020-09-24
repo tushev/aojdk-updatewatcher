@@ -18,10 +18,29 @@
     </Window.Resources>
     <Grid>
 
+        <Button x:Name="btnOpenSettings"  
+                Style="{StaticResource LinkButtonI}" 
+                Opacity="1"
+                Margin="0,22,70,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnOpenSettings_Click" >
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE713;" FontSize="18" VerticalAlignment="Center" Margin="0,0,5,0" />
+                <TextBlock Text="Settings" VerticalAlignment="Center" TextDecorations="Underline"/>
+            </StackPanel>
+        </Button>
+        <Button x:Name="btnOpenHelp"  Click="btnOpenHelp_Click" 
+                Style="{StaticResource LinkButtonI}" 
+                Opacity="1"
+                Margin="0,22,13,0" HorizontalAlignment="Right" VerticalAlignment="Top" >
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE897;" FontSize="18" VerticalAlignment="Center" Margin="0,0,1,0" />
+                <TextBlock Text="Help" VerticalAlignment="Center" TextDecorations="Underline"/>
+            </StackPanel>
+        </Button>
+
         <Grid HorizontalAlignment="Left" Margin="19,14,0,0" VerticalAlignment="Top" x:Name="gridSchedule">
-            <CheckBox x:Name="cbSchedule" FontWeight="Bold"
+            <CheckBox x:Name="cbSchedule" FontWeight="Bold" 
                   IsChecked="{Binding Path=SchedulerManagerTaskStatus, Mode=TwoWay}"                    
-                  ToolTip="If you want another schedule, turn this on and press Edit task to configure it as desired.">
+                  ToolTip="If you want another schedule, turn this on and press Edit task to configure it as desired." Checked="cbSchedule_Checked">
                 <CheckBox.Content>
                     <TextBlock Text="{Binding StringFormat='Check for {0} updates on Logon [Recommended]', Path=TargetProduct}"/>
                 </CheckBox.Content>
@@ -37,7 +56,7 @@
                     />
         </Grid>
 
-        <TextBlock HorizontalAlignment="Stretch" Margin="10,44,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#ff777777">
+        <TextBlock HorizontalAlignment="Stretch" Margin="10,95,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#ff777777">
             <Run Text="This app is recommended to run on Windows startup. When it launches, it gets version from Windows Registry or 'release' file for each of your local installations of" />
             <Run Text="{Binding Path=TargetProduct, Mode=OneWay}"/><Run Text="."/>
             <LineBreak/><Run Text="Then it queries "/><Run Text="{Binding Path=TargetProduct, Mode=OneWay}"/><Run Text=" API to check if there is a version newer than yours. " />
@@ -54,7 +73,7 @@
 
         </TextBlock>
 
-        <Grid HorizontalAlignment="Left" Margin="19,160,0,0" VerticalAlignment="Top" x:Name="gridRegistry">
+        <Grid HorizontalAlignment="Left" Margin="19,50,0,0" VerticalAlignment="Top" x:Name="gridRegistry">
             <CheckBox x:Name="cbRegistryMachine"
                   IsChecked="{Binding DiscoverMachineWideInstallations}"
                   ToolTip="If you want another schedule, turn this on and press Edit task to configure it as desired."
@@ -78,28 +97,28 @@
             ToolTip="Show auto-discovered installations that are shadowed by user-added ones"
             Foreground="Gray" Style="{DynamicResource GrayCheckBox}"
             HorizontalAlignment="Right" Margin="0,125,13,0" VerticalAlignment="Top"/>
-        
-        <Label Content="All auto-discovered installations are grayed out." 
-               ToolTip="If you need to change settings for auto-discovered installation, add it manually."
+
+        <Label x:Name="lblGrayedOut"
+               Content="All auto-discovered installations are grayed out. Click here to learn how to edit them." 
                Foreground="Gray"
-               HorizontalAlignment="Left" Margin="7,214,0,0" VerticalAlignment="Top"/>
-        
+               HorizontalAlignment="Left" Margin="7,214,0,0" VerticalAlignment="Top" MouseDown="Label_MouseDown"/>
+
 
 
 
 
         <Label  x:Name="lblLTS"  Content="{Binding LTSReleasesMessage}"
                        ToolTip="Long-term support (LTS) versions have a longer support timeframe and are suitable for enterprise or similar use. Click for more info." 
-                       Foreground="Gray" HorizontalAlignment="Left" Margin="476,214,0,0" VerticalAlignment="Top" MouseUp="lblLTS_MouseUp"/>
-        <Button x:Name="btnWhatJREJDK" Content="Help choose"                         
-                    Style="{StaticResource LinkButton}" Margin="702,227,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatJREJDK_Click" />
-        <Button x:Name="btnWhatImpl" Content="Help choose"                         
-                    Style="{StaticResource LinkButton}" Margin="781,227,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatImpl_Click"  />
-        <Button x:Name="btnWhatHeap" Content="Help choose"                         
-            Style="{StaticResource LinkButton}" Margin="861,227,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatHeap_Click"  />
-        <Label  x:Name="lblYourArchMessage"  Content="{Binding YourArchMessage}"
+                       Foreground="Gray" HorizontalAlignment="Left" Margin="480,214,0,0" VerticalAlignment="Top" MouseUp="lblLTS_MouseUp"/>
+        <Button x:Name="btnWhatJREJDK" Content="Help on types" FontSize="10"                        
+                    Style="{StaticResource LinkButton}" Margin="702,230,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatJREJDK_Click" />
+        <Button x:Name="btnWhatImpl" Content="Help on JVMs"    FontSize="10"                       
+                    Style="{StaticResource LinkButton}" Margin="781,230,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatImpl_Click"  />
+        <Button x:Name="btnWhatHeap" Content="Help on heap" FontSize="10"                          
+            Style="{StaticResource LinkButton}" Margin="861,230,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatHeap_Click"  />
+        <Label  x:Name="lblYourArchMessage"  Content="{Binding YourArchMessage}" FontSize="11"
                 ToolTip="Architecture of your system (OS)"
-                Foreground="LightGray" HorizontalAlignment="Right" Margin="0,214,10,0" VerticalAlignment="Top" />
+                Foreground="LightGray" HorizontalAlignment="Right" Margin="0,215,10,0" VerticalAlignment="Top" />
 
 
 
@@ -109,7 +128,7 @@
                   GridLinesVisibility="None"
                   DataGridCell.Selected="DataGridCell_Selected" 
                   Unloaded="DataGrid_Unloaded"
-                  CanUserAddRows="True"
+                  CanUserAddRows="False"
                   CanUserDeleteRows="False"
                   RowHeight="23"
                   SelectionMode="Single"
@@ -140,7 +159,7 @@
             <DataGrid.Columns>
                 <!--<DataGridCheckBoxColumn Binding="{Binding Path=MarkedForUpdate, UpdateSourceTrigger=PropertyChanged}"/>-->
 
-                <DataGridTemplateColumn SortMemberPath="CheckForUpdatesFlag">
+                <DataGridTemplateColumn SortMemberPath="CheckForUpdatesFlag" Header="Upd?" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <CheckBox ToolTip="Check for updates of this installation?" HorizontalAlignment="Center" IsChecked="{Binding Path=CheckForUpdatesFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -148,7 +167,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Header="Origin" IsReadOnly="True" Binding="{Binding Path=InstallationTypeText}" />
+                <DataGridTextColumn Header="Origin" IsReadOnly="True" Binding="{Binding Path=InstallationTypeText}" Width="90" />
 
                 <DataGridTemplateColumn Header="Local installation path" Width="*" SortMemberPath="DisplayPath">
                     <DataGridTemplateColumn.CellTemplate>
@@ -238,7 +257,7 @@
                 Margin="0,547,10,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Right" Width="122">
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8BB;" FontSize="16" VerticalAlignment="Center"/>
-                <TextBlock Text=" Remove selected" VerticalAlignment="Center"/>
+                <TextBlock Text=" Remove from list" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
 
@@ -293,9 +312,10 @@
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Right" 
                 Click="btnShowNewVersionWindow_Click" 
+                BorderThickness="1"
                 >
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <Label FontFamily="Segoe MDL2 Assets" Content="&#xE895;" FontSize="15" VerticalAlignment="Center"/>
+                <Label FontFamily="Segoe MDL2 Assets" Content="&#xE895;" FontSize="15" Margin="5,0,0,0" VerticalAlignment="Center"/>
                 <Label Content="{Binding Path=CheckForUpdatesButtonText}" />
             </StackPanel>
         </Button>

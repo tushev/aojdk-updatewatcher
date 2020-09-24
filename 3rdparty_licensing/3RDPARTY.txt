@@ -7,4 +7,4 @@ This application contains the following 3rd party elements:
 * dahall/TaskScheduler                      MIT License
 * JamesNK/Newtonsoft.Json                   MIT License
 * System.ValueTuple                         MIT License
-
+* DotNetProjects.Extended.Wpf.Toolkit		MS-PL License

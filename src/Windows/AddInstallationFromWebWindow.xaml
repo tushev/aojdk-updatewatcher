@@ -95,7 +95,7 @@
                 Margin="0,234,10,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235" >
             <Button.ToolTip>
                 <StackPanel Orientation="Horizontal">
-                    
+
                     <TextBlock Text="Once you click this button, new (pending) installation will be added to the list"/>
                     <TextBlock Text=" and all installations (including new one) will be checked for updates" 
                          Visibility="{Binding DownloadImmediately, Converter={StaticResource BooleanToVisibilityConverter}}"/>
@@ -103,11 +103,11 @@
                 </StackPanel>
             </Button.ToolTip>
             <StackPanel Orientation="Horizontal">
-                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xED0E;" FontSize="18" VerticalAlignment="Center"/>
-                <TextBlock Text=" Add selected release to list" VerticalAlignment="Center"/>
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xED0E;" FontSize="18" VerticalAlignment="Center" Margin="0,0,3,0"/>
+                <TextBlock Text="{Binding MainButtonText}" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
-        <CheckBox Content="Start check/download immediately after" IsChecked="{Binding DownloadImmediately}" Opacity="0.8" HorizontalAlignment="Right" Margin="0,214,14,0" VerticalAlignment="Top" />
+        <CheckBox Content="Start check/download immediately" IsChecked="{Binding DownloadImmediately}" Opacity="0.8" HorizontalAlignment="Right" Margin="0,215,42,0" VerticalAlignment="Top" />
 
     </Grid>
 </Window>

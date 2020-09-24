@@ -1,0 +1,68 @@
+﻿<Window x:Class="AJ_UpdateWatcher.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AJ_UpdateWatcher"
+        xmlns:properties="clr-namespace:AJ_UpdateWatcher.Properties"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="Advanced settings" 
+        Height="240.152" Width="584.73" WindowStyle="ThreeDBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Topmost="True" Icon="/AJUpdateWatcher;component/assets/logo.ico" Closing="Window_Closing">
+    <Grid>
+
+        <TabControl>
+            <TabItem Header="Error notifications">
+                <Grid>
+                    <Label Content="Warn if" HorizontalAlignment="Left" Margin="10,23,0,0" VerticalAlignment="Top"/>
+                    <xctk:IntegerUpDown
+                        Value="{Binding Source={x:Static properties:Settings.Default}, Path=UserConfigurableSetting_WarnIfNUpdateChecksResultedInErrors, Mode=TwoWay}"
+                        Increment="1" Minimum="2" Maximum="100000"
+                        Height="20" Width="61" Margin="63,26,0,0" 
+                        HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Label Content="last consecutive background update checks were unsuccessful" HorizontalAlignment="Left" Margin="129,23,0,0" VerticalAlignment="Top"/>
+                    <TextBlock 
+                        Foreground="Gray"
+                        TextWrapping="Wrap" 
+                        Margin="15,54,9,0" VerticalAlignment="Top"
+                        Text="App warns if N last consecutive BACKGROUND update checks produced at least one error. If no errors were encountered during background check, the counter is reset to zero."/>
+                    <Label Content="Current value of error counter:" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top"/>
+                    <TextBox 
+                        HorizontalAlignment="Left" Height="22" Margin="186,114,0,0" VerticalAlignment="Top" Width="37" 
+                        Text="{Binding Source={x:Static properties:Settings.Default}, Path=ErrorsEncounteredSinceLastConfigurationWindowOpened, Mode=OneWay}" 
+                        IsEnabled="False"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="MSI package downloader">
+                <Grid >
+                    <CheckBox x:Name="cbSchedule"
+                        Margin="14,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=UserConfigurableSetting_UseRandomPrefixForDownloadedMSIs, Mode=TwoWay}"
+                        Content="Use random prefix for downloaded MSIs [Recommended]"  
+                        />
+                    <TextBlock 
+                        Foreground="Gray"
+                        TextWrapping="Wrap" 
+                        Margin="14,47,10,0" VerticalAlignment="Top"
+                        Text="Although MSIs are deleted once their installation is complete, it is still recommended to use random prefix to avoid conflicts with external apps."/>
+
+                    <Label Content="Maximum number of concurrent MSI downloads" HorizontalAlignment="Left" Margin="9,101,0,0" VerticalAlignment="Top"/>
+                    <xctk:IntegerUpDown
+                        Value="{Binding Source={x:Static properties:Settings.Default}, Path=UserConfigurableSetting_MaxConcurrentMSIDownloads, Mode=TwoWay}"
+                        Increment="1" Minimum="1" Maximum="16"
+                        Height="20" Width="61" Margin="277,104,0,0" 
+                        HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <TextBlock 
+                        Foreground="Gray"
+                        TextWrapping="Wrap" 
+                        Margin="14,129,14,0" VerticalAlignment="Top"
+                        Text="Set in accordance with your internet connection. Values of 1 or 2 are generally recommended."/>
+
+
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>

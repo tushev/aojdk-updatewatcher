@@ -24,7 +24,6 @@ namespace AJ_UpdateWatcher
 
             NewItem.PropertyChanged += (s, e) => { OnPropertyChanged("CanSelectHeapSize"); };
 
-            DownloadImmediately = true;
         }
 
         
@@ -48,7 +47,24 @@ namespace AJ_UpdateWatcher
             }
         }
 
-        public bool DownloadImmediately { get; set; }
+        private bool _download_immediately = true;
+        public bool DownloadImmediately
+        {
+            get { return _download_immediately; }
+            set
+            {
+                _download_immediately = value;
+                OnPropertyChanged("DownloadImmediately");
+                OnPropertyChanged("MainButtonText");
+            }
+        }
+        public string MainButtonText
+        {
+            get
+            {
+                return DownloadImmediately ? "Get this release" : "Add selected release to list";
+            }
+        }
 
         public bool CanSelectHeapSize { get { return NewItem.JVM_Implementation == "openj9"; } }
        

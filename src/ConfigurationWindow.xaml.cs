@@ -27,6 +27,8 @@ namespace AJ_UpdateWatcher
     public partial class ConfigurationWindow : Window
     {
         HelpHowToInstallNewWindow HelpHowToInstallNewWindow;
+        SettingsWindow SettingsWindowInstance;
+
         ConfigurationViewModel ConfigurationVM = new ConfigurationViewModel();
 
         public ConfigurationWindow()
@@ -45,12 +47,13 @@ namespace AJ_UpdateWatcher
             {
                 var ans = MessageBox.Show(
                     $"Did you forget to configure to check for {Branding.TargetProduct} JDK/JRE Updates on User Logon?" + Environment.NewLine + Environment.NewLine +
-                    "Click Yes to go back and enable this feature," + Environment.NewLine + "No to exit without enabling scheduled tasks.", 
+                    "Yes = go back and enable this feature [Recommended]" + Environment.NewLine + "No = exit without enabling scheduled update check.", 
                     Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
                 if (ans == MessageBoxResult.Yes)
                 {
                     e.Cancel = true;
-                    gridSchedule.Background = Brushes.LightGoldenrodYellow;
+                    gridSchedule.Background = /*gridSchedule.Background == Brushes.LightGoldenrodYellow ? */
+                                              Brushes.Yellow /*: Brushes.LightGoldenrodYellow*/;
                     return;
                 }
             }
@@ -98,6 +101,9 @@ namespace AJ_UpdateWatcher
 
             if (!Settings.Default.isConfigured && (bool)cbSchedule.IsChecked == false)
                 gridSchedule.Background = Brushes.LightGoldenrodYellow;
+
+            //if (!Settings.Default.isConfigured)
+                lblGrayedOut.Foreground = Brushes.IndianRed;
 
         }
 
@@ -163,6 +169,34 @@ namespace AJ_UpdateWatcher
         private void btnWhatHeap_Click(object sender, RoutedEventArgs e)
         {
             AdoptiumHelpMessagesActions.ShowHeapHelp();
+        }
+
+        private void cbSchedule_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!Settings.Default.isConfigured)
+                gridSchedule.Background = Brushes.Transparent;
+        }
+
+        private void btnOpenHelp_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/tushev/aojdk-updatewatcher/wiki");
+        }
+
+        private void btnOpenSettings_Click(object sender, RoutedEventArgs e)
+        {
+            if (SettingsWindowInstance == null || SettingsWindowInstance.IsLoaded == false)
+            {
+                SettingsWindowInstance = new SettingsWindow();
+                SettingsWindowInstance.Owner = this;
+                SettingsWindowInstance.Show();
+            }
+            else
+                SettingsWindowInstance.Activate();
+        }
+
+        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start("https://github.com/tushev/aojdk-updatewatcher/wiki/Types-of-installations");
         }
     }
 

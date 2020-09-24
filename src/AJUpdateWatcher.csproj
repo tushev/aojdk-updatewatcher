@@ -75,11 +75,14 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ActiveDirectoryObjectPicker, Version=2.3.133.0, Culture=neutral, PublicKeyToken=515ab092c8839750, processorArchitecture=MSIL">
-      <HintPath>packages\Tulpep.ActiveDirectoryObjectPicker.2.3.133\lib\net452\ActiveDirectoryObjectPicker.dll</HintPath>
+    <Reference Include="ActiveDirectoryObjectPicker, Version=3.0.4.0, Culture=neutral, PublicKeyToken=515ab092c8839750, processorArchitecture=MSIL">
+      <HintPath>packages\Tulpep.ActiveDirectoryObjectPicker.3.0.4\lib\net472\ActiveDirectoryObjectPicker.dll</HintPath>
     </Reference>
-    <Reference Include="AeroWizard, Version=2.2.3.0, Culture=neutral, PublicKeyToken=915e74f5d64b8f37, processorArchitecture=MSIL">
-      <HintPath>packages\AeroWizard.2.2.3\lib\net45\AeroWizard.dll</HintPath>
+    <Reference Include="AeroWizard, Version=2.2.7.0, Culture=neutral, PublicKeyToken=915e74f5d64b8f37, processorArchitecture=MSIL">
+      <HintPath>packages\AeroWizard.2.2.7\lib\net45\AeroWizard.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetProjects.Wpf.Extended.Toolkit, Version=4.6.86.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\DotNetProjects.Extended.Wpf.Toolkit.4.6.86\lib\net40\DotNetProjects.Wpf.Extended.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="GroupControls, Version=1.8.0.0, Culture=neutral, PublicKeyToken=3726d9da21b6ac8f, processorArchitecture=MSIL">
       <HintPath>packages\GroupControls.1.8.0\lib\net45\GroupControls.dll</HintPath>
@@ -87,11 +90,11 @@
     <Reference Include="LoadingIndicators.WPF, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\LoadingIndicators.WPF.0.0.1\lib\LoadingIndicators.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.8.18.0, Culture=neutral, PublicKeyToken=c416bc1b32d97233, processorArchitecture=MSIL">
-      <HintPath>packages\TaskScheduler.2.8.18\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
+    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.8.21.0, Culture=neutral, PublicKeyToken=c416bc1b32d97233, processorArchitecture=MSIL">
+      <HintPath>packages\TaskScheduler.2.8.21\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Win32.TaskSchedulerEditor, Version=2.8.18.0, Culture=neutral, PublicKeyToken=7be0d908c369d1a5, processorArchitecture=MSIL">
-      <HintPath>packages\TaskSchedulerEditor.2.8.18\lib\net452\Microsoft.Win32.TaskSchedulerEditor.dll</HintPath>
+    <Reference Include="Microsoft.Win32.TaskSchedulerEditor, Version=2.8.21.0, Culture=neutral, PublicKeyToken=7be0d908c369d1a5, processorArchitecture=MSIL">
+      <HintPath>packages\TaskSchedulerEditor.2.8.21\lib\net452\Microsoft.Win32.TaskSchedulerEditor.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.WindowsAPICodePack-Core.1.1.0.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
@@ -106,8 +109,10 @@
       <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Threading.Tasks.Dataflow, Version=4.6.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -126,8 +131,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="TimeSpan2, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0f30172e1249faac, processorArchitecture=MSIL">
-      <HintPath>packages\TimeSpan2.2.2.0\lib\net45\TimeSpan2.dll</HintPath>
+    <Reference Include="TimeSpan2, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0f30172e1249faac, processorArchitecture=MSIL">
+      <HintPath>packages\TimeSpan2.2.3.0\lib\net45\TimeSpan2.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -146,6 +151,9 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Windows\AddInstallationFromWebWindow.xaml.cs">
       <DependentUpon>AddInstallationFromWebWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="ConfigurationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -206,6 +214,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AddInstallationFromWebWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
