@@ -51,14 +51,12 @@ There's a built-in update mechanism.
 
 ## 🛠 Installation & configuration
 0. Run the downloaded installer and run the app _(internet connection highly recommended on first run :)_
-1. **Turn on `Check for AdoptOpenJDK updates on Logon`**. _(If you want another schedule, turn this on and press Edit task to configure it as desired)_:
-2. **Turn on automatic discovery of AdoptOpenJDK installations**:
-
-![Check for AdoptOpenJDK updates on Logon](/docs/check_on_logon.png?raw=true)
-![Auto_Discovery](/docs/autodiscovery_settings.png?raw=true)
+1. **Turn on `Check for AdoptOpenJDK updates on Logon`**. _(If you want another schedule, turn this on and press Edit task to configure it as desired)_.
+2. **Turn on automatic discovery of AdoptOpenJDK installations**.
 > Please note that only MSI-installed JDKs/JREs can be discovered (because only MSIs add corresponding registry keys automatically)
  
  **That's all!**
+![First Run](https://raw.githubusercontent.com/tushev/aojdk-updatewatcher/master/docs/first_run_config_example_cut.gif)
 
 ##
 If you don't have any JDKs/JREs installed, click on **Download and install new instance from the web** and the app will download and install them for you: 
