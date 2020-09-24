@@ -194,7 +194,8 @@ namespace AJ_UpdateWatcher
                 SettingsWindowInstance.Activate();
         }
 
-        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+
+        private void btnHowEditGrayedOut_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("https://github.com/tushev/aojdk-updatewatcher/wiki/Types-of-installations");
         }

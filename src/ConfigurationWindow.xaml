@@ -108,10 +108,11 @@
             Foreground="Gray" Style="{DynamicResource GrayCheckBox}"
             HorizontalAlignment="Right" Margin="0,163,12,0" VerticalAlignment="Top"/>
 
-        <!--<Label x:Name="lblGrayedOut"
-               Content="All auto-discovered installations are grayed out. Click here to learn how to edit them." 
-               Foreground="Gray"
-               HorizontalAlignment="Left" Margin="7,214,0,0" VerticalAlignment="Top" MouseDown="Label_MouseDown"/>-->
+        <Button x:Name="btnHowEditGrayedOut"
+               Style="{StaticResource LinkButton}" 
+               FontSize="10"
+               Content="Help - auto-discovered and custom entries" 
+               HorizontalAlignment="Left" Margin="12,230,0,0" VerticalAlignment="Top" Height="11" Click="btnHowEditGrayedOut_Click" />
 
 
 
