@@ -16,7 +16,7 @@ Automatic update tool for AdoptOpenJDK releases                �
 * **For advanced users:** It also provides a lot of manual controls - but they require some fine-tuning. Just read the tooltips, there are tons of them.
 
 
-![Update Dialog](/docs/update_dialog.png?raw=true)
+![Update Dialog](/docs/update_dialog_838.gif?raw=true)
 ![Config Dialog](/docs/config_dialog.png?raw=true)
 
 When this app launches, it gets versions for your local installations of JDK/JRE (either from Windows Registry or from `release` file). Then it queries AdoptOpenJDK API to check if there are versions newer than yours. 
