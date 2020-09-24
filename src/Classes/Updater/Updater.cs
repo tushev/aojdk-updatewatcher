@@ -80,6 +80,11 @@ namespace AJ_UpdateWatcher
 
         public void CheckForUpdatesAsync()
         {
+            if (_state == UpdaterState.UpdateInstallationInProgress)
+            {
+                Debug.WriteLine("Updater.CheckForUpdatesAsync: UpdateInstallationInProgress => Rejected");
+                return;
+            }
             if (_state == UpdaterState.UpdateCheckInProgress)
             {
                 updatecheck_queued = true;

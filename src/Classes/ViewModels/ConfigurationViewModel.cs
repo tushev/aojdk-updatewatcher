@@ -24,14 +24,26 @@ namespace AJ_UpdateWatcher
             {
                 OnPropertyChanged("JavaHomeMessage");
                 OnPropertyChanged("CanAddJavaHomeInstance");
+                OnPropertyChanged("CannotAddJavaHomeMessage");
                 OnPropertyChanged("ThereAreNoInstallations");
                 OnPropertyChanged("ThereAreInstallationsWithSkippedReleases"); // maybe better move to content changed event when it will be implemented?
             };
 
             machine.Installations.ItemPropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == "CheckForUpdatesFlag")                
+                if (e.PropertyName == "CheckForUpdatesFlag")
                     OnPropertyChanged("CheckForUpdatesButtonText");
+
+                if (e.PropertyName == "HasSkippedRelease")
+                    OnPropertyChanged("ThereAreInstallationsWithSkippedReleases");
+            };
+
+            App.Updater.StateChanged += (s, e) => { OnPropertyChanged("CheckForUpdatesButtonText"); };
+            App.Updater.UpdatesInstallationComplete += (s, e) => 
+            { 
+                OnPropertyChanged("JavaHomeMessage");
+                OnPropertyChanged("CanAddJavaHomeInstance");
+                OnPropertyChanged("CannotAddJavaHomeMessage");
             };
 
             schedulerManager.CheckConsistency();
@@ -121,9 +133,11 @@ namespace AJ_UpdateWatcher
         {
             get
             {
-                return machine.Installations.Where(i => i.NotInstalled && i.CheckForUpdatesFlag).Count() == 0 ?
-                   $"Check for {Branding.TargetProduct} updates" :
-                   $"Install new {Branding.TargetProduct} releases and update existing ones";
+                return 
+                   App.Updater.SomethingInProgress ? "Open updater window" :
+                                   (machine.Installations.Where(i => i.NotInstalled && i.CheckForUpdatesFlag).Count() == 0 ?
+                                   $"Check for {Branding.TargetProduct} updates" :
+                                   $"Install new {Branding.TargetProduct} releases and update existing ones");
             }
         }
 

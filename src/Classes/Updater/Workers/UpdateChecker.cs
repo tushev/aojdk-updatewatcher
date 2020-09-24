@@ -50,7 +50,7 @@ namespace AJ_UpdateWatcher
 
                     foreach (Installation i in machine.Installations)
                     {
-                        if (!i.CheckForUpdatesFlag)
+                        if (!i.CheckForUpdatesFlag || i.UpdateInProgress)
                             continue;
 
                         i.NewVersion = null;

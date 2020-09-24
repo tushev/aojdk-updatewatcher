@@ -84,7 +84,7 @@ namespace AJ_UpdateWatcher
                     worker.ReportProgress(-1);                    
                 });
 
-                int ItemsToUpdateCount = machine.Installations.Where(i => i.HasNewVersion && i.MarkedForUpdate).Count();
+                int ItemsToUpdateCount = machine.Installations.Where(i => i.HasNewVersion && i.MarkedForUpdate && !i.UpdateInProgress).Count();
                 int ItemsDownloaded = 0;
 
 
@@ -97,7 +97,7 @@ namespace AJ_UpdateWatcher
                 {
                     try
                     {
-                        if (i.HasNewVersion && i.MarkedForUpdate)
+                        if (i.HasNewVersion && i.MarkedForUpdate && !i.UpdateInProgress)
                         {
                             Debug.WriteLine($"Updating {i.Path} to {i.NewVersion.VersionString}");
 
