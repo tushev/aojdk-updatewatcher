@@ -14,6 +14,8 @@ Automatic update tool for AdoptOpenJDK releases                �
 * Every time it launches (i.e., scheduled on logon), it checks for updates in background
 * If there are new versions, you will be notified
 * **For advanced users:** It also provides a lot of manual controls - but they require some fine-tuning. Just read the tooltips, there are tons of them.
+
+
 ![Update Dialog](/docs/update_dialog.png?raw=true)
 ![Config Dialog](/docs/config_dialog.png?raw=true)
 
