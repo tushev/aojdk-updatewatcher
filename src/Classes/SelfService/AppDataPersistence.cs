@@ -17,7 +17,7 @@ namespace AJ_UpdateWatcher
             {
                 var folder = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "AdoptiumUpdateWatcher"
+                    "AJUpdateWatcher"
                     );
 
                 if (!Directory.Exists(folder))
