@@ -50,13 +50,14 @@ Ironically, this tool is written in C# 6 + WPF, because I am not a Java develope
 There's a built-in update mechanism. 
 
 ## 🛠 Installation & configuration
-* Run the downloaded installer
-* Run the app _(internet connection highly recommended on first run :)_
-1. Turn on **Check for AdoptOpenJDK updates on Logon**. _(If you want another schedule, turn this on and press Edit task to configure it as desired)._:
+0. Run the downloaded installer and run the app _(internet connection highly recommended on first run :)_
+1. **Turn on `Check for AdoptOpenJDK updates on Logon`**. _(If you want another schedule, turn this on and press Edit task to configure it as desired)._:
+
 ![Check for AdoptOpenJDK updates on Logon](/docs/check_on_logon.png?raw=true)
-2. Turn on automatic discovery of AdoptOpenJDK installations:
+
+2. **Turn on automatic discovery of AdoptOpenJDK installations**:
 ![Auto_Discovery](/docs/autodiscovery_settings.png?raw=true)
-	* Please note that only MSI-installed JDKs/JREs can be discovered (because only MSIs add corresponding registry keys automatically)
+> Please note that only MSI-installed JDKs/JREs can be discovered (because only MSIs add corresponding registry keys automatically)
 
 * If you don't have any JDKs/JREs installed, click on **Download and install new instance from the web** and the app will download and install them for you: 
 ![First Run](/docs/first_run.png?raw=true)
