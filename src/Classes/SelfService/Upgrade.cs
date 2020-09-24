@@ -34,7 +34,7 @@ namespace AJ_UpdateWatcher
                         if (MessageBox.Show(
                         $"In is highly important that the scheduled task will be upgraded. We ask you to reconsider your choice." + Environment.NewLine + Environment.NewLine +
                         "Yes = Please upgrade" + Environment.NewLine +
-                        "No  = Keep as is. I'me really sure what I'm doing and I will take full responsibility for upcoming errors." ,
+                        "No  = Keep as is. I'm really sure what I'm doing and I will take full responsibility for upcoming errors." ,
                         $"Upgrade to v.{Assembly.GetExecutingAssembly().GetName().Version} - {Branding.MessageBoxHeader}", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.Yes)
                         == MessageBoxResult.Yes)
                     {
