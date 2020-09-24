@@ -153,8 +153,8 @@ namespace AJ_UpdateWatcher
 
         public static void ShowNewVersionWindow(bool invoked_from_ui = false)
         {
-            if (invoked_from_ui)
-                Updater.SetToInitialState();
+            //if (invoked_from_ui)
+            //    Updater.SetToInitialState();
 
             if (NewVersionWindowInstance == null || NewVersionWindowInstance.IsLoaded == false)
             {
