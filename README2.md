@@ -41,13 +41,15 @@ Ironically, this tool is written in C# 6 + WPF, because I am not a Java develope
 
 ## 📩 Download
 `[!!!]` **⚠ Version 2, described here, has not been released yet. New release is expected in 1-2 days. Currently you can download v.1, which will update itself to v.2 once it will be released.**
-[Download version 1, that supports only 1 installation](https://github.com/tushev/aojdk-updatewatcher/releases)
-
- [![GitHub stars](https://img.shields.io/github/stars/tushev/aojdk-updatewatcher.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/tushev/aojdk-updatewatcher/stargazers/)
- 
-**If you find this app useful, stars are appreciated :)**
-
+### 📩 [Download version 1, that supports only 1 installation](https://github.com/tushev/aojdk-updatewatcher/releases)
 There's a built-in update mechanism. 
+### If you find this app useful, stars are appreciated :) [![GitHub stars](https://img.shields.io/github/stars/tushev/aojdk-updatewatcher.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/tushev/aojdk-updatewatcher/stargazers/)
+
+
+* ❓ [Read the wiki](https://github.com/tushev/aojdk-updatewatcher/wiki)
+
+
+
 
 ## 🛠 Installation & configuration
 0. Run the downloaded installer and run the app _(internet connection highly recommended on first run :)_
