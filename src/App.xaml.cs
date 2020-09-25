@@ -40,13 +40,20 @@ namespace AJ_UpdateWatcher
         {
             base.OnStartup(e);
 
-            if (e.Args.Length > 0 && e.Args[0] == "-deletetask")
+            if (e.Args.Length > 0 && (e.Args[0] == "-deletetask" || e.Args[0] == "-askdeletetask"))
             {
                 SchedulerManager sm = new SchedulerManager();
                 if (sm.TaskIsSet())
                 {
-                    sm.DeleteTask();
-                    MessageBox.Show("Scheduled task has been removed successfully", Branding.MessageBoxHeader, MessageBoxButton.OK, MessageBoxImage.Information);
+                    var result = (e.Args[0] == "-askdeletetask") ?
+                        MessageBox.Show($"You have a scheduled task to check for updates of {Branding.TargetProduct}.{Environment.NewLine+Environment.NewLine}Do you want to remove this scheduled task?", Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) :
+                        MessageBoxResult.Yes;
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        sm.DeleteTask();
+                        MessageBox.Show("Scheduled task has been removed successfully", Branding.MessageBoxHeader, MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 }
 
                 Application.Current.Shutdown();
