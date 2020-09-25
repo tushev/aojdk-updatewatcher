@@ -47,16 +47,16 @@
                         Margin="14,47,10,0" VerticalAlignment="Top"
                         Text="Although MSIs are deleted once their installation is complete, it is still recommended to use random prefix to avoid conflicts with external apps."/>
 
-                    <Label Content="Maximum number of concurrent MSI downloads" HorizontalAlignment="Left" Margin="9,101,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Maximum number of concurrent MSI downloads" HorizontalAlignment="Left" Margin="9,98,0,0" VerticalAlignment="Top"/>
                     <xctk:IntegerUpDown
                         Value="{Binding Source={x:Static properties:Settings.Default}, Path=UserConfigurableSetting_MaxConcurrentMSIDownloads, Mode=TwoWay}"
                         Increment="1" Minimum="1" Maximum="16"
-                        Height="20" Width="61" Margin="277,104,0,0" 
+                        Height="20" Width="61" Margin="277,101,0,0" 
                         HorizontalAlignment="Left" VerticalAlignment="Top" />
                     <TextBlock 
                         Foreground="Gray"
                         TextWrapping="Wrap" 
-                        Margin="14,129,14,0" VerticalAlignment="Top"
+                        Margin="14,126,14,0" VerticalAlignment="Top"
                         Text="Set in accordance with your internet connection. Values of 1 or 2 are generally recommended."/>
 
 
