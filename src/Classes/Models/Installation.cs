@@ -355,7 +355,8 @@ namespace AJ_UpdateWatcher
                 if (String.IsNullOrEmpty(installed_version_heap))
                 {
                     installed_version_heap = "normal";
-                    if (installed_version_jvm_implementation == "openj9" && Directory.Exists(System.IO.Path.Combine(path, @"bin\default")))
+                    if (installed_version_jvm_implementation == "openj9" && Directory.Exists(System.IO.Path.Combine(path, @"bin\default"))
+                        && installed_version_arch == "x64") // because 'default' on openj9-x32 means normal heap, not large
                         installed_version_heap = "large";
                 }
 
