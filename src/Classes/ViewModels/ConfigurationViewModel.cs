@@ -27,6 +27,7 @@ namespace AJ_UpdateWatcher
                 OnPropertyChanged("CannotAddJavaHomeMessage");
                 OnPropertyChanged("ThereAreNoInstallations");
                 OnPropertyChanged("ThereAreInstallationsWithSkippedReleases"); // maybe better move to content changed event when it will be implemented?
+                OnPropertyChanged("CheckForUpdatesButtonText");
             };
 
             machine.Installations.ItemPropertyChanged += (s, e) =>

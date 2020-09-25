@@ -6,7 +6,13 @@
         xmlns:local="clr-namespace:AJ_UpdateWatcher"
         xmlns:properties="clr-namespace:AJ_UpdateWatcher.Properties"
         mc:Ignorable="d"
-        Title="Update Watcher for AdoptOpenJDK - Configuration" Height="715" Width="1024" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closing="Window_Closing" Loaded="Window_Loaded" Icon="assets/logo.ico">
+        Title="Update Watcher for AdoptOpenJDK - Configuration" 
+        Height="715" Width="1024"
+        MinHeight="715" MinWidth="1024" 
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="CanResizeWithGrip" 
+        Closing="Window_Closing" Loaded="Window_Loaded" 
+        Icon="assets/logo.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -123,21 +129,20 @@
 
         <Label  x:Name="lblLTS"  Content="{Binding LTSReleasesMessage}"
                        ToolTip="Long-term support (LTS) versions have a longer support timeframe and are suitable for enterprise or similar use. Click for more info." 
-                       Foreground="Gray" HorizontalAlignment="Left" Margin="480,214,0,0" VerticalAlignment="Top" MouseUp="lblLTS_MouseUp"/>
+                       Foreground="Gray" HorizontalAlignment="Right" Margin="0,214,422,0" VerticalAlignment="Top" MouseUp="lblLTS_MouseUp"/>
         <Button x:Name="btnWhatJREJDK" Content="Help on types" FontSize="10"                        
-                    Style="{StaticResource LinkButton}" Margin="702,230,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatJREJDK_Click" />
+                    Style="{StaticResource LinkButton}" Margin="0,230,237,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="70" Click="btnWhatJREJDK_Click" />
         <Button x:Name="btnWhatImpl" Content="Help on JVMs"    FontSize="10"                       
-                    Style="{StaticResource LinkButton}" Margin="781,230,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatImpl_Click"  />
+                    Style="{StaticResource LinkButton}" Margin="0,230,157,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="70" Click="btnWhatImpl_Click"  />
         <Button x:Name="btnWhatHeap" Content="Help on heap" FontSize="10"                          
-            Style="{StaticResource LinkButton}" Margin="861,230,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatHeap_Click"  />
+            Style="{StaticResource LinkButton}" Margin="0,230,77,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="70" Click="btnWhatHeap_Click"  />
         <Label  x:Name="lblYourArchMessage"  Content="{Binding YourArchMessage}" FontSize="11"
                 ToolTip="Architecture of your system (OS)"
                 Foreground="LightGray" HorizontalAlignment="Right" Margin="0,215,10,0" VerticalAlignment="Top" />
 
 
 
-        <DataGrid x:Name="UIInstallationList" 
-                  Height="297" Margin="10,240,10,0" VerticalAlignment="Top" 
+        <DataGrid x:Name="UIInstallationList" Margin="10,240,10,147" 
                   AutoGenerateColumns="False" 
                   GridLinesVisibility="None"
                   DataGridCell.Selected="DataGridCell_Selected" 
@@ -230,13 +235,13 @@
                 x:Name="btnAddJAVA_HOMEInstallation" 
                 Command="{Binding AddJAVA_HOMEInstallationCommand}" 
                 IsEnabled="{Binding Path=CanAddJavaHomeInstance, BindsDirectlyToSource=True, FallbackValue=True, UpdateSourceTrigger=PropertyChanged}"
-                Margin="10,547,0,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" Width="160">
+                Margin="10,0,0,108" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="160">
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEA8A;" FontSize="18" VerticalAlignment="Center"/>
                 <TextBlock Text=" Add JAVA_HOME" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
-        <Label Content="{Binding CannotAddJavaHomeMessage}" Foreground="#FFA2A2A2" HorizontalAlignment="Left" Margin="8,570,0,0" VerticalAlignment="Top" FontSize="11"
+        <Label Content="{Binding CannotAddJavaHomeMessage}" Foreground="#FFA2A2A2" HorizontalAlignment="Left" Margin="8,0,0,89" VerticalAlignment="Bottom" FontSize="11"
                x:Name="lblJAVAHOMEintheList"
                Visibility="{Binding CanAddJavaHomeInstance, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter='negate'}"/>
 
@@ -244,19 +249,19 @@
         <Button ToolTip="You'll have to update it manually if it changes" 
                 x:Name="btnAddInstallation"
                 Command="{Binding AddInstallationCommand}" 
-                Margin="176,547,0,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" Width="160" >
+                Margin="176,0,0,108" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="160" >
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xED25;" FontSize="18" VerticalAlignment="Center"/>
                 <TextBlock Text=" Add custom path" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
-        <Label Content="update manually when it changes" Foreground="#FFA2A2A2" HorizontalAlignment="Left" Margin="169,570,0,0" VerticalAlignment="Top" Width="188" FontSize="11"/>
+        <Label Content="update manually when it changes" Foreground="#FFA2A2A2" HorizontalAlignment="Left" Margin="169,0,0,89" VerticalAlignment="Bottom" Width="188" FontSize="11"/>
 
         <!-- INSTALL NEW RELEASE -->
         <Button ToolTip="Download latest package through the API and install it on your machine." 
                 Style="{StaticResource LinkButtonI}" 
                 Command="{Binding AddInstallationFromWebCommand}" 
-                Margin="343,562,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left">
+                Margin="-46,0,0,114"  VerticalAlignment="Bottom" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE896;" FontSize="18" VerticalAlignment="Center" />
                 <TextBlock Text="Download and install new instance from the web" VerticalAlignment="Center" TextDecorations="Underline"/>
@@ -268,7 +273,7 @@
         <Button  
                 x:Name="btnResetAPIforSelected"
                 Command="{Binding ResetAPIforSelectedCommand}" 
-                Margin="0,547,137,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Right" Width="240" 
+                Margin="0,0,137,108" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="240" 
                 ToolTip="Replace API settings with the auto-guessed ones."
             >
             <StackPanel Orientation="Horizontal">
@@ -282,7 +287,7 @@
         <Button 
                 x:Name="btnRemoveSelected" 
                 Command="{Binding RemoveSelectedInstallationCommand}" 
-                Margin="0,547,10,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Right" Width="122">
+                Margin="0,0,10,108" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="122">
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8BB;" FontSize="16" VerticalAlignment="Center"/>
                 <TextBlock Text=" Remove from list" VerticalAlignment="Center"/>
@@ -292,10 +297,32 @@
         <!-- SHOW SHADOWED -->
         <CheckBox x:Name="cbShowShadowed"
             IsChecked="{Binding ShowShadowedInstallations}"
-            Content="Display overridden entries" 
+            Content="Display overridden auto-discovered entries" 
             ToolTip="Show auto-discovered installations that are overridden by user-added ones"
-            Foreground="Gray" Style="{DynamicResource GrayCheckBox}"
-            HorizontalAlignment="Right" Margin="0,582,10,0" VerticalAlignment="Top"/>
+            Foreground="Gray" Style="{DynamicResource GrayCheckBox}" Margin="344,0,0,35" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="248"/>
+
+
+
+
+
+
+
+        <!-- CHECK FOR NEW VERSIONS -->
+        <Button x:Name="btnShowNewVersionWindow"                 
+                Margin="0,0,10,33" Height="50" 
+                
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right" 
+                Click="btnShowNewVersionWindow_Click" 
+                BorderThickness="1"
+                >
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label FontFamily="Segoe MDL2 Assets" Content="&#xE895;" FontSize="15" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                <Label Content="{Binding Path=CheckForUpdatesButtonText}" />
+            </StackPanel>
+        </Button>
+
+
 
 
 
@@ -315,32 +342,31 @@
                 Click="btnEditEnvironmentVariables_Click" ToolTip="Click to edit Environment Variables " 
             />
 
+
+
+        <!-- RESET ALL SKIPPED RELEASES -->
         <Button
             x:Name="btnCancelSkippedRelease"
             Content="Reset all skipped releases"         
             Command="{Binding ResetAllSkippedReleasesCommand}"
             IsEnabled="{Binding ThereAreInstallationsWithSkippedReleases, UpdateSourceTrigger=PropertyChanged}"
             Style="{StaticResource LinkButton}" 
-            Margin="175,0,0,22" Height="19"  
+            Margin="183,0,0,22" Height="19"  
             VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
 
 
+        <!-- UPDATE THIS TOOL REGULARLY -->
+        <CheckBox x:Name="cbSelfUpdate" 
+                  IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CheckForSelfUpdates, Mode=TwoWay}"
+                  Content="Update this tool regularly" 
+                  ToolTip="If on, this app will check for new releases on GitHub every time it starts."
+                  Foreground="Gray"
+                  Margin="660,0,0,9" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="155" 
+                  Style="{DynamicResource GrayCheckBox}"/>
 
 
 
-        <!-- CHECK FOR NEW VERSIONS -->
-        <Button x:Name="btnShowNewVersionWindow"                 
-                Margin="0,0,10,30" Height="40" 
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Right" 
-                Click="btnShowNewVersionWindow_Click" 
-                BorderThickness="1"
-                >
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <Label FontFamily="Segoe MDL2 Assets" Content="&#xE895;" FontSize="15" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                <Label Content="{Binding Path=CheckForUpdatesButtonText}" />
-            </StackPanel>
-        </Button>
+
 
 
 
@@ -350,13 +376,13 @@
             Foreground="Gray"
             Content="If you don't have JDK/JRE installed, you can install it here"
             Visibility="{Binding ThereAreNoInstallations, Converter={StaticResource BooleanToVisibilityConverter}}"
-            HorizontalAlignment="Right" Margin="0,388,264,0" VerticalAlignment="Top" 
+            HorizontalAlignment="Center" Margin="0,0,0,265" VerticalAlignment="Bottom" 
             FontFamily="Segoe UI Black" FontSize="16"/>
         <Image 
             x:Name="imgInstallTipArrow"           
             Visibility="{Binding ThereAreNoInstallations, Converter={StaticResource BooleanToVisibilityConverter}}"
-            HorizontalAlignment="Left" VerticalAlignment="Top"
-            Height="157" Width="305"  Margin="484,405,0,0" 
+            HorizontalAlignment="Center" VerticalAlignment="Bottom"
+            Height="157" Width="305"  Margin="255,0,0,122" 
             Source="assets/arrow.png"  Opacity="0.5" Stretch="Fill"/>
 
         <Button
@@ -393,18 +419,11 @@
                 Style="{StaticResource LinkButton}"
                Opacity="0.8"
                 Content="starring it on GitHub" 
-                HorizontalAlignment="Left" Margin="540,0,0,-4" VerticalAlignment="Bottom" Width="192" Height="19"
+                HorizontalAlignment="Left" Margin="540,0,0,-4" VerticalAlignment="Bottom"  Height="19"
                
                 Click="btnStarOnGithub_Click" 
             />
 
-        <CheckBox x:Name="cbSelfUpdate" 
-                  IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CheckForSelfUpdates, Mode=TwoWay}"
-                  Content="Update this tool regularly" 
-                  ToolTip="If on, this app will check for new releases on GitHub every time it starts."
-                  Foreground="Gray"
-                  Margin="0,0,13,9" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="155" 
-                  Style="{DynamicResource GrayCheckBox}"/>
 
 
 

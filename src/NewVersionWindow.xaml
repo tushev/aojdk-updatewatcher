@@ -486,7 +486,9 @@
                         <TextBlock FontSize="13">
                             <Run Text="  * Internet connection issues" /><LineBreak/>
                             <Run Text="  * " /><Run Text="{Binding APIBaseDomain, Mode=OneWay}" /><Run Text=" may be down" /><LineBreak/>
-                            <Run Text="  * There is no such release that you are asking for :)" /><LineBreak/>
+                            <Run Text="  * API says that there is no such release that you are asking for :)" /><LineBreak/>
+                            <LineBreak/>
+                            <Run Text="Re-check that API parameters are set correctly and the required release exists on project's website." /><LineBreak/>
                         </TextBlock>
                     </StackPanel>
                 </TextBlock.ToolTip>
