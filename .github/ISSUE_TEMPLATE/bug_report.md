@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: It seems that I found an error
 title: ''
 labels: ''
 assignees: ''
