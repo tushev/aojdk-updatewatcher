@@ -97,4 +97,8 @@ v.2.0: The app was refactored. However, some codestyle issues still remain - for
 
 ## 🔕 Known not-a-bugs
 * **JAVA_HOME** value is updated when the *app is launched* (either in configuration mode or during background check). If you change JAVA_HOME value while running configuration screen, the value will not be updated in the app. However, you can close the configuration window safely: when the next background check occurs, actual value of JAVA_HOME at that time will be used 
+* ⚠ Please keep in mind that if **JAVA_HOME** installation significantly changes (i.e., 8 → 11, or JRE → JDK), you should update API parameters manually _(because the app cannot decide whether this is intended or not)._<br> You can use `Detect (reset) API settings for selected` button to do it.
 * If the configuration app **continiously** reminds you to turn on scheduled task (even if you opted out before), this happens because you have not either added some installations manually, or turned auto-discovery on. Once you set at least one of these, the app will consider itself as 'configured' and will remember your opt-out.
+* For **manually** added installations that were released prior to Sep 16 2020, it may be not always possible to detect build number. **Thus you may miss an update**, say, from `8.0.265+1` to `8.0.265+2` - but only for manually added installations _(custom path or JAVA_HOME)_. **It is highly recommended to use automatic discovery** (which detects build numbers) for releases downloaded and installed prior to 16 September 2020.
+
+[See all 🔕 Known not-a-bugs](https://github.com/tushev/aojdk-updatewatcher/wiki/Known-not-a-bugs)
