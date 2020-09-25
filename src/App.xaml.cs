@@ -40,6 +40,18 @@ namespace AJ_UpdateWatcher
         {
             base.OnStartup(e);
 
+            if (e.Args.Length > 0 && e.Args[0] == "-deletetask")
+            {
+                SchedulerManager sm = new SchedulerManager();
+                if (sm.TaskIsSet())
+                {
+                    sm.DeleteTask();
+                    MessageBox.Show("Scheduled task has been removed successfully", Branding.MessageBoxHeader, MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                Application.Current.Shutdown();
+            }
+
             // before doing things, upgrade from previous version
             Upgrade.UpgradeAppSettings();
 
