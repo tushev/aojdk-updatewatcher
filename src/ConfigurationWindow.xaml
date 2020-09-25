@@ -79,34 +79,37 @@
 
         <TextBlock FontSize="13" TextWrapping="Wrap"  Foreground="#222"
                    HorizontalAlignment="Stretch" VerticalAlignment="Top"
-                   Margin="45,110,10,0">
-            <!--<Run Text="This app is recommended to run on Windows startup. When it launches, it gets version from Windows Registry or 'release' file for each of your local installations of" />
-            <Run Text="{Binding Path=TargetProduct, Mode=OneWay}"/><Run Text="."/>
-            <LineBreak/><Run Text="Then it queries "/><Run Text="{Binding Path=TargetProduct, Mode=OneWay}"/><Run Text=" API to check if there is a version newer than yours. " />
-            <Run Text="If there is, you will be notified. Otherwise app quits without showing any windows." />
-            <LineBreak/>
-            <Run Text="This configuration window will appear only if something goes wrong or you have explicitly called it." />
-            <LineBreak/>
-            <LineBreak/>-->
+                   Margin="45,111,10,0">
             <Run Text="⚠ All"/>
             <Run Text="auto-discovered installations are grayed out." FontWeight="Bold"/>
-            <Run Text="You cannot edit them."/>
-            <LineBreak/>
-            <LineBreak/>
+            <Run Text="You cannot edit them directly."/>
+        </TextBlock>
+        <TextBlock FontSize="13" TextWrapping="Wrap"  Foreground="#222"
+                   HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                   Margin="45,137,10,0">
             <Run Text="You can also add other (custom) installations to monitor for updates." />
+        </TextBlock>
+        <!--Tooltip="So, if you add manually an entry with the same path as an auto-discovered one, and then turn 'Upd?' off - neither will be checked for updates."-->
+        <TextBlock FontSize="13" TextWrapping="Wrap"  Foreground="#222"
+                   HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                   Margin="45,162,10,0">
+            <Run Text="If you"/>
+            <Run Text="(for some strong reason)" FontStyle="Italic"/>
+            <Run Text="still need to change settings (or turn updates off) for an auto-discovered installation, then"/>
+            <Run Text="you have to override" FontWeight="Medium"/>
+            <Run Text="it."/>
             <LineBreak/>
-            <Run Text="If any user-added installation will have the same path as an auto-discovered one," FontWeight="Medium"/>
-            <Run Text="user-added one will be preferred, and auto-discovered - ignored." />
-            <LineBreak/>
-            <Run Foreground="#777" FontStyle="Italic" Text="So, if you add manually an entry with the same path as an auto-discovered one, and then turn 'Upd?' off - neither will be checked for updates." />
+            <Run Text="To do so, just add custom installation with the same path." />
         </TextBlock>
 
-        <CheckBox x:Name="cbShowShadowed"
-            IsChecked="{Binding ShowShadowedInstallations}"
-            Content="Show ignored" 
-            ToolTip="Show auto-discovered installations that are shadowed by user-added ones"
-            Foreground="Gray" Style="{DynamicResource GrayCheckBox}"
-            HorizontalAlignment="Right" Margin="0,163,12,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnHowDisableUpdates"
+               Style="{StaticResource LinkButton}" 
+               FontSize="13"
+               Content="See how" 
+               Height="11"
+               HorizontalAlignment="Left" VerticalAlignment="Top" 
+               Margin="378,189,0,0" Click="btnHowDisableUpdates_Click"  />
+
 
         <Button x:Name="btnHowEditGrayedOut"
                Style="{StaticResource LinkButton}" 
@@ -261,18 +264,6 @@
         </Button>
 
 
-        <!-- REMOVE SELECTED -->
-        <Button 
-                x:Name="btnRemoveSelected" 
-                Command="{Binding RemoveSelectedInstallationCommand}" 
-                Margin="0,547,10,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Right" Width="122">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8BB;" FontSize="16" VerticalAlignment="Center"/>
-                <TextBlock Text=" Remove from list" VerticalAlignment="Center"/>
-            </StackPanel>
-        </Button>
-
-
         <!-- RESET API SETTINGS -->
         <Button  
                 x:Name="btnResetAPIforSelected"
@@ -285,6 +276,26 @@
                 <TextBlock Text=" Detect (reset) API settings for selected" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
+
+
+        <!-- REMOVE SELECTED -->
+        <Button 
+                x:Name="btnRemoveSelected" 
+                Command="{Binding RemoveSelectedInstallationCommand}" 
+                Margin="0,547,10,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Right" Width="122">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8BB;" FontSize="16" VerticalAlignment="Center"/>
+                <TextBlock Text=" Remove from list" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+
+        <!-- SHOW SHADOWED -->
+        <CheckBox x:Name="cbShowShadowed"
+            IsChecked="{Binding ShowShadowedInstallations}"
+            Content="Display overridden entries" 
+            ToolTip="Show auto-discovered installations that are overridden by user-added ones"
+            Foreground="Gray" Style="{DynamicResource GrayCheckBox}"
+            HorizontalAlignment="Right" Margin="0,582,10,0" VerticalAlignment="Top"/>
 
 
 
@@ -319,7 +330,7 @@
 
         <!-- CHECK FOR NEW VERSIONS -->
         <Button x:Name="btnShowNewVersionWindow"                 
-                Margin="0,0,10,36" Height="40" 
+                Margin="0,0,10,30" Height="40" 
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Right" 
                 Click="btnShowNewVersionWindow_Click" 
@@ -386,13 +397,13 @@
                
                 Click="btnStarOnGithub_Click" 
             />
-        
+
         <CheckBox x:Name="cbSelfUpdate" 
                   IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CheckForSelfUpdates, Mode=TwoWay}"
                   Content="Update this tool regularly" 
                   ToolTip="If on, this app will check for new releases on GitHub every time it starts."
                   Foreground="Gray"
-                  Margin="0,0,12,9" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="155" 
+                  Margin="0,0,13,9" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="155" 
                   Style="{DynamicResource GrayCheckBox}"/>
 
 

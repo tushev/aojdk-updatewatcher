@@ -199,6 +199,11 @@ namespace AJ_UpdateWatcher
         {
             Process.Start("https://github.com/tushev/aojdk-updatewatcher/wiki/Types-of-installations");
         }
+
+        private void btnHowDisableUpdates_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/tushev/aojdk-updatewatcher/wiki/Types-of-installations#-usage-scenario-disable-updates-check-for-one-of-auto-discovered-installations");
+        }
     }
 
 
