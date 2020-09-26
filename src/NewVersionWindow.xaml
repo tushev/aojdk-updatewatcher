@@ -412,7 +412,7 @@
                         <TextBlock Text="For installations that are auto-discovered via registry, build number will be (almost always) detected and accounted for."/>
                         <TextBlock Text="For manually added installations that were released prior to Sep 16 2020, it may be not always possible to detect build number."/>
                         <TextBlock>
-                            <Run Text="If local build number cannot be detected, it will be ignored when checking for new versions: the updater will compare only AA.BB.CC version literals, not AA.BB.CC+NUM. Thus you may miss update, say, from 8.0.265+1 to 8.0.265+2"/>
+                            <Run Text="If local build number cannot be detected, it will be ignored when checking for new versions: the updater will compare only AA.BB.CC version literals, not AA.BB.CC+NUM. Thus you may miss an update, say, from 8.0.265+1 to 8.0.265+2"/>
                             <Run Text="- for manually added installations." FontStyle="Italic"/>
                         </TextBlock>
                         <TextBlock Text="It is highly recommended to use automatic discovery (which detects build numbers) for releases downloaded and installed prior to 16 September 2020."/>
