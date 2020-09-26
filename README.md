@@ -28,8 +28,9 @@ This app is designed to run on Windows startup. I recommend to turn on **Check f
 
 ## 🔃 New in v. 2.0.0
 * Support for multiple AdoptOpenJDK installations
+* Automatic discovery of installations via Windows Registry
 * Redesigned UI/UX
-* App warns if `N` last *consecutive* update checks were unsuccessful *(default N=10)*
+* App warns if `N` last *consecutive* background update checks were unsuccessful *(default N=10)*
 * Limited support for `Most recent`/ `Most recent LTS` options
 * Other improvements, perfomance optimisations etc.
 
