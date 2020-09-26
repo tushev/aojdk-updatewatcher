@@ -6,7 +6,7 @@
 [![GitHub release](https://img.shields.io/github/release/tushev/aojdk-updatewatcher.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/releases/)
 [![Github all releases](https://img.shields.io/github/downloads/tushev/aojdk-updatewatcher/total.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/releases/)
 
-Automatic update tool for AdoptOpenJDK releases                                                                                       [📩 Download](#-download)
+Automatic update tool for AdoptOpenJDK releases                                                                                    [⬇ Download](#-download)
 
 ## 💡 Key ideas
 
