@@ -193,7 +193,7 @@ namespace AJ_UpdateWatcher
             if (Settings.Default.CheckForSelfUpdates)
                 if (SelfUpdate.HasNewVersion(Settings.Default.SelfUpdatesAPI))
                 {
-                    var ans = MessageBox.Show($"New version of {Branding.ProductName} is available. Would you like to download and install it?", Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    var ans = MessageBox.Show($"New version of {Branding.ProductName} is available. Would you like to download installer (EXE/MSI) and run it?", Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (ans == MessageBoxResult.Yes)
                     {
                         SelfUpdate.DownloadCloseAndInstallUpdate();

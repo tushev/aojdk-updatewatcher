@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Update Watcher for AdoptOpenJDK")]
-[assembly: AssemblyDescription("Independent automatic update tool for AdoptOpenJDK releases")]
+[assembly: AssemblyDescription("Independent automatic update tool for AdoptOpenJDK releases. Provided 'as is', without warranty of any kind. Use at your own risk.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("tushev.org")]
 [assembly: AssemblyProduct("Update Watcher for AdoptOpenJDK")]
@@ -51,5 +51,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyVersion("2.0.1.0")]
+[assembly: AssemblyFileVersion("2.0.1.0")]
