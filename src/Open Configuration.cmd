@@ -1,0 +1,1 @@
+@start AJUpdateWatcher.exe -config
