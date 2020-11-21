@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AJUpdateWatcher", "AJUpdateWatcher.csproj", "{CA4BD54C-A4C8-4897-A115-BE5F83C6BCC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AJBasicUnitTests", "..\tests\AJBasicUnitTests\AJBasicUnitTests.csproj", "{5D4EB130-8D26-4C61-A301-C2A228BA09DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{CA4BD54C-A4C8-4897-A115-BE5F83C6BCC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA4BD54C-A4C8-4897-A115-BE5F83C6BCC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA4BD54C-A4C8-4897-A115-BE5F83C6BCC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D4EB130-8D26-4C61-A301-C2A228BA09DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D4EB130-8D26-4C61-A301-C2A228BA09DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D4EB130-8D26-4C61-A301-C2A228BA09DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D4EB130-8D26-4C61-A301-C2A228BA09DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
