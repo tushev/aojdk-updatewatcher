@@ -160,20 +160,28 @@ namespace AJ_UpdateWatcher
 
                         //MessageBox.Show(o.ToString());
 
-                        latest.Major = version_major;
-                        latest.Minor = version_minor;
-                        latest.Security = version_security;
-                        //latest.Build = version_build;
+                        latest.Major = Convert.ToInt32(version_major);
+                        latest.Minor = Convert.ToInt32(version_minor);
+                        latest.Security = Convert.ToInt32(version_security);
+
+                        latest.Build = Convert.ToInt32(version_build);
+
+                        if (o["version"]["patch"] != null)
+                            latest.Patch = Convert.ToInt32(o["version"]["patch"]);
+
+                        if (o["version"]["adopt_build_number"] != null)
+                            latest.AdoptBuild = Convert.ToInt32(o["version"]["adopt_build_number"]);
+
                         latest.VersionString = version_string;
                         latest.ReleaseName = version_release;
-                        latest.SemanticVersion = semantic_version;
+                        latest.SemVerAPI = semantic_version;
 
                         latest.MSIURL = msi_url;
                         latest.ZIPURL = zip_url;
                         latest.ImageType = image_type;
 
-                        // temporary (?) fix around https://github.com/AdoptOpenJDK/TSC/issues/185#issuecomment-724696068
-                        latest.Build = semantic_version.Split('+').Last();
+                        // see https://github.com/AdoptOpenJDK/TSC/issues/185#issuecomment-724696068
+                        latest.MSIRevision = Convert.ToInt32(semantic_version.Split('+').Last());
                         /*
                          * semver = major.minor.security + ((patch * 100) + build)
                          * MSI product version = major.minor.security.((patch * 100) + build)
@@ -181,7 +189,6 @@ namespace AJ_UpdateWatcher
                          * => semver = 11.0.9 + 101
                          * => MSI product version = 11.0.9.101
                          */
-                        // /endfix
 
                         latest.Found = true;
                         break;
