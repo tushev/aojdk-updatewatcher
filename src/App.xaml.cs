@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,7 +47,7 @@ namespace AJ_UpdateWatcher
                 if (sm.TaskIsSet())
                 {
                     var result = (e.Args[0] == "-askdeletetask") ?
-                        MessageBox.Show($"You have a scheduled task to check for updates of {Branding.TargetProduct}.{Environment.NewLine+Environment.NewLine}Do you want to remove this scheduled task?", Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) :
+                        MessageBox.Show($"You have a scheduled task to check for updates of {Branding.TargetProduct}.{Environment.NewLine + Environment.NewLine}Do you want to remove this scheduled task?", Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) :
                         MessageBoxResult.Yes;
 
                     if (result == MessageBoxResult.Yes)
@@ -72,6 +73,9 @@ namespace AJ_UpdateWatcher
             Updater = new Updater(Machine);
             Updater.RefreshAutoDiscoveredInstancesOnInstallationCompletion = true;
 
+            // add trigger
+            AddTriggers();
+
             if (!Settings.Default.isConfigured || (e.Args.Length > 0 && e.Args[0] == "-config"))
                 ShowConfigurationWindow();
             else
@@ -89,7 +93,7 @@ namespace AJ_UpdateWatcher
                             App.SetUpdateCheckErrorCount(0);
 
                             // show GUI
-                            ShowNewVersionWindow();                            
+                            ShowNewVersionWindow();
                         }
                         else
                         {
@@ -135,10 +139,11 @@ namespace AJ_UpdateWatcher
 
                     Updater.CheckForUpdatesAsync();
 
-                } else
+                }
+                else
                 {
                     var ans = MessageBox.Show(
-                        $"You don't have any configured {Branding.TargetProduct} installations. Would you like to configure them?", 
+                        $"You don't have any configured {Branding.TargetProduct} installations. Would you like to configure them?",
                         Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Error);
                     if (ans == MessageBoxResult.Yes)
                         ShowConfigurationWindow();
@@ -146,6 +151,27 @@ namespace AJ_UpdateWatcher
                         Application.Current.Shutdown();
                 }
             }
+        }
+
+        private static void AddTriggers()
+        {
+            Updater.UpdatesInstallationComplete += (s, _e) =>
+            {
+                string f = "";
+                try
+                {
+                    if (!String.IsNullOrEmpty(Settings.Default.UserConfigurableSetting_PostUpdateCommand))
+                    {
+                        f = Settings.Default.UserConfigurableSetting_PostUpdateCommand;
+                        Process.Start(f);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"There was an error while executing post-updates-installation command ({f}): {Environment.NewLine + Environment.NewLine}{ex.Message}",
+                        Branding.MessageBoxHeader, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            };
         }
 
         public static void ShowAddInstallationFromWebWindow()

@@ -8,7 +8,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Advanced settings" 
-        Height="240.152" Width="584.73" WindowStyle="ThreeDBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Topmost="True" Icon="/AJUpdateWatcher;component/assets/logo.ico" Closing="Window_Closing">
+        Height="275.152" Width="584.73" WindowStyle="ThreeDBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Topmost="True" Icon="/AJUpdateWatcher;component/assets/logo.ico" Closing="Window_Closing">
     <Grid>
 
         <TabControl>
@@ -59,6 +59,44 @@
                         Margin="14,126,14,0" VerticalAlignment="Top"
                         Text="Set in accordance with your internet connection. Values of 1 or 2 are generally recommended."/>
 
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Post-Install">
+                <Grid >
+
+                    <Label Content="Post-install command:" 
+                        Margin="9,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        />
+                    <TextBox x:Name="txtPostInstallCommand" 
+                             Height="25" Margin="141,8,40,0" TextWrapping="Wrap" VerticalAlignment="Top"     
+                             VerticalContentAlignment="Center"
+                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=UserConfigurableSetting_PostUpdateCommand, Mode=TwoWay}"
+                             />
+                    <Button x:Name="btnChoosePostInstallCommand" Content="..." 
+                            Margin="0,8,10,0" HorizontalAlignment="Right" Width="25" Height="25" VerticalAlignment="Top" Click="btnChoosePostInstallCommand_Click"/>
+
+                    <TextBlock 
+                        Foreground="Gray"
+                        TextWrapping="Wrap" 
+                        Margin="14,40,10,0" VerticalAlignment="Top"
+                        Text="If set, the specified command will be executed EVERY time when UpdatesInstallationComplete event occurs. This may be an executable or custom batch/PowerShell script."/>
+
+                    <TextBlock 
+                        Foreground="Gray"
+                        TextWrapping="Wrap" 
+                        Margin="14,78,10,0" VerticalAlignment="Top"
+                        Text="No arguments will be passed to the command. Unfortunately (and contr-intuitively), the updater cannot tell where were the new updates installed.
+Your script could possibly scan Windows Registry to find the actual list of JDK/JRE installations."/>
+
+                    <TextBlock 
+                        Foreground="OrangeRed"
+                        TextWrapping="Wrap" 
+                        Margin="14,132,10,0" VerticalAlignment="Top"
+                        Text="Please be advised that this ABSOLUTELY does not guarantee that MSIs were installed correctly (or installed at all),
+or the user did not press Cancel for some or all the MSIs. This only means that 'the progress bar for installation of updates has disappered'.
+You should handle all possible outcomes in your scripts manually. Use this (as well as the whole app in general) AT YOUR OWN RISK."/>
 
                 </Grid>
             </TabItem>

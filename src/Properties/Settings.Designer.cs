@@ -154,5 +154,17 @@ namespace AJ_UpdateWatcher.Properties {
                 this["SettingsUpgradeRequired"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UserConfigurableSetting_PostUpdateCommand {
+            get {
+                return ((string)(this["UserConfigurableSetting_PostUpdateCommand"]));
+            }
+            set {
+                this["UserConfigurableSetting_PostUpdateCommand"] = value;
+            }
+        }
     }
 }
