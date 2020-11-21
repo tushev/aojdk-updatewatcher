@@ -40,12 +40,14 @@ namespace AJ_UpdateWatcher
         private int installed_version_major = 0;
         private int installed_version_minor = 0;
         private int installed_version_security = 0;
+        private int installed_version_patch = -1;
         private int installed_version_build = -1;
         private string installed_version_arch = "";
         private string installed_version_jvm_implementation = "";
         private string installed_version_image_type = "";
         private string installed_version_heap = "";
         private string installed_version_full_version_string = "";
+        private string installed_version_semver = "";
         private string installed_version_os_name = "";
 
         private AdoptiumReleaseVersion new_available_version;
@@ -231,6 +233,7 @@ namespace AJ_UpdateWatcher
                     if (match_semantic_version.Success)
                     {
                         found = TryParseVersionREGEX(found, full_version_processed, match_semantic_version);
+                        installed_version_semver = match_semantic_version.Groups[1].Value;
                         semantic_processed = found;
                     }
 
@@ -499,6 +502,7 @@ namespace AJ_UpdateWatcher
                 version.Major = installed_version_major.ToString();
                 version.Minor = installed_version_minor.ToString();
                 version.Security = installed_version_security.ToString();
+                version.Patch = (installed_version_patch == -1) ? null : installed_version_patch.ToString();
                 version.Build = (installed_version_build == -1) ? null : installed_version_build.ToString();
 
                 version.LocalPath = Path;
@@ -518,6 +522,7 @@ namespace AJ_UpdateWatcher
                     return String.IsNullOrEmpty(path) ? "None yet" : "Not detected";
                 else
                     return installed_version_major.ToString() + "." + installed_version_minor.ToString() + "." + installed_version_security.ToString() +
+                                (installed_version_patch == -1 ? "" : "." + installed_version_patch.ToString()) +
                                 (installed_version_build == -1 ? "" : "+" + installed_version_build.ToString());
             }
         }

@@ -11,9 +11,11 @@ namespace AJ_UpdateWatcher
         public string Major { get; set; }
         public string Minor { get; set; }
         public string Security { get; set; }
+        public string Patch { get; set; }
         public string Build { get; set; }
-        public string VersionString { get; set; } // like: "openjdk_version": "1.8.0_265-b01" :: version only
-        public string ReleaseName { get; set; } // like: "release_name": "jdk-11.0.8+10_openj9-0.21.0" :: extra info
+        public string VersionString { get; set; } // like: "openjdk_version": "1.8.0_275-b01" // "11.0.9+11" :: version only
+        public string ReleaseName { get; set; } // like: "release_name": "jdk8u275-b01" // "jdk-11.0.8+10_openj9-0.21.0" // "jdk-11.0.9+11.1" :: extra info
+        public string SemanticVersion { get; set; } // like: "semver": "8.0.275+1" // "11.0.9+11.1" :: extra info
         public string MSIURL { get; set; }
         public string ZIPURL { get; set; }
         public string LocalPath { get; set; }
@@ -30,7 +32,9 @@ namespace AJ_UpdateWatcher
         {
             get
             {
-                return $"{Major}.{Minor}.{Security}" + (String.IsNullOrEmpty(Build) || Build == "-1" ? "" : $"+{Build}");
+                return $"{Major}.{Minor}.{Security}" +
+                    (String.IsNullOrEmpty(Patch) || Patch == "-1" ? "" : $".{Patch}") + 
+                    (String.IsNullOrEmpty(Build) || Build == "-1" ? "" : $"+{Build}");
             }
         }
 

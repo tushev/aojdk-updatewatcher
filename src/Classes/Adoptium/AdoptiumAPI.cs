@@ -150,6 +150,7 @@ namespace AJ_UpdateWatcher
                         string version_security = (string)o["version"]["security"];
                         string version_build = (string)o["version"]["build"];
                         string version_string = (string)o["version"]["openjdk_version"];
+                        string semantic_version = (string)o["version"]["semver"];
                         string version_release = (string)o["release_name"];
                         
                         string zip_url = (string)o["binary"]["package"]["link"];
@@ -162,13 +163,25 @@ namespace AJ_UpdateWatcher
                         latest.Major = version_major;
                         latest.Minor = version_minor;
                         latest.Security = version_security;
-                        latest.Build = version_build;
+                        //latest.Build = version_build;
                         latest.VersionString = version_string;
                         latest.ReleaseName = version_release;
+                        latest.SemanticVersion = semantic_version;
 
                         latest.MSIURL = msi_url;
                         latest.ZIPURL = zip_url;
                         latest.ImageType = image_type;
+
+                        // temporary (?) fix around https://github.com/AdoptOpenJDK/TSC/issues/185#issuecomment-724696068
+                        latest.Build = semantic_version.Split('+').Last();
+                        /*
+                         * semver = major.minor.security + ((patch * 100) + build)
+                         * MSI product version = major.minor.security.((patch * 100) + build)
+                         * eg.jdk - 11.0.9.1 + 1
+                         * => semver = 11.0.9 + 101
+                         * => MSI product version = 11.0.9.101
+                         */
+                        // /endfix
 
                         latest.Found = true;
                         break;
