@@ -219,11 +219,24 @@ namespace AJ_UpdateWatcher
             if (Settings.Default.CheckForSelfUpdates)
                 if (SelfUpdate.HasNewVersion(Settings.Default.SelfUpdatesAPI))
                 {
-                    var ans = MessageBox.Show($"New version of {Branding.ProductName} is available. Would you like to download installer (EXE/MSI) and run it?", Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    var ans = MessageBox.Show($"A new version of {Branding.ProductName} is available. Would you like to download update (EXE/MSI) and install it?"
+                        + $"{Environment.NewLine + Environment.NewLine}[Yes] = Download installer (EXE/MSI) and run it"
+                        + $"{Environment.NewLine}[No] = Do not update now"
+                        + $"{Environment.NewLine}[Cancel] = Open new release page in default browser (for installer-free ZIPs etc. This app will be closed) "
+                        + $"{Environment.NewLine + Environment.NewLine}New release name: {SelfUpdate.LatestVersion_ReleaseName}"
+                        , Branding.MessageBoxHeader, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                     if (ans == MessageBoxResult.Yes)
                     {
                         SelfUpdate.DownloadCloseAndInstallUpdate();
                         System.Windows.Application.Current.Shutdown(); // normally this line should not be triggered
+                    }
+                    else
+                    {
+                        if (ans == MessageBoxResult.Cancel)
+                        {
+                            SelfUpdate.OpenLatestReleaseInBrowser();
+                            System.Windows.Application.Current.Shutdown();
+                        }
                     }
                 }
         }

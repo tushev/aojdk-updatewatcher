@@ -18,12 +18,18 @@ namespace AJ_UpdateWatcher
         const string UserAgent = "aojdk-updatewatcher Auto Updater";
         static string ProductName = $"Update Watcher for {Branding.TargetProduct}";
 
-        static public string DownloadURL = "";
+        static public string LatestVersion_DownloadURL = "";
+        static public string LatestVersion_BrowserURL = "";
+        static public string LatestVersion_ReleaseName = "";
         static public bool Found = false;
 
         static public bool HasNewVersion(string api)
         {
             Version local_version = Assembly.GetEntryAssembly().GetName().Version;
+
+            // for testing
+            //local_version = new Version("0.0.0.0");
+
             Found = false;
 
             try
@@ -40,6 +46,9 @@ namespace AJ_UpdateWatcher
                 var response = httpClient.GetStringAsync(new Uri(api)).Result;
                 JObject o = JObject.Parse(response);
 
+                LatestVersion_BrowserURL = (string)o["html_url"];
+                LatestVersion_ReleaseName = (string)o["name"];
+
                 string tag = (string)o["tag_name"];
                 Version remote_version = new Version(tag);
 
@@ -52,7 +61,7 @@ namespace AJ_UpdateWatcher
                         string name = (string)a["name"];
                         if (name.IndexOf("setup", StringComparison.OrdinalIgnoreCase) >= 0)
                         {
-                            DownloadURL = (string)a["browser_download_url"];
+                            LatestVersion_DownloadURL = (string)a["browser_download_url"];
                             Found = true;
                             break;
                         }
@@ -71,18 +80,18 @@ namespace AJ_UpdateWatcher
         }
         static public void DownloadCloseAndInstallUpdate()
         {
-            if (!Found || DownloadURL == "") return;
+            if (!Found || LatestVersion_DownloadURL == "") return;
             try
             {
-                Uri ur = new Uri(DownloadURL);
+                Uri ur = new Uri(LatestVersion_DownloadURL);
 
-                string tempname = System.IO.Path.GetTempPath() + Guid.NewGuid() + "-" + GetFileNameFromUrl(DownloadURL);
+                string tempname = System.IO.Path.GetTempPath() + Guid.NewGuid() + "-" + GetFileNameFromUrl(LatestVersion_DownloadURL);
 
                 using (WebClient client = new WebClient())
                 {
                     client.DownloadFile(ur, tempname);
 
-                    MessageBox.Show("The application will be closed and new version will be installed.", ProductName + " Updater", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show($"Download complete. {Branding.ProductName} will now be closed and the new version will be installed.", ProductName + " :: Updater", MessageBoxButton.OK, MessageBoxImage.Information);
                     Process proc = new Process();
                     proc.StartInfo.FileName = tempname;
                     proc.StartInfo.UseShellExecute = true;
@@ -95,6 +104,10 @@ namespace AJ_UpdateWatcher
             {
                 MessageBox.Show("There was an error: " + ex.Message, ProductName + " Updater Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+        static public void OpenLatestReleaseInBrowser()
+        {
+            Process.Start(LatestVersion_BrowserURL);
         }
         static string GetFileNameFromUrl(string url)
         {

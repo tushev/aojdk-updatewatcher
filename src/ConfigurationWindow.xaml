@@ -358,10 +358,10 @@
         <!-- UPDATE THIS TOOL REGULARLY -->
         <CheckBox x:Name="cbSelfUpdate" 
                   IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CheckForSelfUpdates, Mode=TwoWay}"
-                  Content="Update this tool regularly" 
-                  ToolTip="If on, this app will check for new releases on GitHub every time it starts."
+                  Content="Update this tool regularly (recommended) [via GitHub]" 
+                  ToolTip="If on, this app will query GitHub API for new releases of this app every time this app starts."
                   Foreground="Gray"
-                  Margin="660,0,0,9" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="155" 
+                  Margin="660,0,0,9" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Left"  
                   Style="{DynamicResource GrayCheckBox}"/>
 
 
