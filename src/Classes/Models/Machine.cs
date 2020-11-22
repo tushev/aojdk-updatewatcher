@@ -241,6 +241,16 @@ namespace AJ_UpdateWatcher
         public bool ThereAreInstallationsWithSkippedReleases { get { return InstallationsWithSkippedReleasesCount > 0; } }
         public int InstallationsWithUpdatesCount { get { return Installations.Count(x => x.HasNewVersion); } }
         public int InstallationsWithMSIUpdatesCount { get { return Installations.Count(x => x.HasMSIInNewVersion); } }
+        public string StringListOfAvailableUpdates 
+        { 
+            get
+            { 
+                var query = from x in Installations
+                            where x.HasNewVersion
+                            select x.NewVersion.ParsedVersionString;
+                return String.Join(", ", query);
+            }
+        }
 
         private bool show_shadowed_installations = false;
         public bool ShowShadowedInstallations

@@ -93,7 +93,19 @@ namespace AJ_UpdateWatcher
                             App.SetUpdateCheckErrorCount(0);
 
                             // show GUI
-                            ShowNewVersionWindow();
+                            Action _ShowNewVersionWindow = () => { ShowNewVersionWindow(false); };
+
+                            /*
+                             * // either - show icon (show delayed)...
+                             * if (Settings.Default.UserConfigurableSetting_UseTrayNotificationForBackgroundCheck)
+                             * {
+                             *     TrayIconUpdatesAreAvailable.UserClickedOnIconOrNotification += (s2, e2) => { _ShowNewVersionWindow(); };                                
+                             *     TrayIconUpdatesAreAvailable.ShowNotification(Machine.StringListOfAvailableUpdates);
+                             * }
+                             * // or show GUI directly
+                             * else
+                             */
+                            _ShowNewVersionWindow();
                         }
                         else
                         {
@@ -196,18 +208,19 @@ namespace AJ_UpdateWatcher
                 ConfigurationWindowInstance.Activate();
         }
 
-        public static void ShowNewVersionWindow(bool invoked_from_ui = false)
+        public static void ShowNewVersionWindow(bool invoked_from_ui)
         {
             //if (invoked_from_ui)
             //    Updater.SetToInitialState();
 
             if (NewVersionWindowInstance == null || NewVersionWindowInstance.IsLoaded == false)
             {
-                NewVersionWindowInstance = new NewVersionWindow(true);
+                NewVersionWindowInstance = new NewVersionWindow(invoked_from_ui);
                 NewVersionWindowInstance.Show();
             }
             else
             {
+                NewVersionWindowInstance.SetInvokedFromUIState(invoked_from_ui);
                 NewVersionWindowInstance.Activate();
                 NewVersionWindowInstance.RefreshUpdates();
             }
@@ -280,6 +293,13 @@ namespace AJ_UpdateWatcher
         {
             Settings.Default.ErrorsEncounteredSinceLastConfigurationWindowOpened = n;
             Settings.Default.Save();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+
+            TrayIconUpdatesAreAvailable.RemoveTrayIcon();
         }
     }
 }

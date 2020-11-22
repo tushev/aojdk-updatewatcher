@@ -166,5 +166,17 @@ namespace AJ_UpdateWatcher.Properties {
                 this["UserConfigurableSetting_PostUpdateCommand"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UserConfigurableSetting_UseTrayNotificationForBackgroundCheck {
+            get {
+                return ((bool)(this["UserConfigurableSetting_UseTrayNotificationForBackgroundCheck"]));
+            }
+            set {
+                this["UserConfigurableSetting_UseTrayNotificationForBackgroundCheck"] = value;
+            }
+        }
     }
 }

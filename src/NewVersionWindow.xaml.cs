@@ -27,14 +27,19 @@ namespace AJ_UpdateWatcher
     {
         NewVersionViewModel NewVersionVM;
 
-        public NewVersionWindow(bool hide_config_link = false)
+        public NewVersionWindow(bool invoked_from_ui = false)
         {
             InitializeComponent();
 
-            NewVersionVM = new NewVersionViewModel(hide_config_link);
+            NewVersionVM = new NewVersionViewModel(invoked_from_ui);
             this.DataContext = NewVersionVM;
 
             HeaderArea.MouseLeftButtonDown += (s, e) => { this.DragMove(); };
+        }
+
+        public void SetInvokedFromUIState(bool invoked_from_ui)
+        {
+            NewVersionVM.InvokedFromUI = invoked_from_ui;
         }
 
         public void RefreshUpdates()

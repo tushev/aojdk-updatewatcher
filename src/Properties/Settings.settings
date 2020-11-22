@@ -38,5 +38,8 @@
     <Setting Name="UserConfigurableSetting_PostUpdateCommand" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="UserConfigurableSetting_UseTrayNotificationForBackgroundCheck" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

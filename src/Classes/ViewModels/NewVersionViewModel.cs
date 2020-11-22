@@ -22,11 +22,9 @@ namespace AJ_UpdateWatcher
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
 
-        public bool InvokedFromUI { get; set; }
-
-        public NewVersionViewModel(bool invoked_from_ui = false)
+        public NewVersionViewModel(bool _invoked_from_ui = false)
         {
-            InvokedFromUI = invoked_from_ui;
+            InvokedFromUI = _invoked_from_ui;
             ShowAllEnabledInstallations = false;
 
             if (!updater.UpdateCheckPerformed)
@@ -79,6 +77,7 @@ namespace AJ_UpdateWatcher
                 
 
             };
+
 
             updater.StateChanged += (s, _e) => { RefreshUI(); };
             updater.UpdatesInstallationStarted += (s, _e) => { dispatcherTimer.Start(); };
@@ -416,5 +415,19 @@ namespace AJ_UpdateWatcher
 
         public string TargetProduct { get { return Branding.TargetProduct; } }
         public string ProductName { get { return Branding.ProductName; } }
+
+        private bool invoked_from_ui = true;
+        public bool InvokedFromUI
+        {
+            get { return invoked_from_ui; }
+            set
+            {
+                invoked_from_ui = value;
+                OnPropertyChanged("InvokedFromUI");
+            }
+        }
+
+
+
     }
 }
