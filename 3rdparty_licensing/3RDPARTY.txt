@@ -8,3 +8,4 @@ This application contains the following 3rd party elements:
 * JamesNK/Newtonsoft.Json                   MIT License
 * System.ValueTuple                         MIT License
 * DotNetProjects.Extended.Wpf.Toolkit		MS-PL License
+* Windows Community Toolkit                 MIT License

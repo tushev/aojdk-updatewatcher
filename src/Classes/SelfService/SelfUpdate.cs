@@ -20,7 +20,9 @@ namespace AJ_UpdateWatcher
 
         static public string LatestVersion_DownloadURL = "";
         static public string LatestVersion_BrowserURL = "";
-        static public string LatestVersion_ReleaseName = "";
+        static public string LatestVersion_ReleaseName { get; internal set; }
+        static public string LatestVersion_ReleaseText { get; internal set; }
+        static public string LatestVersion_TagName { get; internal set; }
         static public bool Found = false;
 
         static public bool HasNewVersion(string api)
@@ -28,7 +30,7 @@ namespace AJ_UpdateWatcher
             Version local_version = Assembly.GetEntryAssembly().GetName().Version;
 
             // for testing
-            //local_version = new Version("0.0.0.0");
+            // local_version = new Version("0.0.0.0");
 
             Found = false;
 
@@ -47,7 +49,10 @@ namespace AJ_UpdateWatcher
                 JObject o = JObject.Parse(response);
 
                 LatestVersion_BrowserURL = (string)o["html_url"];
+
                 LatestVersion_ReleaseName = (string)o["name"];
+                LatestVersion_ReleaseText = (string)o["body"];
+                LatestVersion_TagName = (string)o["tag_name"];
 
                 string tag = (string)o["tag_name"];
                 Version remote_version = new Version(tag);

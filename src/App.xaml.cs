@@ -219,12 +219,15 @@ namespace AJ_UpdateWatcher
             if (Settings.Default.CheckForSelfUpdates)
                 if (SelfUpdate.HasNewVersion(Settings.Default.SelfUpdatesAPI))
                 {
-                    var ans = MessageBox.Show($"A new version of {Branding.ProductName} is available. Would you like to download update (EXE/MSI) and install it?"
-                        + $"{Environment.NewLine + Environment.NewLine}[Yes] = Download installer (EXE/MSI) and run it"
-                        + $"{Environment.NewLine}[No] = Do not update now"
-                        + $"{Environment.NewLine}[Cancel] = Open new release page in default browser (for installer-free ZIPs etc. This app will be closed) "
-                        + $"{Environment.NewLine + Environment.NewLine}New release name: {SelfUpdate.LatestVersion_ReleaseName}"
-                        , Branding.MessageBoxHeader, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    var ans = ShowSelfUpdateDialog();
+
+                    //var ans = MessageBox.Show($"A new version of {Branding.ProductName} is available. Would you like to download update (EXE/MSI) and install it?"
+                    //    + $"{Environment.NewLine + Environment.NewLine}[Yes] = Download installer (EXE/MSI) and run it"
+                    //    + $"{Environment.NewLine}[No] = Do not update now"
+                    //    + $"{Environment.NewLine}[Cancel] = Open new release page in default browser (for installer-free ZIPs etc. This app will be closed) "
+                    //    + $"{Environment.NewLine + Environment.NewLine}New release name: {SelfUpdate.LatestVersion_ReleaseName}"
+                    //    , Branding.MessageBoxHeader, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
                     if (ans == MessageBoxResult.Yes)
                     {
                         SelfUpdate.DownloadCloseAndInstallUpdate();
@@ -240,6 +243,20 @@ namespace AJ_UpdateWatcher
                     }
                 }
         }
+
+        private MessageBoxResult ShowSelfUpdateDialog()
+        {
+            var dialog = new AJ_UpdateWatcher.Windows.SelfUpdateDialog();
+
+            this.SetShutdownExplicit();
+            bool? ans = dialog.ShowDialog();
+            this.SetShutdownOnLastWindowClose();
+
+            return ans == true ? (dialog.OpenReleasePageInstead == false ? MessageBoxResult.Yes : MessageBoxResult.Cancel) : MessageBoxResult.No;
+        }
+
+        public void SetShutdownExplicit() { this.ShutdownMode = ShutdownMode.OnExplicitShutdown; }
+        public void SetShutdownOnLastWindowClose() { this.ShutdownMode = ShutdownMode.OnLastWindowClose; }
 
         private static void CheckForFirstRunAndExit(bool invoked_from_ui, string status = "")
         {
