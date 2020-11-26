@@ -11,5 +11,6 @@
     <local:InstallationStatusToVisibilityMultiValueConverter x:Key="InstallationStatusToVisibilityMultiValueConverter"/>
     <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     <local:ObjectToTupleWithParameterConverter x:Key="ObjectToTupleWithParameterConverter"/>
+    <local:SuggestConvertToUserOverridedVisibilityMultiValueConverter x:Key="SuggestConvertToUserOverridedVisibilityMultiValueConverter"/>
 
 </ResourceDictionary>
