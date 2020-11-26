@@ -44,5 +44,8 @@
     <Setting Name="JavaHomeWarningHasBeenDisplayed" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="NoWarrantiesDisclaimerHasBeenDisplayed" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
