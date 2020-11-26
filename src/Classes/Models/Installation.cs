@@ -56,7 +56,7 @@ namespace AJ_UpdateWatcher
         public bool IsRegistryAutodiscoveredInstance { get { return registry_autodiscovered_instance; } }
         public bool IsAutodiscoveredInstance { get { return registry_autodiscovered_instance; } }
         public bool RegistryUserScope { get; set; }
-
+        public bool OverridesAutodiscovered { get; set; }
 
 
 
@@ -85,9 +85,11 @@ namespace AJ_UpdateWatcher
                 if (registry_autodiscovered_instance)
                     return "Registry " + (RegistryUserScope ? "(HKCU)" : "(HKLM)");
                 else if (java_home_instance)
-                    return "JAVA_HOME";
+                    return (OverridesAutodiscovered ? "JAVA_HOME (o)" : "JAVA_HOME");
                 else
-                    return Detected || (NotInstalled && CheckForUpdatesFlag) ? "User added" : " ";
+                    return Detected || (NotInstalled && CheckForUpdatesFlag) ? 
+                        (OverridesAutodiscovered ? "User override" : "User added") : 
+                        " ";
             }
         }
 

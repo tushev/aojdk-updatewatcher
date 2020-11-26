@@ -175,6 +175,7 @@ namespace AJ_UpdateWatcher
 
             // disable auto-discovered installations that have the same path as one of custom-set installations            
             foreach (var i in Installations)
+            {
                 if (i.IsAutodiscoveredInstance)
                 {
                     var same_pathed = Installations.Where(x => x.Path.TrimEnd('\\') == i.Path.TrimEnd('\\') && x.IsAutodiscoveredInstance == false);
@@ -189,6 +190,21 @@ namespace AJ_UpdateWatcher
                             i.CheckForUpdatesFlag = true;
                     }
                 }
+                else
+                {
+                    var same_pathed_autos = Installations.Where(x => x.Path.TrimEnd('\\') == i.Path.TrimEnd('\\') && x.IsAutodiscoveredInstance == true);
+                    if (same_pathed_autos.Count() > 0)
+                    {
+                        if (i.OverridesAutodiscovered == false)
+                            i.OverridesAutodiscovered = true;
+                    }
+                    else
+                    {
+                        if (i.OverridesAutodiscovered == true)
+                            i.OverridesAutodiscovered = false;
+                    }
+                }
+            }
 
             OnPropertyChanged("Installations");
         }
