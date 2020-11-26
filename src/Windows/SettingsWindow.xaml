@@ -9,6 +9,15 @@
         mc:Ignorable="d"
         Title="Advanced settings" 
         Height="275.152" Width="584.73" WindowStyle="ThreeDBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Topmost="True" Icon="/AJUpdateWatcher;component/assets/logo.ico" Closing="Window_Closing">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/CommonStyles.xaml" />
+                <ResourceDictionary Source="../Styles/ConfigurationWindow.CustomStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
     <Grid>
 
         <TabControl>
@@ -89,6 +98,11 @@
                         Margin="14,78,10,0" VerticalAlignment="Top"
                         Text="No arguments will be passed to the command. Unfortunately (and contr-intuitively), the updater cannot tell where were the new updates installed.
 Your script could possibly scan Windows Registry to find the actual list of JDK/JRE installations."/>
+
+                    <Button x:Name="btnOpenSampleScriptLink" 
+                            Style="{StaticResource LinkButton}"
+                            Content="See sample scripts"
+                            Width="100" Height="23" Margin="0,120,18,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnOpenSampleScriptLink_Click"/>
 
                     <TextBlock 
                         Foreground="OrangeRed"

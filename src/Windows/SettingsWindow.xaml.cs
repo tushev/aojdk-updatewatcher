@@ -51,5 +51,10 @@ namespace AJ_UpdateWatcher
 
             this.Topmost = oldTopMost;
         }
+
+        private void btnOpenSampleScriptLink_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/tushev/aojdk-updatewatcher/wiki/Sample-postinstall-scripts");
+        }
     }
 }
