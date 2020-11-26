@@ -178,5 +178,17 @@ namespace AJ_UpdateWatcher.Properties {
                 this["UserConfigurableSetting_UseTrayNotificationForBackgroundCheck"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool JavaHomeWarningHasBeenDisplayed {
+            get {
+                return ((bool)(this["JavaHomeWarningHasBeenDisplayed"]));
+            }
+            set {
+                this["JavaHomeWarningHasBeenDisplayed"] = value;
+            }
+        }
     }
 }

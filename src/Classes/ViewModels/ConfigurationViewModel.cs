@@ -202,8 +202,32 @@ namespace AJ_UpdateWatcher
         }
         private void ExecuteAddJAVA_HOMEInstallationCommand(object parameter)
         {
-            Installation new_installation = new Installation(true);
-            ConfiguredInstallations.Add(new_installation);
+            bool add = true;
+
+            try
+            {
+                if (!Properties.Settings.Default.JavaHomeWarningHasBeenDisplayed &&
+                    (machine.DiscoverMachineWideInstallations || machine.DiscoverUserScopeInstallations)
+                   )
+                { 
+                    var ans = MessageBox.Show(
+                                 "Generally, you don't need adding JAVA_HOME, if you have auto-discovery turned on. Auto-discovery will monitor all your installations for updates." + Environment.NewLine + Environment.NewLine +
+                                 "Add JAVA_HOME **only** if you need to override something, or to switch to Latest (LTS) feature branch, or if your know what are you doing." + Environment.NewLine + Environment.NewLine +
+                                 "Proceed with adding JAVA_HOME? ",
+                                 Branding.ProductName, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+                    if (ans == MessageBoxResult.No)
+                        add = false;
+
+                    Properties.Settings.Default.JavaHomeWarningHasBeenDisplayed = true;
+                }
+            }
+            catch (Exception) { }
+
+            if (add)
+            {
+                Installation new_installation = new Installation(true);
+                ConfiguredInstallations.Add(new_installation);
+            }
         }
         public bool CanExecuteAddJAVA_HOMEInstallationCommand(object parameter) { return true; }
         #endregion
