@@ -289,7 +289,7 @@ namespace AJ_UpdateWatcher
         {
             get
             {
-                return Installations.Count(x => String.IsNullOrEmpty(x.Path)) > 0;
+                return Installations.Count(x => !String.IsNullOrEmpty(x.Path)) > 0;
             }
         }
         public bool PossiblyHasConfiguredInstallations
