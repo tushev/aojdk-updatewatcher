@@ -41,6 +41,8 @@ namespace AJ_UpdateWatcher
         {
             base.OnStartup(e);
 
+            bool continue_loading = true;
+
             if (e.Args.Length > 0 && (e.Args[0] == "-deletetask" || e.Args[0] == "-askdeletetask"))
             {
                 SchedulerManager sm = new SchedulerManager();
@@ -57,114 +59,121 @@ namespace AJ_UpdateWatcher
                     }
                 }
 
+                continue_loading = false;
                 Application.Current.Shutdown();
             }
 
-            // before doing things, upgrade from previous version
-            Upgrade.UpgradeAppSettings();
-
-            // first, check if there is a new version of this tool (if configured so)
-            CheckSelfUpdate();
-
-            // load settings
-            Machine = AppDataPersistence.TryLoad();
-
-            // prepare updater class
-            Updater = new Updater(Machine);
-            Updater.RefreshAutoDiscoveredInstancesOnInstallationCompletion = true;
-
-            // add trigger
-            AddTriggers();
-
-            ShowDisclaimer();
-
-            if (!Settings.Default.isConfigured || (e.Args.Length > 0 && e.Args[0] == "-config"))
-                ShowConfigurationWindow();
-            else
+            if (continue_loading)
             {
-                if (Machine.PossiblyHasConfiguredInstallations)
+                // before doing things, upgrade from previous version
+                Upgrade.UpgradeAppSettings();
+
+                // first, check if there is a new version of this tool (if configured so)
+                CheckSelfUpdate();
+
+                // load settings
+                Machine = AppDataPersistence.TryLoad();
+
+                // prepare updater class
+                Updater = new Updater(Machine);
+                Updater.RefreshAutoDiscoveredInstancesOnInstallationCompletion = true;
+
+                // add trigger
+                AddTriggers();
+
+                ShowDisclaimer();
+
+                if (!Settings.Default.isConfigured || (e.Args.Length > 0 && e.Args[0] == "-config"))
+                    ShowConfigurationWindow();
+                else
                 {
-                    _app_update_check_complete_eventhandler = (s, _e) =>
+                    if (Machine.PossiblyHasConfiguredInstallations)
                     {
-                        // remove event handler so this App.xaml.cs-code will never be triggered again from GUI
-                        Updater.UpdatesCheckComplete -= _app_update_check_complete_eventhandler;
-
-                        if (Updater.UpdateCheckResultedInNewVersions)
+                        _app_update_check_complete_eventhandler = (s, _e) =>
                         {
-                            // reset error counter - update is (at least partially) successful
-                            App.SetUpdateCheckErrorCount(0);
+                            // remove event handler so this App.xaml.cs-code will never be triggered again from GUI
+                            Updater.UpdatesCheckComplete -= _app_update_check_complete_eventhandler;
 
-                            // show GUI
-                            Action _ShowNewVersionWindow = () => { ShowNewVersionWindow(false); };
-
-                            /*
-                             * // either - show icon (show delayed)...
-                             * if (Settings.Default.UserConfigurableSetting_UseTrayNotificationForBackgroundCheck)
-                             * {
-                             *     TrayIconUpdatesAreAvailable.UserClickedOnIconOrNotification += (s2, e2) => { _ShowNewVersionWindow(); };                                
-                             *     TrayIconUpdatesAreAvailable.ShowNotification(Machine.StringListOfAvailableUpdates);
-                             * }
-                             * // or show GUI directly
-                             * else
-                             */
-                            _ShowNewVersionWindow();
-                        }
-                        else
-                        {
-                            if (Updater.ErrorsOccuredWhileCheckingForUpdates)
+                            if (Updater.UpdateCheckResultedInNewVersions)
                             {
-                                // count errors ...
-                                int N = Settings.Default.ErrorsEncounteredSinceLastConfigurationWindowOpened + 1;
-                                SetUpdateCheckErrorCount(N);
+                                // reset error counter - update is (at least partially) successful
+                                App.SetUpdateCheckErrorCount(0);
 
-                                // ... and warn user if N>X
-                                if (N >= Settings.Default.UserConfigurableSetting_WarnIfNUpdateChecksResultedInErrors)
-                                {
-                                    var ans = MessageBox.Show(
-                                            $"{Branding.ProductName} has encountered {N} sequential errors during background checking for updates (normally, this happens when you login to Windows)." + Environment.NewLine + Environment.NewLine +
-                                            $"Most likely it is caused by persistent internet connection issues - {AdoptiumAPI.baseDOMAIN} may be not reachable. Also this could be caused by misconfiguration." + Environment.NewLine + Environment.NewLine +
-                                            $"Error counter will be reset now and you will see this message again after {Settings.Default.UserConfigurableSetting_WarnIfNUpdateChecksResultedInErrors} new sequential errors." + Environment.NewLine + Environment.NewLine +
-                                            //TODO: $"This can be configured in Settings" + Environment.NewLine + Environment.NewLine +
-                                            $"Would you like to open Configuration Window for {Branding.ProductName}?"
-                                            ,
-                                            Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.No);
+                                // show GUI
+                                Action _ShowNewVersionWindow = () => { ShowNewVersionWindow(false); };
 
-                                    if (ans == MessageBoxResult.Yes)
-                                        ShowConfigurationWindow();
-                                    else
-                                    {
-                                        SetUpdateCheckErrorCount(0);
-                                        Application.Current.Shutdown();
-                                    }
-                                }
-                                else
-                                    CheckForFirstRunAndExit(false, $"There were errors while checking for {Branding.TargetProduct} updates. Check your internet connection and ensure {AdoptiumAPI.baseDOMAIN} is reachable.");
+                                /*
+                                 * // either - show icon (show delayed)...
+                                 * if (Settings.Default.UserConfigurableSetting_UseTrayNotificationForBackgroundCheck)
+                                 * {
+                                 *     TrayIconUpdatesAreAvailable.UserClickedOnIconOrNotification += (s2, e2) => { _ShowNewVersionWindow(); };                                
+                                 *     TrayIconUpdatesAreAvailable.ShowNotification(Machine.StringListOfAvailableUpdates);
+                                 * }
+                                 * // or show GUI directly
+                                 * else
+                                 */
+                                _ShowNewVersionWindow();
                             }
                             else
                             {
-                                // reset error counter - there were no errors (and no updates)
-                                App.SetUpdateCheckErrorCount(0);
+                                if (Updater.ErrorsOccuredWhileCheckingForUpdates)
+                                {
+                                    // count errors ...
+                                    int N = Settings.Default.ErrorsEncounteredSinceLastConfigurationWindowOpened + 1;
+                                    SetUpdateCheckErrorCount(N);
 
-                                CheckForFirstRunAndExit(false, $"You already have up-to-date version of {Branding.TargetProduct}");
+                                    // ... and warn user if N>X
+                                    if (N >= Settings.Default.UserConfigurableSetting_WarnIfNUpdateChecksResultedInErrors)
+                                    {
+                                        var ans = MessageBox.Show(
+                                                $"{Branding.ProductName} has encountered {N} sequential errors during background checking for updates (normally, this happens when you login to Windows)." + Environment.NewLine + Environment.NewLine +
+                                                $"Most likely it is caused by persistent internet connection issues - {AdoptiumAPI.baseDOMAIN} may be not reachable. Also this could be caused by misconfiguration." + Environment.NewLine + Environment.NewLine +
+                                                $"Error counter will be reset now and you will see this message again after {Settings.Default.UserConfigurableSetting_WarnIfNUpdateChecksResultedInErrors} new sequential errors." + Environment.NewLine + Environment.NewLine +
+                                                //TODO: $"This can be configured in Settings" + Environment.NewLine + Environment.NewLine +
+                                                $"Would you like to open Configuration Window for {Branding.ProductName}?"
+                                                ,
+                                                Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.No);
+
+                                        if (ans == MessageBoxResult.Yes)
+                                            ShowConfigurationWindow();
+                                        else
+                                        {
+                                            SetUpdateCheckErrorCount(0);
+                                            Application.Current.Shutdown();
+                                        }
+                                    }
+                                    else
+                                        CheckForFirstRunAndExit(false, $"There were errors while checking for {Branding.TargetProduct} updates. Check your internet connection and ensure {AdoptiumAPI.baseDOMAIN} is reachable.");
+                                }
+                                else
+                                {
+                                    // reset error counter - there were no errors (and no updates)
+                                    App.SetUpdateCheckErrorCount(0);
+
+                                    CheckForFirstRunAndExit(false, $"You already have up-to-date version of {Branding.TargetProduct}");
+                                }
                             }
-                        }
-                    };
-                    Updater.UpdatesCheckComplete += _app_update_check_complete_eventhandler;
+                        };
+                        Updater.UpdatesCheckComplete += _app_update_check_complete_eventhandler;
 
-                    Updater.CheckForUpdatesAsync();
+                        Updater.CheckForUpdatesAsync();
 
-                }
-                else
-                {
-                    var ans = MessageBox.Show(
-                        $"You don't have any configured {Branding.TargetProduct} installations. Would you like to configure them?",
-                        Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Error);
-                    if (ans == MessageBoxResult.Yes)
-                        ShowConfigurationWindow();
+                    }
                     else
-                        Application.Current.Shutdown();
-                }
-            }
+                    {
+                        var ans = MessageBox.Show(
+                            $"You don't have any configured {Branding.TargetProduct} installations. Would you like to configure them?",
+                            Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Error);
+                        if (ans == MessageBoxResult.Yes)
+                            ShowConfigurationWindow();
+                        else
+                            Application.Current.Shutdown();
+
+                    } // if-else (Machine.PossiblyHasConfiguredInstallations)
+
+                } //else (!Settings.Default.isConfigured || (e.Args.Length > 0 && e.Args[0] == "-config"))
+
+            } //if (continue_loading)
         }
 
         private static void AddTriggers()
