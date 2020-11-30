@@ -26,7 +26,17 @@ Configuration window will appear only on first run or if something goes wrong or
 
 This app is designed to run on Windows startup. I recommend to turn on **Check for AdoptOpenJDK updates on Logon** setting in configuration. If you want another schedule, turn this on and press Edit task to configure it as desired.
 
-## 🔃 New in v. 2.0.0
+## 🔃 New in v. 2.0.1:
+* Added support for recently introduced changes in AdoptOpenJDK API and versioning scheme. This allows to receive `patch` and `AdoptBuild` updates for AdoptOpenJDK.
+* Switched to [MSI](https://github.com/tushev/aojdk-updatewatcher/wiki/MSI-Installation) for installers. *No more false positives on VirusTotal!*
+* Added support for post-install scripts/triggers (#5). 
+* Redesigned self-update UI, added an option to view new release name *(+ release notes on hover)*
+* Added [many new command line arguments](https://github.com/tushev/aojdk-updatewatcher/wiki/Command-Line-Arguments)
+* Added .cmd file to open Configuration for installer-free version (#4) 
+* Fix for a bug during background check when autodiscovery was set to off
+* Other minor changes and fixes
+
+###  New in v. 2.0.0
 * Support for multiple AdoptOpenJDK installations
 * Automatic discovery of installations via Windows Registry
 * Redesigned UI/UX
@@ -38,12 +48,12 @@ This app is designed to run on Windows startup. I recommend to turn on **Check f
 ## ℹ Requirements
 Ironically, this tool is written in C# 6 + WPF, because I am not a Java developer xD
 * Windows 10 _(earlier versions are likely to work as well, but I did not test that)_
-* .NET Framework 4.7.2 _(the installer will do it for you)_
+* .NET Framework 4.7.2 _(must be installed beforehand)_
 
 ## 📩 Download
 There's a built-in update mechanism. 
-### 👉 [Download version 2](https://github.com/tushev/aojdk-updatewatcher/releases) 👈
-### If you find this app useful, stars are appreciated :) [![GitHub stars](https://img.shields.io/github/stars/tushev/aojdk-updatewatcher.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/tushev/aojdk-updatewatcher/stargazers/)
+### 👉 [Download version 2.0.1](https://github.com/tushev/aojdk-updatewatcher/releases) 👈
+### If you find this app useful, stars are appreciated :) [![GitHub stars](https://img.shields.io/github/stars/tushev/aojdk-updatewatcher.svg?style=social&label=Star&maxAge=86400)](https://GitHub.com/tushev/aojdk-updatewatcher/stargazers/)
 * ❓ [Read the wiki](https://github.com/tushev/aojdk-updatewatcher/wiki)
 
 
@@ -53,7 +63,7 @@ There's a built-in update mechanism.
 0. Run the downloaded installer and run the app _(internet connection highly recommended on first run :)_
 1. **Turn on `Check for AdoptOpenJDK updates on Logon`**. _(If you want another schedule, turn this on and press Edit task to configure it as desired)_.
 2. **Turn on automatic discovery of AdoptOpenJDK installations**.
-> Please note that only MSI-installed JDKs/JREs can be discovered (because only MSIs add corresponding registry keys automatically)
+> 👉 Please note that only MSI-installed JDKs/JREs can be discovered automatically (because only MSIs add corresponding registry keys automatically). ZIP-extracted JDKs/JREs or very old MSIs cannot be autodiscovered.
  
  **That's all!**
 ![First Run](https://raw.githubusercontent.com/tushev/aojdk-updatewatcher/master/docs/first_run_config_example_cut.gif)
@@ -74,6 +84,8 @@ The author does not provide any support related to AdoptOpenJDK.
 
 For support, please visit https://github.com/AdoptOpenJDK/openjdk-support/issues or their corresponding website - https://adoptopenjdk.net
 
+⚠ This *(independent)* software does not GUARANTEE that you will always get the lastest version of AdoptOpenJDK.<br>**Normally, everything works OK, and you get timely updates.**<br>However, if something breaks or changes in AdoptOpenJDK API, then you may not get the latest version.<br>*No warranties provided (see [LICENSE](https://github.com/tushev/aojdk-updatewatcher/blob/master/LICENSE.txt)), use at your own risk*.
+
 **THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.**
@@ -92,7 +104,7 @@ v.1.0: Please don't judge my coding style by this project, as I developed this a
 v.2.0: The app was refactored. However, some codestyle issues still remain - for a single-person-maintained project, they are not a major issue. My top priority is app stability and robustness.
 
 [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)
-(`¹`) Please note that _blank-line related rules_ such as `The code must not contain multiple blank lines in a row.`, `A closing curly bracket must not be preceded by a blank line.`,  `An opening curly bracket must not be followed by a blank line` etc **are disabled** in CodeFactor.
+(`¹`) <sub>Please note that _blank-line related rules_ such as `The code must not contain multiple blank lines in a row.`, `A closing curly bracket must not be preceded by a blank line.`,  `An opening curly bracket must not be followed by a blank line` etc **are disabled** in CodeFactor.</sub>
 
 
 ## 🔕 Known not-a-bugs
