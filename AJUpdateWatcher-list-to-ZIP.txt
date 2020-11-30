@@ -1,0 +1,20 @@
+src\bin\Release\AJUpdateWatcher.exe
+src\bin\Release\Open Configuration.cmd
+3rdparty_licensing\3RDPARTY.txt
+3rdparty_licensing\MIT.txt
+3rdparty_licensing\MS-PL.md
+3rdparty_licensing\Unlicense.txt
+src\bin\Release\ActiveDirectoryObjectPicker.dll
+src\bin\Release\AeroWizard.dll
+src\bin\Release\DotNetProjects.Wpf.Extended.Toolkit.dll
+src\bin\Release\GroupControls.dll
+src\bin\Release\LoadingIndicators.WPF.dll
+src\bin\Release\Microsoft.Win32.TaskScheduler.dll
+src\bin\Release\Microsoft.Win32.TaskSchedulerEditor.dll
+src\bin\Release\Microsoft.WindowsAPICodePack.dll
+src\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll
+src\bin\Release\Microsoft.WindowsAPICodePack.ShellExtensions.dll
+src\bin\Release\Newtonsoft.Json.dll
+src\bin\Release\System.Threading.Tasks.Dataflow.dll
+src\bin\Release\System.ValueTuple.dll
+src\bin\Release\TimeSpan2.dll
