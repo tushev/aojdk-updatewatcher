@@ -100,7 +100,11 @@ namespace AJ_UpdateWatcher
             try
             {
                 sm.DeleteTask(v1TaskName);
-                sm.InstallTask();
+
+                if (!sm.TaskIsSet())
+                    sm.InstallTask();
+                else
+                    sm.CheckConsistency();
             }
             catch (Exception ex) { MessageBox.Show($"There was an error: [{ex.Message}]", Branding.MessageBoxHeader); };
         }

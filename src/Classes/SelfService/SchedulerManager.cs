@@ -50,13 +50,19 @@ namespace AJ_UpdateWatcher
                         Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                     if (ans == MessageBoxResult.Yes)
                     {
-                        DeleteTask(taskName);
-                        InstallTask(taskName);
+                        ForceReInstallTask(taskName);
                     }
                 }
             }
         }
 
+        public void ForceReInstallTask(string taskName = defaultTaskName)
+        {
+            if (TaskIsSet())
+                DeleteTask(taskName);
+
+            InstallTask(taskName);
+        }
 
         public void InstallTask(string taskName = defaultTaskName)
         {

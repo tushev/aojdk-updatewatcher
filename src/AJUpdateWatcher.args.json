@@ -3,6 +3,10 @@
   "Id": "ca4bd54c-a4c8-4897-a115-be5f83c6bcc5",
   "Items": [
     {
+      "Id": "aa5a4c4f-597c-4f3a-a2bc-c2625d4c293b",
+      "Command": "-explicitcheck"
+    },
+    {
       "Id": "35cc4f59-576e-4203-b4d0-0b70fbc16263",
       "Command": "-askdeletetask"
     },

@@ -43,25 +43,7 @@ namespace AJ_UpdateWatcher
 
             bool continue_loading = true;
 
-            if (e.Args.Length > 0 && (e.Args[0] == "-deletetask" || e.Args[0] == "-askdeletetask"))
-            {
-                SchedulerManager sm = new SchedulerManager();
-                if (sm.TaskIsSet())
-                {
-                    var result = (e.Args[0] == "-askdeletetask") ?
-                        MessageBox.Show($"You have a scheduled task to check for updates of {Branding.TargetProduct}.{Environment.NewLine + Environment.NewLine}Do you want to remove this scheduled task?", Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) :
-                        MessageBoxResult.Yes;
-
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        sm.DeleteTask();
-                        MessageBox.Show("Scheduled task has been removed successfully", Branding.MessageBoxHeader, MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                }
-
-                continue_loading = false;
-                Application.Current.Shutdown();
-            }
+            continue_loading = HandleSchedulerCommandLine(e, continue_loading);
 
             if (continue_loading)
             {
@@ -116,6 +98,9 @@ namespace AJ_UpdateWatcher
                             }
                             else
                             {
+                                // TODO?: move this higher, add notice on ShowConfigurationWindow
+                                bool explicit_requested = (e.Args.Length > 0 && e.Args[0] == "-explicitcheck");
+
                                 if (Updater.ErrorsOccuredWhileCheckingForUpdates)
                                 {
                                     // count errors ...
@@ -143,14 +128,14 @@ namespace AJ_UpdateWatcher
                                         }
                                     }
                                     else
-                                        CheckForFirstRunAndExit(false, $"There were errors while checking for {Branding.TargetProduct} updates. Check your internet connection and ensure {AdoptiumAPI.baseDOMAIN} is reachable.");
+                                        CheckForFirstRunAndExit(false, $"There were errors while checking for {Branding.TargetProduct} updates. Check your internet connection and ensure {AdoptiumAPI.baseDOMAIN} is reachable.", explicit_requested);
                                 }
                                 else
                                 {
                                     // reset error counter - there were no errors (and no updates)
                                     App.SetUpdateCheckErrorCount(0);
 
-                                    CheckForFirstRunAndExit(false, $"You already have up-to-date version of {Branding.TargetProduct}");
+                                    CheckForFirstRunAndExit(false, $"You already have up-to-date version of {Branding.TargetProduct}", explicit_requested);
                                 }
                             }
                         };
@@ -174,6 +159,56 @@ namespace AJ_UpdateWatcher
                 } //else (!Settings.Default.isConfigured || (e.Args.Length > 0 && e.Args[0] == "-config"))
 
             } //if (continue_loading)
+        }
+
+        private static bool HandleSchedulerCommandLine(StartupEventArgs e, bool continue_loading)
+        {
+            if (e.Args.Length > 0 && (e.Args[0] == "-deletetask" || e.Args[0] == "-askdeletetask" || e.Args[0] == "-silentlydeletetask"))
+            {
+                SchedulerManager sm = new SchedulerManager();
+                if (sm.TaskIsSet())
+                {
+                    var result = (e.Args[0] == "-askdeletetask") ?
+                        MessageBox.Show($"You have a scheduled task to check for updates of {Branding.TargetProduct}.{Environment.NewLine + Environment.NewLine}Do you want to remove this scheduled task?", Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) :
+                        MessageBoxResult.Yes;
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        sm.DeleteTask();
+
+                        if (e.Args[0] != "-silentlydeletetask")
+                        {
+                            MessageBox.Show("Scheduled task has been removed successfully", Branding.MessageBoxHeader, MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                }
+
+                continue_loading = false;
+                Application.Current.Shutdown();
+            }
+            
+            if (e.Args.Length > 0 && (e.Args[0] == "-forcesettask" || e.Args[0] == "-settask_askifnonconsistent"))
+            {
+                SchedulerManager sm = new SchedulerManager();
+                
+                // re-create the task without asking
+                if (e.Args[0] == "-forcesettask")
+                    sm.ForceReInstallTask();
+
+                // ask if task is present and not-consistent, otherwise create it silently
+                if (e.Args[0] == "-settask_askifnonconsistent")
+                {
+                    if (sm.TaskIsSet())
+                        sm.CheckConsistency();
+                    else
+                        sm.ForceReInstallTask();
+                }
+
+                continue_loading = false;
+                Application.Current.Shutdown();
+            }
+
+            return continue_loading;
         }
 
         private static void AddTriggers()
@@ -282,19 +317,25 @@ namespace AJ_UpdateWatcher
         public void SetShutdownExplicit() { this.ShutdownMode = ShutdownMode.OnExplicitShutdown; }
         public void SetShutdownOnLastWindowClose() { this.ShutdownMode = ShutdownMode.OnLastWindowClose; }
 
-        private static void CheckForFirstRunAndExit(bool invoked_from_ui, string status = "")
+        private static void CheckForFirstRunAndExit(bool invoked_from_ui, string status = "", bool explicit_requested = false)
         {
             if (!invoked_from_ui)
             {
-                if (!Settings.Default.FirstSilentRunMessageHasBeenDisplayed)
+                if (!Settings.Default.FirstSilentRunMessageHasBeenDisplayed || explicit_requested)
                 {
+                    int maxN = -1;
+                    try { maxN = Settings.Default.UserConfigurableSetting_WarnIfNUpdateChecksResultedInErrors; } catch (Exception) { }
+
                     MessageBox.Show(
-                        $"This is the first background check for updates of {Branding.TargetProduct}." + Environment.NewLine + Environment.NewLine +
+                        $"This is the {(explicit_requested ? "explicit message for" : "first background")} check for updates of {Branding.TargetProduct}." + Environment.NewLine + Environment.NewLine +
                         $"It resulted in: [ {status} ]." + Environment.NewLine + Environment.NewLine + 
-                        $" You will receive no such messages in future, background checks will be silent unless there is a new version. If you need to change settings, please use [Configure Update Watcher for {Branding.TargetProduct}] shortcut from Start menu.", 
+                        $"{(explicit_requested ? "Normally you should not see a message like this" : "You will receive no such messages in future")}, background checks are completely silent unless there is a new version (or more than {maxN} consequent background errors have occured)." + Environment.NewLine + Environment.NewLine + 
+                        $"If you need to change settings, please use [Configure Update Watcher for {Branding.TargetProduct}] shortcut from Start menu.", 
                         Branding.MessageBoxHeader, MessageBoxButton.OK, MessageBoxImage.Information);
-                    
-                    Settings.Default.FirstSilentRunMessageHasBeenDisplayed = true;
+
+                    if (!explicit_requested)
+                        Settings.Default.FirstSilentRunMessageHasBeenDisplayed = true;
+
                     Settings.Default.Save();
                 }
                 System.Windows.Application.Current.Shutdown();
@@ -322,7 +363,7 @@ namespace AJ_UpdateWatcher
                               $"Normally, everything works OK, and you get timely updates.{Environment.NewLine + Environment.NewLine}" +
                               $"However, if something breaks or changes in AdoptOpenJDK API, then you may not get the latest version.{Environment.NewLine + Environment.NewLine}" +
                               //$"So, from time to time, it's recommended to check their website to ensure that everything's OK.{Environment.NewLine + Environment.NewLine}" +
-                              $"Thus we have to remind you:{Environment.NewLine}No warranties provided (see LICENSE), use at your own risk.";
+                              $"Thus we have to remind you (only once, now):{Environment.NewLine}No warranties provided (see LICENSE), use at your own risk.";
 
                 MessageBox.Show(message, "Disclaimer - " + Branding.MessageBoxHeader, MessageBoxButton.OK, MessageBoxImage.Information);
 
