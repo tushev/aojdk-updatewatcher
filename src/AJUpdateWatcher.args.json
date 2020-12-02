@@ -3,16 +3,23 @@
   "Id": "ca4bd54c-a4c8-4897-a115-be5f83c6bcc5",
   "Items": [
     {
-      "Id": "aa5a4c4f-597c-4f3a-a2bc-c2625d4c293b",
-      "Command": "-explicitcheck"
-    },
-    {
-      "Id": "35cc4f59-576e-4203-b4d0-0b70fbc16263",
-      "Command": "-askdeletetask"
-    },
-    {
-      "Id": "9f624842-2759-48bc-a4bb-dedab1c29a40",
-      "Command": "-deletetask"
+      "Id": "5d2f7236-7e4f-4820-acc9-7430fdbca627",
+      "Command": "other",
+      "ExclusiveMode": true,
+      "Items": [
+        {
+          "Id": "aa5a4c4f-597c-4f3a-a2bc-c2625d4c293b",
+          "Command": "-explicitcheck"
+        },
+        {
+          "Id": "35cc4f59-576e-4203-b4d0-0b70fbc16263",
+          "Command": "-askdeletetask"
+        },
+        {
+          "Id": "9f624842-2759-48bc-a4bb-dedab1c29a40",
+          "Command": "-deletetask"
+        }
+      ]
     },
     {
       "Id": "1db0d6a3-f6c4-4c32-86fc-d9be025543c0",
