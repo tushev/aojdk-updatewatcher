@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -63,9 +64,14 @@ namespace AJ_UpdateWatcher
 
             try
             {
+                IWebProxy defaultWebProxy = WebRequest.DefaultWebProxy;
+                defaultWebProxy.Credentials = CredentialCache.DefaultCredentials;
+
                 HttpClientHandler hch = new HttpClientHandler();
-                hch.Proxy = null;
-                hch.UseProxy = false;
+                hch.Proxy = defaultWebProxy;
+
+                //hch.Proxy = ProxyConfigurator.GetWebProxy;
+                //hch.UseProxy = ProxyConfigurator.UseProxy;
 
                 var httpClient = new HttpClient(hch);
 
@@ -118,9 +124,14 @@ namespace AJ_UpdateWatcher
 
             try
             {
+                IWebProxy defaultWebProxy = WebRequest.DefaultWebProxy;
+                defaultWebProxy.Credentials = CredentialCache.DefaultCredentials;
+
                 HttpClientHandler hch = new HttpClientHandler();
-                hch.Proxy = null;
-                hch.UseProxy = false;
+                hch.Proxy = defaultWebProxy;
+
+                //hch.Proxy = ProxyConfigurator.GetWebProxy;
+                //hch.UseProxy = ProxyConfigurator.UseProxy;
 
                 var httpClient = new HttpClient(hch);
                 Debug.WriteLine($"Querying API: {URL}");

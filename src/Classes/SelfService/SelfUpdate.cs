@@ -36,9 +36,14 @@ namespace AJ_UpdateWatcher
 
             try
             {
+                IWebProxy defaultWebProxy = WebRequest.DefaultWebProxy;
+                defaultWebProxy.Credentials = CredentialCache.DefaultCredentials;
+
                 HttpClientHandler hch = new HttpClientHandler();
-                hch.Proxy = null;
-                hch.UseProxy = false;
+                hch.Proxy = defaultWebProxy;
+
+                //hch.Proxy = ProxyConfigurator.GetWebProxy;
+                //hch.UseProxy = ProxyConfigurator.UseProxy;
 
                 var httpClient = new HttpClient(hch);
 
@@ -92,8 +97,13 @@ namespace AJ_UpdateWatcher
 
                 string tempname = System.IO.Path.GetTempPath() + Guid.NewGuid() + "-" + GetFileNameFromUrl(LatestVersion_DownloadURL);
 
-                using (WebClient client = new WebClient())
+                IWebProxy defaultWebProxy = WebRequest.DefaultWebProxy;
+                defaultWebProxy.Credentials = CredentialCache.DefaultCredentials;
+
+                using (WebClient client = new WebClient { Proxy = defaultWebProxy })
                 {
+                    //client.Proxy = ProxyConfigurator.GetWebProxy;
+
                     client.DownloadFile(ur, tempname);
 
                     MessageBox.Show($"Download complete. {Branding.ProductName} will now be closed and the new version will be installed.", ProductName + " :: Updater", MessageBoxButton.OK, MessageBoxImage.Information);

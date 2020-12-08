@@ -202,5 +202,89 @@ namespace AJ_UpdateWatcher.Properties {
                 this["NoWarrantiesDisclaimerHasBeenDisplayed"] = value;
             }
         }
+        
+        //[global::System.Configuration.UserScopedSettingAttribute()]
+        //[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        //[global::System.Configuration.DefaultSettingValueAttribute("False")]
+        //public string ProxyEnabled {
+        //    get {
+        //        return ((string)(this["ProxyEnabled"]));
+        //    }
+        //    set {
+        //        this["ProxyEnabled"] = value;
+        //    }
+        //}
+        
+        //[global::System.Configuration.UserScopedSettingAttribute()]
+        //[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        //[global::System.Configuration.DefaultSettingValueAttribute("")]
+        //public string ProxyHostName {
+        //    get {
+        //        return ((string)(this["ProxyHostName"]));
+        //    }
+        //    set {
+        //        this["ProxyHostName"] = value;
+        //    }
+        //}
+        
+        //[global::System.Configuration.UserScopedSettingAttribute()]
+        //[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        //[global::System.Configuration.DefaultSettingValueAttribute("")]
+        //public string ProxyPort {
+        //    get {
+        //        return ((string)(this["ProxyPort"]));
+        //    }
+        //    set {
+        //        this["ProxyPort"] = value;
+        //    }
+        //}
+        
+        //[global::System.Configuration.UserScopedSettingAttribute()]
+        //[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        //[global::System.Configuration.DefaultSettingValueAttribute("")]
+        //public string ProxyUserName {
+        //    get {
+        //        return ((string)(this["ProxyUserName"]));
+        //    }
+        //    set {
+        //        this["ProxyUserName"] = value;
+        //    }
+        //}
+        
+        //[global::System.Configuration.UserScopedSettingAttribute()]
+        //[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        //[global::System.Configuration.DefaultSettingValueAttribute("")]
+        //public string ProxyPassword {
+        //    get {
+        //        return ((string)(this["ProxyPassword"]));
+        //    }
+        //    set {
+        //        this["ProxyPassword"] = value;
+        //    }
+        //}
+        
+        //[global::System.Configuration.UserScopedSettingAttribute()]
+        //[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        //[global::System.Configuration.DefaultSettingValueAttribute("False")]
+        //public string ProxyBypassOnLocal {
+        //    get {
+        //        return ((string)(this["ProxyBypassOnLocal"]));
+        //    }
+        //    set {
+        //        this["ProxyBypassOnLocal"] = value;
+        //    }
+        //}
+        
+        //[global::System.Configuration.UserScopedSettingAttribute()]
+        //[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        //[global::System.Configuration.DefaultSettingValueAttribute("False")]
+        //public string ProxyUseDefaultCredentials {
+        //    get {
+        //        return ((string)(this["ProxyUseDefaultCredentials"]));
+        //    }
+        //    set {
+        //        this["ProxyUseDefaultCredentials"] = value;
+        //    }
+        //}
     }
 }

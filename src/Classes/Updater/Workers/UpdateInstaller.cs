@@ -108,8 +108,13 @@ namespace AJ_UpdateWatcher
 
                             i.UpdateProgressPercentage = (int)InstallationUpdateStatus.UpdateIndeterminate;
 
-                            using (WebClient client = new WebClient())
+                            IWebProxy defaultWebProxy = WebRequest.DefaultWebProxy;
+                            defaultWebProxy.Credentials = CredentialCache.DefaultCredentials;
+
+                            using (WebClient client = new WebClient { Proxy = defaultWebProxy })
                             {
+                                //client.Proxy = ProxyConfigurator.GetWebProxy;
+
                                 client.DownloadProgressChanged += (o, ep) =>
                                     {
                                         i.UpdateBytesReceived = ep.BytesReceived;

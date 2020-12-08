@@ -47,5 +47,26 @@
     <Setting Name="NoWarrantiesDisclaimerHasBeenDisplayed" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <!-- <Setting Name="ProxyEnabled" Type="System.Boolean" Scope="User"> -->
+      <!-- <Value Profile="(Default)">False</Value> -->
+    <!-- </Setting> -->
+    <!-- <Setting Name="ProxyHostName" Type="System.String" Scope="User"> -->
+      <!-- <Value Profile="(Default)" /> -->
+    <!-- </Setting> -->
+    <!-- <Setting Name="ProxyPort" Type="System.String" Scope="User"> -->
+      <!-- <Value Profile="(Default)" /> -->
+    <!-- </Setting> -->
+    <!-- <Setting Name="ProxyUserName" Type="System.String" Scope="User"> -->
+      <!-- <Value Profile="(Default)" /> -->
+    <!-- </Setting> -->
+    <!-- <Setting Name="ProxyPassword" Type="System.String" Scope="User"> -->
+      <!-- <Value Profile="(Default)" /> -->
+    <!-- </Setting> -->
+    <!-- <Setting Name="ProxyBypassOnLocal" Type="System.Boolean" Scope="User"> -->
+      <!-- <Value Profile="(Default)">False</Value> -->
+    <!-- </Setting> -->
+    <!-- <Setting Name="ProxyUseDefaultCredentials" Type="System.Boolean" Scope="User"> -->
+      <!-- <Value Profile="(Default)">False</Value> -->
+    <!-- </Setting> -->
   </Settings>
 </SettingsFile>

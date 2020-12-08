@@ -115,6 +115,60 @@ You should handle all possible outcomes in your scripts manually. Use this (as w
                 </Grid>
             </TabItem>
 
+            <!--<TabItem Header="Proxy">
+                <Grid >
+                    <CheckBox 
+                        Margin="14,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=ProxyEnabled, Mode=TwoWay}"
+                        Content="Use proxy"  
+                        />
+                    <TextBlock 
+                        Foreground="Gray"
+                        TextWrapping="Wrap" 
+                        Margin="14,38,10,0" VerticalAlignment="Top"
+                        Text="Will be used for all Internet requests (queries to AdoptOpenJDK API, self-updates via GutHub):"/>
+
+                    <Label   Content="Host name" HorizontalAlignment="Left" Margin="9,58,0,0" VerticalAlignment="Top"/>
+                    <TextBox Height="23" Margin="82,62,10,0" TextWrapping="Wrap" VerticalAlignment="Top"                             
+                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=ProxyHostName, Mode=TwoWay}"
+                             />
+
+                    <Label Content="Port" HorizontalAlignment="Left" Margin="9,89,0,0" VerticalAlignment="Top"/>
+                    <xctk:IntegerUpDown
+                        Value="{Binding Source={x:Static properties:Settings.Default}, Path=ProxyPort, Mode=TwoWay}"
+                        Increment="1" Minimum="0" Maximum="65535"
+                        Height="23" Width="87" Margin="82,90,0,0" 
+                        HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+                    <Label   Content="User name" HorizontalAlignment="Left" Margin="9,114,0,0" VerticalAlignment="Top"/>
+                    <TextBox Height="23" Margin="82,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top"                             
+                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=ProxyUserName, Mode=TwoWay}" HorizontalAlignment="Left" Width="246"
+                             />
+                    <Label   Content="Password" HorizontalAlignment="Left" Margin="9,142,0,0" VerticalAlignment="Top"/>
+                    <TextBox Height="23" Margin="82,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top"                               
+                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=ProxyPassword, Mode=TwoWay}" HorizontalAlignment="Left" Width="246"                              
+                             />
+                    <Label   Content="⚠ Just FYI: stored in clear, in %AppData" Foreground="Gray"
+                             ToolTip="Many apps store proxy passwords in clear. The only difference is that this app discloses this explicitly."
+                             HorizontalAlignment="Left" Margin="328,143,0,0" VerticalAlignment="Top"/>
+
+
+                    <CheckBox 
+                        Margin="14,178,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=ProxyUseDefaultCredentials, Mode=TwoWay}"
+                        Content="Use system default credentials for proxy"  
+                        />
+
+                    --><!--<CheckBox 
+                        Margin="0,102,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                        IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=ProxyBypassOnLocal, Mode=TwoWay}"
+                        Content="Bypass proxy on local addresses"  
+                        />--><!--
+
+
+                </Grid>
+            </TabItem>-->
+
         </TabControl>
     </Grid>
 </Window>
