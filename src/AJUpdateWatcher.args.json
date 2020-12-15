@@ -8,16 +8,42 @@
       "ExclusiveMode": true,
       "Items": [
         {
-          "Id": "aa5a4c4f-597c-4f3a-a2bc-c2625d4c293b",
-          "Command": "-explicitcheck"
+          "Id": "9f624842-2759-48bc-a4bb-dedab1c29a40",
+          "Command": "-deletetask"
+        },
+        {
+          "Id": "a078ed8d-a22e-4685-941e-274bde51ac1b",
+          "Command": "-silentlydeletetask"
         },
         {
           "Id": "35cc4f59-576e-4203-b4d0-0b70fbc16263",
           "Command": "-askdeletetask"
         },
         {
-          "Id": "9f624842-2759-48bc-a4bb-dedab1c29a40",
-          "Command": "-deletetask"
+          "Id": "b653f3e2-fcac-4558-8e1e-c02751b1687d",
+          "Command": "-forcesettask"
+        },
+        {
+          "Id": "f5a59667-d357-47c5-aba5-e50da6af9593",
+          "Command": "-settask_askifnonconsistent"
+        },
+        {
+          "Id": "1067df1f-2442-4d67-8ac1-ed0674b72854",
+          "Command": "",
+          "Items": [
+            {
+              "Id": "aa5a4c4f-597c-4f3a-a2bc-c2625d4c293b",
+              "Command": "/explicitcheck"
+            },
+            {
+              "Id": "07268aaf-610b-4ea9-96df-ba17d6f4d11e",
+              "Command": "--eXplicitCHECK"
+            },
+            {
+              "Id": "5aebb9e4-f1f5-4208-88b8-3150ee544c7f",
+              "Command": "-explicitcheck"
+            }
+          ]
         }
       ]
     },

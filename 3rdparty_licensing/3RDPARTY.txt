@@ -9,3 +9,4 @@ This application contains the following 3rd party elements:
 * System.ValueTuple                         MIT License
 * DotNetProjects.Extended.Wpf.Toolkit		MS-PL License
 * Windows Community Toolkit                 MIT License
+* Fluent Command Line Parser                FreeBSD License

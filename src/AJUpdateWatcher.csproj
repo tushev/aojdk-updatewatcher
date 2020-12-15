@@ -86,6 +86,9 @@
     <Reference Include="DotNetProjects.Wpf.Extended.Toolkit, Version=4.6.86.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>packages\DotNetProjects.Extended.Wpf.Toolkit.4.6.86\lib\net40\DotNetProjects.Wpf.Extended.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
+    </Reference>
     <Reference Include="GroupControls, Version=1.8.0.0, Culture=neutral, PublicKeyToken=3726d9da21b6ac8f, processorArchitecture=MSIL">
       <HintPath>packages\GroupControls.1.8.0\lib\net45\GroupControls.dll</HintPath>
     </Reference>
@@ -148,6 +151,9 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Adoptium\AdoptiumHelpMessagesActions.cs" />
     <Compile Include="Classes\SelfService\ProxyConfigurator.cs" />
+    <Compile Include="Classes\SelfService\Startup\CommandLine.cs" />
+    <Compile Include="Classes\SelfService\Startup\AppStartup.cs" />
+    <Compile Include="Classes\SelfService\Startup\SchedulerCommandLineTasks.cs" />
     <Compile Include="Classes\SelfService\TrayIconUpdatesAreAvailable.cs" />
     <Compile Include="Classes\SelfService\Upgrade.cs" />
     <Compile Include="Classes\Utilities\Converters\Boolean3AndConverter.cs" />
