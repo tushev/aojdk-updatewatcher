@@ -4,6 +4,7 @@ src\bin\Release\Open Configuration.cmd
 3rdparty_licensing\MIT.txt
 3rdparty_licensing\MS-PL.md
 3rdparty_licensing\Unlicense.txt
+3rdparty_licensing\FreeBSD.txt
 src\bin\Release\ActiveDirectoryObjectPicker.dll
 src\bin\Release\AeroWizard.dll
 src\bin\Release\DotNetProjects.Wpf.Extended.Toolkit.dll
@@ -18,3 +19,4 @@ src\bin\Release\Newtonsoft.Json.dll
 src\bin\Release\System.Threading.Tasks.Dataflow.dll
 src\bin\Release\System.ValueTuple.dll
 src\bin\Release\TimeSpan2.dll
+src\bin\Release\FluentCommandLineParser.dll
