@@ -28,5 +28,10 @@ namespace AJ_UpdateWatcher
         {
             execute(parameter);
         }
+        public void RaiseCanExecuteChanged()
+        {
+            if (CanExecuteChanged != null)
+                CanExecuteChanged(this, new EventArgs());
+        }
     }
 }

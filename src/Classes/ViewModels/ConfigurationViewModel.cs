@@ -68,6 +68,7 @@ namespace AJ_UpdateWatcher
             {
                 _selectedItem = value;
                 OnPropertyChanged("SelectedItem");
+                RemoveSelectedInstallationCommand.RaiseCanExecuteChanged();
             }
         }
         public FullyObservableCollection<Installation> ConfiguredInstallations
@@ -323,8 +324,8 @@ namespace AJ_UpdateWatcher
         #endregion
 
         #region RemoveSelectedInstallationCommand
-        ICommand remove_selected_installation_command;
-        public ICommand RemoveSelectedInstallationCommand
+        DelegateCommand remove_selected_installation_command;
+        public DelegateCommand RemoveSelectedInstallationCommand
         {
             get
             {
@@ -352,7 +353,7 @@ namespace AJ_UpdateWatcher
                 }
             }
         }
-        private bool CanExecuteRemoveSelectedInstallationCommand(object parameter) { return true; }
+        private bool CanExecuteRemoveSelectedInstallationCommand(object parameter) { return !(SelectedItem == null || SelectedItem.IsAutodiscoveredInstance); }
         #endregion
 
         #region ResetAllSkippedReleasesCommand
