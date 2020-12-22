@@ -93,12 +93,6 @@ namespace AJ_UpdateWatcher
         {
             App.SetUpdateCheckErrorCount(0);
 
-            lstReleasesInGrid.ItemsSource = ConfigurationVM.AvailableReleases;
-            lstJVMInGrid.ItemsSource = ConfigurationVM.JVMs;
-            lstImageTypeInGrid.ItemsSource = ConfigurationVM.ImageTypes;
-            lstArchInGrid.ItemsSource = ConfigurationVM.Archs;
-            lstHeapSizeInGrid.ItemsSource = ConfigurationVM.HeapSizes;
-
             if (!Settings.Default.isConfigured && (bool)cbSchedule.IsChecked == false)
                 gridSchedule.Background = Brushes.LightGoldenrodYellow;
 

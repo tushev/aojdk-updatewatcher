@@ -68,7 +68,9 @@ namespace AJ_UpdateWatcher
             {
                 _selectedItem = value;
                 OnPropertyChanged("SelectedItem");
+
                 RemoveSelectedInstallationCommand.RaiseCanExecuteChanged();
+                ConvertToUserOverriddenInstallationCommand.RaiseCanExecuteChanged();
             }
         }
         public FullyObservableCollection<Installation> ConfiguredInstallations
@@ -343,9 +345,13 @@ namespace AJ_UpdateWatcher
                 bool is_java_home = SelectedItem.IsJavaHomeInstance;
                 string itemToRemoveName = (is_java_home ? "JAVA_HOME instance" : "[" + SelectedItem.DisplayPath + "]");
 
+                string question = SelectedItem.OverridesAutodiscovered ?
+                    $"Remove user override for {itemToRemoveName}?{Environment.NewLine+Environment.NewLine}API params will be reset to defaults, and an auto-discovered instance should appear in the list." :
+                    $"Remove {itemToRemoveName} from the list of monitored installations?";
+
                 var result =
                     String.IsNullOrEmpty(SelectedItem.Path) ? MessageBoxResult.Yes : 
-                    MessageBox.Show($"Remove {itemToRemoveName} from the list?", "Confirm removal", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    MessageBox.Show(question, "Confirm removal", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
@@ -354,6 +360,38 @@ namespace AJ_UpdateWatcher
             }
         }
         private bool CanExecuteRemoveSelectedInstallationCommand(object parameter) { return !(SelectedItem == null || SelectedItem.IsAutodiscoveredInstance); }
+        #endregion
+
+        #region ConvertToUserOverriddenInstallationCommand
+        DelegateCommand convert_to_user_overridden_installation_command;
+        public DelegateCommand ConvertToUserOverriddenInstallationCommand
+        {
+            get
+            {
+                if (convert_to_user_overridden_installation_command == null)
+                {
+                    convert_to_user_overridden_installation_command = new DelegateCommand(CanExecuteConvertToUserOverriddenInstallationCommand, ExecuteConvertToUserOverriddenInstallationCommand);
+                }
+                return convert_to_user_overridden_installation_command;
+            }
+        }
+        private void ExecuteConvertToUserOverriddenInstallationCommand(object parameter)
+        {
+            if (null != SelectedItem)
+            {
+                if (SelectedItem.Path != null)
+                {
+                    Installation new_installation = new Installation(SelectedItem.Path);
+
+                    bool disable_updates = ((string)parameter??"").ToLowerInvariant() == "disableupdatescheck";
+                    if (disable_updates)
+                        new_installation.CheckForUpdatesFlag = false;
+
+                    ConfiguredInstallations.Add(new_installation);
+                }
+            }
+        }
+        private bool CanExecuteConvertToUserOverriddenInstallationCommand(object parameter) { return (SelectedItem != null && SelectedItem.IsAutodiscoveredInstance && SelectedItem.CheckForUpdatesFlag); }
         #endregion
 
         #region ResetAllSkippedReleasesCommand

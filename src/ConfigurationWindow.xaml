@@ -93,12 +93,6 @@
         <TextBlock FontSize="13" TextWrapping="Wrap"  Foreground="#222"
                    HorizontalAlignment="Stretch" VerticalAlignment="Top"
                    Margin="45,137,10,0">
-            <Run Text="You can also add other (custom) installations to monitor for updates." />
-        </TextBlock>
-        <!--Tooltip="So, if you add manually an entry with the same path as an auto-discovered one, and then turn 'Upd?' off - neither will be checked for updates."-->
-        <TextBlock FontSize="13" TextWrapping="Wrap"  Foreground="#222"
-                   HorizontalAlignment="Stretch" VerticalAlignment="Top"
-                   Margin="45,162,10,0">
             <Run Text="If you"/>
             <Run Text="(for some strong reason)" FontStyle="Italic"/>
             <Run Text="still need to change settings (or turn updates off) for an auto-discovered installation, then"/>
@@ -107,6 +101,12 @@
             <LineBreak/>
             <Run Text="To do so, just add custom installation with the same path." />
         </TextBlock>
+        <TextBlock FontSize="13" TextWrapping="Wrap"  Foreground="#222"
+                   HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                   Margin="45,162,10,0">
+            <Run Text="You can also add other (custom) installations to monitor for updates." />
+        </TextBlock>
+        <!--Tooltip="So, if you add manually an entry with the same path as an auto-discovered one, and then turn 'Upd?' off - neither will be checked for updates."-->
 
         <Button x:Name="btnHowDisableUpdates"
                Style="{StaticResource LinkButton}" 
@@ -154,21 +154,37 @@
                   VerticalContentAlignment="Center"
                   ItemsSource="{Binding ConfiguredInstallations}"
                   SelectedItem="{Binding SelectedItem}"
+                  Tag="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=Window}}"
                   >
 
-            <!--<DataGrid.ContextMenu>
+            <DataGrid.ContextMenu>
                 <ContextMenu>
+                    <!--<MenuItem Header="{Binding Path=InstallationTypeText}" IsEnabled="False"
+                              DataContext="{Binding   PlacementTarget.SelectedItem,
+                                                      RelativeSource={RelativeSource FindAncestor,
+                                                      AncestorType={x:Type ContextMenu}}}"/>
+                    <Separator/>-->
 
-                    <MenuItem Header="Remove" 
+                    <MenuItem Header="Remove installation" 
+                              Command="{Binding PlacementTarget.Tag.RemoveSelectedInstallationCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                               IsEnabled="{Binding IsEditable}" 
                               DataContext="{Binding   PlacementTarget.SelectedItem,
                                                       RelativeSource={RelativeSource FindAncestor,
-                                                      AncestorType={x:Type ContextMenu}}}"          />
-                    
-                    <MenuItem Header="Convert to user-overrided"
+                                                      AncestorType={x:Type ContextMenu}}}">
+                        <MenuItem.Visibility>
+                            <MultiBinding Converter="{StaticResource SuggestRemoveOrConvertBackVisibilityMultiValueConverter}">
+                                <Binding Path="IsAutodiscoveredInstance"/>
+                                <Binding Path="OverridesAutodiscovered"/>
+                                <Binding Path="InstallationTypeText"/>
+                            </MultiBinding>
+                        </MenuItem.Visibility>
+                    </MenuItem>
+
+                    <MenuItem Header="Convert to user-overrided installation (if you need to change something)"
+                              Command="{Binding PlacementTarget.Tag.ConvertToUserOverriddenInstallationCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                               DataContext="{Binding   PlacementTarget.SelectedItem,
                                                       RelativeSource={RelativeSource FindAncestor,
-                                                      AncestorType={x:Type ContextMenu}}}"          >
+                                                      AncestorType={x:Type ContextMenu}}}">
                         <MenuItem.Visibility>
                             <MultiBinding Converter="{StaticResource SuggestConvertToUserOverridedVisibilityMultiValueConverter}">
                                 <Binding Path="IsAutodiscoveredInstance"/>
@@ -176,8 +192,36 @@
                             </MultiBinding>
                         </MenuItem.Visibility>
                     </MenuItem>
+
+                    <MenuItem Header="Disable checking for updates"
+                              Command="{Binding PlacementTarget.Tag.ConvertToUserOverriddenInstallationCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                              CommandParameter="DisableUpdatesCheck"
+                              DataContext="{Binding   PlacementTarget.SelectedItem,
+                                                      RelativeSource={RelativeSource FindAncestor,
+                                                      AncestorType={x:Type ContextMenu}}}">
+                        <MenuItem.Visibility>
+                            <MultiBinding Converter="{StaticResource SuggestConvertToUserOverridedVisibilityMultiValueConverter}">
+                                <Binding Path="IsAutodiscoveredInstance"/>
+                                <Binding Path="CheckForUpdatesFlag"/>
+                            </MultiBinding>
+                        </MenuItem.Visibility>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Convert back to auto-discovered installation (will reset API params to defaults)"
+                              Command="{Binding PlacementTarget.Tag.RemoveSelectedInstallationCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                              DataContext="{Binding   PlacementTarget.SelectedItem,
+                                                      RelativeSource={RelativeSource FindAncestor,
+                                                      AncestorType={x:Type ContextMenu}}}">
+                        <MenuItem.Visibility>
+                            <MultiBinding Converter="{StaticResource SuggestRemoveOrConvertBackVisibilityMultiValueConverter}" ConverterParameter="Negate">
+                                <Binding Path="IsAutodiscoveredInstance"/>
+                                <Binding Path="OverridesAutodiscovered"/>
+                                <Binding Path="InstallationTypeText"/>
+                            </MultiBinding>
+                        </MenuItem.Visibility>
+                    </MenuItem>
                 </ContextMenu>
-            </DataGrid.ContextMenu>-->
+            </DataGrid.ContextMenu>
             
             <DataGrid.InputBindings>
                 <KeyBinding Key="Delete" Command="{Binding RemoveSelectedInstallationCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
@@ -185,7 +229,7 @@
             
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
-                    <Setter Property="IsEnabled" Value="{Binding IsEditable}"/>
+                    <!--<Setter Property="IsEnabled" Value="{Binding IsEditable}"/>-->
                     <Setter Property="Visibility">
                         <Setter.Value>
                             <MultiBinding Converter="{StaticResource InstallationStatusToVisibilityMultiValueConverter}">
@@ -206,14 +250,17 @@
                 <DataGridTemplateColumn SortMemberPath="CheckForUpdatesFlag" Header="Upd?" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox ToolTip="Check for updates of this installation?" HorizontalAlignment="Center" IsChecked="{Binding Path=CheckForUpdatesFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <CheckBox ToolTip="Check for updates of this installation?" 
+                                      HorizontalAlignment="Center" 
+                                      IsEnabled="{Binding IsEditable}"
+                                      IsChecked="{Binding Path=CheckForUpdatesFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
                 <DataGridTextColumn Header="Origin" IsReadOnly="True" Binding="{Binding Path=InstallationTypeText}" Width="90" />
 
-                <DataGridTemplateColumn Header="Local installation path" Width="*" SortMemberPath="DisplayPath">
+                <DataGridTemplateColumn Header="Local installation path" Width="*" SortMemberPath="DisplayPath" SortDirection="Ascending" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=DisplayPath, Converter={StaticResource ShowUnderscoreConverter}}" />
@@ -243,11 +290,82 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Binding="{Binding InstalledVersionString, Mode=OneWay}" Header="Installed version"/>
 
-                <DataGridComboBoxColumn Header="API/Major version" x:Name="lstReleasesInGrid" SelectedItemBinding="{Binding Path=WatchedRelease, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120"  />
-                <DataGridComboBoxColumn Header="API/Type" x:Name="lstImageTypeInGrid" SelectedItemBinding="{Binding Path=ImageType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="80" />
-                <DataGridComboBoxColumn Header="API/JVM" x:Name="lstJVMInGrid" SelectedItemBinding="{Binding Path=JVM_Implementation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="80" />
-                <DataGridComboBoxColumn Header="API/Heap" x:Name="lstHeapSizeInGrid" SelectedItemBinding="{Binding Path=HeapSize, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="78"  />
-                <DataGridComboBoxColumn Header="API/Arch" x:Name="lstArchInGrid" SelectedItemBinding="{Binding Path=Arch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="60" />
+                <!-- FEATURE VERSION -->
+                <DataGridTemplateColumn Header="API/Major version" x:Name="lstReleasesInGrid" Width="120" SortMemberPath="WatchedRelease">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=WatchedRelease, Converter={StaticResource ShowUnderscoreConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox IsEnabled="{Binding IsEditable}"
+                                      ItemsSource="{Binding Path=DataContext.AvailableReleases, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                      SelectedItem="{Binding Path=WatchedRelease, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <!-- IMAGE TYPE -->
+                <DataGridTemplateColumn Header="API/Type" x:Name="lstImageTypeInGrid" Width="80" SortMemberPath="ImageType">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=ImageType, Converter={StaticResource ShowUnderscoreConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox IsEnabled="{Binding IsEditable}"
+                                      ItemsSource="{Binding Path=DataContext.ImageTypes, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                      SelectedItem="{Binding Path=ImageType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <!-- JVM IMPLEMENTATION -->
+                <DataGridTemplateColumn Header="API/JVM" x:Name="lstJVMInGrid" Width="80" SortMemberPath="JVM_Implementation">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=JVM_Implementation, Converter={StaticResource ShowUnderscoreConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox IsEnabled="{Binding IsEditable}"
+                                      ItemsSource="{Binding Path=DataContext.JVMs, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                      SelectedItem="{Binding Path=JVM_Implementation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <!-- HEAP SIZE -->
+                <DataGridTemplateColumn Header="API/Heap" x:Name="lstHeapSizeInGrid" Width="78" SortMemberPath="HeapSize">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=HeapSize, Converter={StaticResource ShowUnderscoreConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox IsEnabled="{Binding IsEditable}"
+                                      ItemsSource="{Binding Path=DataContext.HeapSizes, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                      SelectedItem="{Binding Path=HeapSize, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  />
+                            <!-- please note that UpdateSourceTrigger=LostFocus to ensure immediate visualization if heapsize is reset back to normal if impl=hotspot -->
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <!-- ARCHITECTURE (x64/x86) -->
+                <DataGridTemplateColumn Header="API/Arch" x:Name="lstArchInGrid" Width="60" SortMemberPath="Arch">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Arch, Converter={StaticResource ShowUnderscoreConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox IsEnabled="{Binding IsEditable}"
+                                      ItemsSource="{Binding Path=DataContext.Archs, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                      SelectedItem="{Binding Path=Arch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
 
 
             </DataGrid.Columns>

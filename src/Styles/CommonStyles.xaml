@@ -12,5 +12,6 @@
     <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     <local:ObjectToTupleWithParameterConverter x:Key="ObjectToTupleWithParameterConverter"/>
     <local:SuggestConvertToUserOverridedVisibilityMultiValueConverter x:Key="SuggestConvertToUserOverridedVisibilityMultiValueConverter"/>
+    <local:SuggestRemoveOrConvertBackVisibilityMultiValueConverter x:Key="SuggestRemoveOrConvertBackVisibilityMultiValueConverter"/>
 
 </ResourceDictionary>

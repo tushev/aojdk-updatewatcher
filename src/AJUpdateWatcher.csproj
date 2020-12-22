@@ -163,6 +163,7 @@
     <Compile Include="Classes\Utilities\Converters\Boolean3AndConverter.cs" />
     <Compile Include="Classes\Utilities\Converters\BooleanAndConverter.cs" />
     <Compile Include="Classes\Utilities\Converters\SuggestConvertToUserOverridedVisibilityMultiValueConverter.cs" />
+    <Compile Include="Classes\Utilities\Converters\SuggestRemoveOrConvertBackVisibilityMultiValueConverter.cs" />
     <Compile Include="Classes\ViewModels\AddInstallationFromWebViewModel.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Windows\AddInstallationFromWebWindow.xaml.cs">
