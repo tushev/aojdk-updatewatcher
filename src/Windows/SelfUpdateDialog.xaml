@@ -65,7 +65,7 @@
         </TextBlock>
 
         <TextBlock HorizontalAlignment="Left" Margin="150,115,0,0" VerticalAlignment="Top"
-                   ToolTip="{Binding Source={x:Static aj:SelfUpdate.LatestVersion_ReleaseText}, Mode=OneWay}" >
+                   ToolTip="{Binding Source={x:Static aj:SelfUpdate.LatestVersion_ReleaseIntroText}, Mode=OneWay}" >
             <Run Text="New version:" />
             <Run Text="{Binding Source={x:Static aj:SelfUpdate.LatestVersion_ReleaseName}, Mode=OneWay}" FontWeight="SemiBold" />
             <Run Text="(" />

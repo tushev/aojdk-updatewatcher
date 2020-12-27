@@ -22,6 +22,7 @@ namespace AJ_UpdateWatcher
         static public string LatestVersion_BrowserURL = "";
         static public string LatestVersion_ReleaseName { get; internal set; }
         static public string LatestVersion_ReleaseText { get; internal set; }
+        static public string LatestVersion_ReleaseIntroText { get; internal set; }
         static public string LatestVersion_TagName { get; internal set; }
         static public bool Found = false;
 
@@ -61,6 +62,8 @@ namespace AJ_UpdateWatcher
 
                 string tag = (string)o["tag_name"];
                 Version remote_version = new Version(tag);
+
+                LatestVersion_ReleaseIntroText = LatestVersion_ReleaseText.Split(new string[] { "<hr>" }, StringSplitOptions.RemoveEmptyEntries)[0];
 
                 var result = remote_version.CompareTo(local_version);
                 if (result > 0)
