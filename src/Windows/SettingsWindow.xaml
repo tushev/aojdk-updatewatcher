@@ -101,8 +101,12 @@ Your script could possibly scan Windows Registry to find the actual list of JDK/
 
                     <Button x:Name="btnOpenSampleScriptLink" 
                             Style="{StaticResource LinkButton}"
-                            Content="See sample scripts"
-                            Width="100" Height="23" Margin="0,120,18,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnOpenSampleScriptLink_Click"/>
+                            Width="100" Height="23" Margin="255,120,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnOpenSampleScriptLink_Click">
+                        <TextBlock>
+                            <Run Text="See sample scripts"/>                            
+                        </TextBlock>
+                    </Button>
+                    <Label Margin="352,106,0,0" Foreground="Blue" FontSize="16" FontFamily="Segoe MDL2 Assets" Content="&#xE8A7;"/>
 
                     <TextBlock 
                         Foreground="OrangeRed"
