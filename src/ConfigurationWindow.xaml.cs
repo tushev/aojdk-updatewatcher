@@ -99,6 +99,14 @@ namespace AJ_UpdateWatcher
             //if (!Settings.Default.isConfigured)
                 //lblGrayedOut.Foreground = Brushes.IndianRed;
 
+            if (Settings.Default.lblHelpContextRequiresHighlighting)
+            {
+                lblHelpContext1.Background = Brushes.Yellow;
+                lblHelpContext2.Background = Brushes.Yellow;
+
+                Settings.Default.lblHelpContextRequiresHighlighting = false;
+            }
+
         }
 
         private void btnEditEnvironmentVariables_Click(object sender, RoutedEventArgs e)

@@ -34,17 +34,27 @@ namespace AJ_UpdateWatcher
                     // if previous version was at least 2.0.0.0 - we may proceed
                     if (previousVersionWasAtLeast2000)
                     {
+                        Version previousFormatVersion = null;
 
                         // some boilerplate code for future releases
-                        /*if (Settings.Default.GetPreviousVersion("SettingsFormatVersion") != null)
+                        if (Settings.Default.GetPreviousVersion("SettingsFormatVersion") != null)
                         {
-                            string _installedFormatVersion = Settings.Default.GetPreviousVersion("SettingsFormatVersion") as string;
-                            Version installedFormatVersion = new Version(_installedFormatVersion);
-                        }*/
+                            string _previousFormatVersion = Settings.Default.GetPreviousVersion("SettingsFormatVersion") as string;
+                            previousFormatVersion = new Version(_previousFormatVersion);
 
-                        //System.Diagnostics.Debug.WriteLine("Upgrading settings from previous version");
-                        //MessageBox.Show("Your settings had been updated from previous version", Branding.MessageBoxHeader);
+                            System.Diagnostics.Debug.WriteLine("Upgrading settings from previous version " + previousFormatVersion.ToString());
+                            //MessageBox.Show("Your settings had been updated from previous version", Branding.MessageBoxHeader);
+
+                        }
+
+                        // we should upgrade anyway if previous >= 2.0.0.0
                         Settings.Default.Upgrade();
+
+                        // one-time highlighting during upgrade
+                        if ((previousFormatVersion??(new Version("2.0.2.0"))) < new Version("2.0.2.0"))
+                        {
+                            Settings.Default.lblHelpContextRequiresHighlighting = true;
+                        }
                     }
 
                     // update not required any more

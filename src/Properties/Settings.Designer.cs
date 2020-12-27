@@ -286,5 +286,17 @@ namespace AJ_UpdateWatcher.Properties {
         //        this["ProxyUseDefaultCredentials"] = value;
         //    }
         //}
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool lblHelpContextRequiresHighlighting {
+            get {
+                return ((bool)(this["lblHelpContextRequiresHighlighting"]));
+            }
+            set {
+                this["lblHelpContextRequiresHighlighting"] = value;
+            }
+        }
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AJ_UpdateWatcher"
         mc:Ignorable="d"
         Title="Select one of release branches, download latest package from it and install it on your machine" 
-        Height="390" Width="700" Icon="/AJUpdateWatcher;component/assets/logo.ico" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+        Height="400" Width="700" Icon="/AJUpdateWatcher;component/assets/logo.ico" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -63,37 +63,56 @@
         <Button x:Name="btnWhatJREJDK" Content="Help choose"                         
                     Style="{StaticResource LinkButton}" Margin="0,111,44,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="70" Click="btnWhatJREJDK_Click" />
 
-        <Label Content="JVM Implementation" HorizontalAlignment="Left" Margin="8,153,0,0" VerticalAlignment="Top"/>
+        <Label Content="JVM Implementation" HorizontalAlignment="Left" Margin="8,143,0,0" VerticalAlignment="Top"/>
         <ComboBox 
             ItemsSource="{Binding Path=JVMs}"
             SelectedItem="{Binding NewItem.JVM_Implementation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            HorizontalAlignment="Left" Margin="134,156,0,0" VerticalAlignment="Top" Width="120"/>
+            HorizontalAlignment="Left" Margin="134,146,0,0" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="btnWhatImpl" Content="Help choose"                         
-                    Style="{StaticResource LinkButton}" Margin="261,167,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatImpl_Click"  />
+                    Style="{StaticResource LinkButton}" Margin="261,157,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatImpl_Click"  />
 
-        <Label Content="Heap size (openj9)" HorizontalAlignment="Left" Margin="20,184,0,0" VerticalAlignment="Top"/>
+        <Label Content="Heap size (openj9)" HorizontalAlignment="Left" Margin="20,174,0,0" VerticalAlignment="Top"/>
         <ComboBox 
             ItemsSource="{Binding Path=HeapSizes}"
             SelectedItem="{Binding NewItem.HeapSize, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
             IsEnabled="{Binding CanSelectHeapSize}"
-            HorizontalAlignment="Left" Margin="134,186,0,0" VerticalAlignment="Top" Width="120"/>
+            HorizontalAlignment="Left" Margin="134,176,0,0" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="btnWhatHeap" Content="Help choose"                         
-            Style="{StaticResource LinkButton}" Margin="261,199,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatHeap_Click"   />
+            Style="{StaticResource LinkButton}" Margin="261,189,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="btnWhatHeap_Click"   />
 
-        <Label Content="Architecture" HorizontalAlignment="Left" Margin="53,214,0,0" VerticalAlignment="Top"/>
+        <Label Content="Architecture" HorizontalAlignment="Left" Margin="53,204,0,0" VerticalAlignment="Top"/>
         <ComboBox 
             ItemsSource="{Binding Path=Archs}"
             SelectedItem="{Binding Path=NewItem.Arch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            HorizontalAlignment="Left" Margin="134,216,0,0" VerticalAlignment="Top" Width="120"/>
+            HorizontalAlignment="Left" Margin="134,206,0,0" VerticalAlignment="Top" Width="120"/>
         <Label  x:Name="lblYourArchMessage"  Content="{Binding YourArchMessage}"
-                Foreground="Gray" HorizontalAlignment="Left" Margin="256,214,0,0" VerticalAlignment="Top" RenderTransformOrigin="26.6,0.2" />
+                Foreground="Gray" HorizontalAlignment="Left" Margin="256,204,0,0" VerticalAlignment="Top" RenderTransformOrigin="26.6,0.2" />
 
+
+        <TextBlock  TextWrapping="Wrap"
+                    FontWeight="SemiBold"
+                    Foreground="#888"
+                    FontSize="11.5"
+                    VerticalAlignment="Top" HorizontalAlignment="Left"
+                    Margin="15,251,0,0" Width="669" >
+            <Run Text="Please keep in mind that this dialog does not check whether there actually is a release for given combination of parameters."/>
+        </TextBlock>
+        <TextBlock TextWrapping="Wrap"
+                   FontSize="12"
+                   Foreground="#888"
+                   VerticalAlignment="Top" HorizontalAlignment="Left"
+                   Margin="15,269,0,0" Width="669" >
+            <Run Text="It should definitely work for something obvious like 'hotspot/JDK/x64', but if you ask for '10/openj9-largeheap/JRE/x32' - "/>
+            <LineBreak/>
+            <Run Text="there may be no such release :)"/>
+            <Run Text="So, if you see errors when trying to download - most likely you have specified wrong release."/>
+        </TextBlock>
 
         <!-- ADD PATH -->
         <Button  
                 x:Name="btnAddInstallation"
                 Command="{Binding AddInstallationCommand}" 
-                Margin="0,241,19,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Right" Width="238" >
+                Margin="0,0,10,10" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="238" >
             <Button.ToolTip>
                 <StackPanel Orientation="Horizontal">
 
@@ -108,26 +127,7 @@
                 <TextBlock Text="{Binding MainButtonText}" VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
-        <CheckBox Content="Start check/download immediately" IsChecked="{Binding DownloadImmediately}" Opacity="0.8" HorizontalAlignment="Right" Margin="0,220,54,0" VerticalAlignment="Top" />
-
-        <TextBlock  TextWrapping="Wrap"
-                    FontWeight="SemiBold"
-                    Foreground="#888"
-                    FontSize="11.5"
-                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
-                    Margin="15,0,0,48" Width="669" >
-            <Run Text="Please keep in mind that this dialog does not check whether there actually is a release for given combination of parameters."/>
-        </TextBlock>
-        <TextBlock TextWrapping="Wrap"
-                   FontSize="12"
-                   Foreground="#888"
-                   VerticalAlignment="Bottom" HorizontalAlignment="Left"
-                   Margin="15,0,0,13" Width="669" >
-            <Run Text="It should definitely work for something obvious like 'hotspot/JDK/x64', but if you ask for '10/openj9-largeheap/JRE/x32' - "/>
-            <LineBreak/>
-            <Run Text="there may be no such release :)"/>
-            <Run Text="So, if you see errors when trying to download - most likely you have specified wrong release."/>
-        </TextBlock>
+        <CheckBox Content="Start check/download immediately" IsChecked="{Binding DownloadImmediately}" Opacity="0.8" HorizontalAlignment="Right" Margin="0,0,258,20" VerticalAlignment="Bottom" />
 
     </Grid>
 </Window>

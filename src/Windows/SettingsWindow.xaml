@@ -34,10 +34,10 @@
                         Foreground="Gray"
                         TextWrapping="Wrap" 
                         Margin="15,54,9,0" VerticalAlignment="Top"
-                        Text="App warns if N last consecutive BACKGROUND update checks produced at least one error. If no errors were encountered during background check, the counter is reset to zero."/>
-                    <Label Content="Current value of error counter:" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top"/>
+                        Text="App warns if N last consecutive BACKGROUND update checks produced at least one error. If no errors were encountered during background check, or at least one update was available (so that the update dialog has been displayed), then the counter is reset to zero."/>
+                    <Label Content="Current value of error counter:" HorizontalAlignment="Left" Margin="10,123,0,0" VerticalAlignment="Top"/>
                     <TextBox 
-                        HorizontalAlignment="Left" Height="22" Margin="186,114,0,0" VerticalAlignment="Top" Width="37" 
+                        HorizontalAlignment="Left" Height="22" Margin="186,127,0,0" VerticalAlignment="Top" Width="37" 
                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=ErrorsEncounteredSinceLastConfigurationWindowOpened, Mode=OneWay}" 
                         IsEnabled="False"/>
                 </Grid>
@@ -54,7 +54,7 @@
                         Foreground="Gray"
                         TextWrapping="Wrap" 
                         Margin="14,47,10,0" VerticalAlignment="Top"
-                        Text="Although MSIs are deleted once their installation is complete, it is still recommended to use random prefix to avoid conflicts with external apps."/>
+                        Text="Although MSIs are deleted once their installation is complete, it is still recommended to use random prefix to avoid potential conflicts with external apps."/>
 
                     <Label Content="Maximum number of concurrent MSI downloads" HorizontalAlignment="Left" Margin="9,98,0,0" VerticalAlignment="Top"/>
                     <xctk:IntegerUpDown
@@ -159,11 +159,13 @@ You should handle all possible outcomes in your scripts manually. Use this (as w
                         Content="Use system default credentials for proxy"  
                         />
 
-                    --><!--<CheckBox 
+                    -->
+            <!--<CheckBox 
                         Margin="0,102,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"
                         IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=ProxyBypassOnLocal, Mode=TwoWay}"
                         Content="Bypass proxy on local addresses"  
-                        />--><!--
+                        />-->
+            <!--
 
 
                 </Grid>

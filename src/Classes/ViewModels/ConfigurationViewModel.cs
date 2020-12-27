@@ -71,6 +71,7 @@ namespace AJ_UpdateWatcher
 
                 RemoveSelectedInstallationCommand.RaiseCanExecuteChanged();
                 ConvertToUserOverriddenInstallationCommand.RaiseCanExecuteChanged();
+                ResetAPIforSelectedCommand.RaiseCanExecuteChanged();
             }
         }
         public FullyObservableCollection<Installation> ConfiguredInstallations
@@ -303,8 +304,8 @@ namespace AJ_UpdateWatcher
         #endregion       
 
         #region ResetAPIforSelectedCommand
-        ICommand reset_API_for_selected_command;
-        public ICommand ResetAPIforSelectedCommand
+        DelegateCommand reset_API_for_selected_command;
+        public DelegateCommand ResetAPIforSelectedCommand
         {
             get
             {
@@ -322,7 +323,7 @@ namespace AJ_UpdateWatcher
                 SelectedItem.SetReleaseParametersFromPath();
             }
         }
-        private bool CanExecuteResetAPIforSelectedCommand(object parameter) { return true; }
+        private bool CanExecuteResetAPIforSelectedCommand(object parameter) { return SelectedItem != null && !SelectedItem.IsAutodiscoveredInstance && !SelectedItem.NotInstalled; }
         #endregion
 
         #region RemoveSelectedInstallationCommand

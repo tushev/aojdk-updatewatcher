@@ -62,7 +62,7 @@
                     />
         </Grid>
 
-        <Grid HorizontalAlignment="Left" Margin="28,55,0,0" VerticalAlignment="Top" x:Name="gridRegistry">
+        <Grid HorizontalAlignment="Left" Margin="28,51,0,0" VerticalAlignment="Top" x:Name="gridRegistry">
             <CheckBox x:Name="cbRegistryMachine"
                   IsChecked="{Binding DiscoverMachineWideInstallations}"
                   ToolTip="If you want another schedule, turn this on and press Edit task to configure it as desired."
@@ -85,43 +85,68 @@
 
         <TextBlock FontSize="13" TextWrapping="Wrap"  Foreground="#222"
                    HorizontalAlignment="Stretch" VerticalAlignment="Top"
-                   Margin="45,111,10,0">
+                   Margin="48,107,10,0">
             <Run Text="⚠ All"/>
             <Run Text="auto-discovered installations are grayed out." FontWeight="Bold"/>
             <Run Text="You cannot edit them directly."/>
         </TextBlock>
+
         <TextBlock FontSize="13" TextWrapping="Wrap"  Foreground="#222"
                    HorizontalAlignment="Stretch" VerticalAlignment="Top"
-                   Margin="45,137,10,0">
+                   Margin="70,126,10,0">
             <Run Text="If you"/>
             <Run Text="(for some strong reason)" FontStyle="Italic"/>
-            <Run Text="still need to change settings (or turn updates off) for an auto-discovered installation, then"/>
-            <Run Text="you have to override" FontWeight="Medium"/>
-            <Run Text="it."/>
-            <LineBreak/>
-            <Run Text="To do so, just add custom installation with the same path." />
+            <Run Text="still need to change settings / turn off updates"/>
+            <Run Text="for an auto-discovered installation, then"/>
+            <Run Text="you have to override" FontWeight="Medium" x:Name="lblHelpContext1"/>
+            <Run Text="it (via context menu)." x:Name="lblHelpContext2"/>
         </TextBlock>
+
         <TextBlock FontSize="13" TextWrapping="Wrap"  Foreground="#222"
                    HorizontalAlignment="Stretch" VerticalAlignment="Top"
-                   Margin="45,162,10,0">
-            <Run Text="You can also add other (custom) installations to monitor for updates." />
+                   Margin="50,151,10,0">   
+            <Run Text="Using auto-discovered installations"/>
+            <Run Text="only" TextDecorations="Underline"/>
+            <Run Text="is the preferred way" FontWeight="Medium"/>
+            <Run Text="of monitoring for updates for MSI packages."/>
+            <LineBreak/>
+            <Run Text="Normally, you do not need adding JAVA_HOME, unless your JAVA_HOME points to ZIP-extracted installation."/>
+            <TextBlock.ToolTip>
+                <TextBlock>
+                    <Run Text="Auto-discovery lists all MSI-based AdoptOpenJDK installations on your machine."/>
+                    <LineBreak/>
+                    <Run Text="If JAVA_HOME points to one of MSI instances, then auto-discovery will monitor it as well as all other MSI instances."/>                    
+                    <LineBreak/>
+                    <LineBreak/>
+                    <Run Text="You should add JAVA_HOME to the list only if your JAVA_HOME installation is extracted from ZIP or somehow cannot be discovered automatically."/>
+                    <LineBreak/>
+                    <Run Text="In the last case, you should remove JAVA_HOME entry as soon as auto-discovery starts detecting it."/>
+                    <LineBreak/>
+                    <Run Text="(Such situations may happen when you update some really old versions (say, 11.0.0 from 2018)." FontStyle="Italic"/>
+                </TextBlock>
+            </TextBlock.ToolTip>
         </TextBlock>
-        <!--Tooltip="So, if you add manually an entry with the same path as an auto-discovered one, and then turn 'Upd?' off - neither will be checked for updates."-->
 
-        <Button x:Name="btnHowDisableUpdates"
+        <!--<TextBlock FontSize="13" TextWrapping="Wrap"  Foreground="#222"
+                   HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                   Margin="50,191,10,0">            
+            <Run Text="You can also add other (&quot;custom path&quot; or JAVA_HOME) installations to monitor for updates." />
+        </TextBlock>-->
+
+        <!--<Button x:Name="btnHowDisableUpdates"
                Style="{StaticResource LinkButton}" 
                FontSize="13"
                Content="See how" 
                Height="11"
                HorizontalAlignment="Left" VerticalAlignment="Top" 
-               Margin="378,189,0,0" Click="btnHowDisableUpdates_Click"  />
+               Margin="378,189,0,0" Click="btnHowDisableUpdates_Click"  />-->
 
 
         <Button x:Name="btnHowEditGrayedOut"
                Style="{StaticResource LinkButton}" 
                FontSize="10"
                Content="Help - auto-discovered and custom entries" 
-               HorizontalAlignment="Left" Margin="12,230,0,0" VerticalAlignment="Top" Height="11" Click="btnHowEditGrayedOut_Click" />
+               HorizontalAlignment="Left" Margin="12,218,0,0" VerticalAlignment="Top" Height="11" Click="btnHowEditGrayedOut_Click" />
 
 
 
@@ -129,20 +154,20 @@
 
         <Label  x:Name="lblLTS"  Content="{Binding LTSReleasesMessage}"
                        ToolTip="Long-term support (LTS) versions have a longer support timeframe and are suitable for enterprise or similar use. Click for more info." 
-                       Foreground="Gray" HorizontalAlignment="Right" Margin="0,214,422,0" VerticalAlignment="Top" MouseUp="lblLTS_MouseUp"/>
+                       Foreground="Gray" HorizontalAlignment="Right" Margin="0,202,422,0" VerticalAlignment="Top" MouseUp="lblLTS_MouseUp"/>
         <Button x:Name="btnWhatJREJDK" Content="Help on types" FontSize="10"                        
-                    Style="{StaticResource LinkButton}" Margin="0,230,237,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="70" Click="btnWhatJREJDK_Click" />
+                    Style="{StaticResource LinkButton}" Margin="0,218,237,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="70" Click="btnWhatJREJDK_Click" />
         <Button x:Name="btnWhatImpl" Content="Help on JVMs"    FontSize="10"                       
-                    Style="{StaticResource LinkButton}" Margin="0,230,157,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="70" Click="btnWhatImpl_Click"  />
+                    Style="{StaticResource LinkButton}" Margin="0,218,157,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="70" Click="btnWhatImpl_Click"  />
         <Button x:Name="btnWhatHeap" Content="Help on heap" FontSize="10"                          
-            Style="{StaticResource LinkButton}" Margin="0,230,77,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="70" Click="btnWhatHeap_Click"  />
+            Style="{StaticResource LinkButton}" Margin="0,218,77,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="70" Click="btnWhatHeap_Click"  />
         <Label  x:Name="lblYourArchMessage"  Content="{Binding YourArchMessage}" FontSize="11"
                 ToolTip="Architecture of your system (OS)"
-                Foreground="LightGray" HorizontalAlignment="Right" Margin="0,215,10,0" VerticalAlignment="Top" />
+                Foreground="LightGray" HorizontalAlignment="Right" Margin="0,203,10,0" VerticalAlignment="Top" />
 
 
 
-        <DataGrid x:Name="UIInstallationList" Margin="10,240,10,147" 
+        <DataGrid x:Name="UIInstallationList" Margin="10,228,10,142" 
                   AutoGenerateColumns="False" 
                   GridLinesVisibility="None"
                   DataGridCell.Selected="DataGridCell_Selected" 
@@ -206,7 +231,7 @@
                             </MultiBinding>
                         </MenuItem.Visibility>
                     </MenuItem>
-                    
+
                     <MenuItem Header="Convert back to auto-discovered installation (will reset API params to defaults)"
                               Command="{Binding PlacementTarget.Tag.RemoveSelectedInstallationCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                               DataContext="{Binding   PlacementTarget.SelectedItem,
@@ -222,11 +247,11 @@
                     </MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>
-            
+
             <DataGrid.InputBindings>
                 <KeyBinding Key="Delete" Command="{Binding RemoveSelectedInstallationCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
             </DataGrid.InputBindings>
-            
+
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <!--<Setter Property="IsEnabled" Value="{Binding IsEditable}"/>-->
@@ -240,7 +265,14 @@
                             </MultiBinding>
                         </Setter.Value>
                     </Setter>
-
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsAutodiscoveredInstance}" Value="True">
+                            <Setter Property="Foreground" Value="DimGray"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsAutodiscoveredInstance}" Value="False">
+                            <Setter Property="Foreground" Value="Black"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
 
@@ -519,13 +551,13 @@
             Foreground="Gray"
             Content="If you don't have JDK/JRE installed, you can install it here"
             Visibility="{Binding ThereAreNoInstallations, Converter={StaticResource BooleanToVisibilityConverter}}"
-            HorizontalAlignment="Center" Margin="0,0,0,265" VerticalAlignment="Bottom" 
+            HorizontalAlignment="Center" Margin="275,0,275,282" VerticalAlignment="Bottom" 
             FontFamily="Segoe UI Black" FontSize="16"/>
         <Image 
             x:Name="imgInstallTipArrow"           
             Visibility="{Binding ThereAreNoInstallations, Converter={StaticResource BooleanToVisibilityConverter}}"
             HorizontalAlignment="Center" VerticalAlignment="Bottom"
-            Height="157" Width="305"  Margin="255,0,0,122" 
+            Height="175" Width="305"  Margin="483,0,228,122" 
             Source="assets/arrow.png"  Opacity="0.5" Stretch="Fill"/>
 
         <Button
