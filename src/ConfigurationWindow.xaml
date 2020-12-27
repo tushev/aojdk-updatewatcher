@@ -179,7 +179,7 @@
                   VerticalContentAlignment="Center"
                   ItemsSource="{Binding ConfiguredInstallations}"
                   SelectedItem="{Binding SelectedItem}"
-                  Tag="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=Window}}"
+                  Tag="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=Window}}"                  
                   >
 
             <DataGrid.ContextMenu>
@@ -551,13 +551,13 @@
             Foreground="Gray"
             Content="If you don't have JDK/JRE installed, you can install it here"
             Visibility="{Binding ThereAreNoInstallations, Converter={StaticResource BooleanToVisibilityConverter}}"
-            HorizontalAlignment="Center" Margin="275,0,275,282" VerticalAlignment="Bottom" 
+            HorizontalAlignment="Center" Margin="270,0,270,282" VerticalAlignment="Bottom" 
             FontFamily="Segoe UI Black" FontSize="16"/>
         <Image 
             x:Name="imgInstallTipArrow"           
             Visibility="{Binding ThereAreNoInstallations, Converter={StaticResource BooleanToVisibilityConverter}}"
             HorizontalAlignment="Center" VerticalAlignment="Bottom"
-            Height="175" Width="305"  Margin="483,0,228,122" 
+            Height="175" Margin="483,0,228,121" 
             Source="assets/arrow.png"  Opacity="0.5" Stretch="Fill"/>
 
         <Button
