@@ -101,7 +101,7 @@ namespace AJ_UpdateWatcher
 
             if (Settings.Default.lblHelpContextRequiresHighlighting)
             {
-                lblHelpContext1.Background = Brushes.Yellow;
+                lblHelpContext1.Background = Brushes.LightGoldenrodYellow;
                 lblHelpContext2.Background = Brushes.Yellow;
 
                 Settings.Default.lblHelpContextRequiresHighlighting = false;
