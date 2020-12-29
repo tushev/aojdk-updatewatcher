@@ -28,7 +28,7 @@ This app is designed to run on Windows startup. I recommend to turn on **Check f
 
 ## 🔃 New in v. 2.0.2:
 * **UX: Easily override any auto-discovered instance with context menu**. Disabling an auto-discovered instance is way simpler now.
-* **Proxy support** (#6): AJUpdateWatcher now uses HTTP proxy - if it is configured in Windows **Settings**.
+* **Proxy support**: AJUpdateWatcher now uses HTTP proxy - if it is configured in Windows **Settings**.
 * 'Immediate check' shortcut now performs check with GUI
 * Improved command line handling 
 * Other minor changes and fixes, updated dependencies
