@@ -454,10 +454,8 @@
             <!-- ALL UP-TO-DATE -->
             <TextBlock FontFamily="Segoe UI" FontSize="28"                       
                        Visibility="{Binding ShowAllInstallationsAreUpToDateMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
-                       Margin="0,-30,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Run Text="All"/>
-                    <Run Text="{Binding TargetProduct, Mode=OneWay}"/>
-                    <Run Text="installations are up-to-date"/>
+                       Margin="0,-30,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding AllInstallationsAreUpToDateMessage, Mode=OneWay}">
             </TextBlock>
             <!-- Installation of selected updates has been complete -->
             <TextBlock FontFamily="Segoe UI" FontSize="14"                       

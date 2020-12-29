@@ -180,6 +180,7 @@ namespace AJ_UpdateWatcher
             OnPropertyChanged("ShowThereMayBeNewVersionsMessage");
             OnPropertyChanged("ThereMayBeNewVersionsMessageMargin");
             OnPropertyChanged("ShowAllInstallationsAreUpToDateMessage");
+            OnPropertyChanged("AllInstallationsAreUpToDateMessage");
             OnPropertyChanged("ShowInstallationCompleteMessage");
             OnPropertyChanged("InstallationCompleteMessageMargin");
             OnPropertyChanged("IsButtonDownloadAndInstallUpdatesEnabled");
@@ -202,6 +203,14 @@ namespace AJ_UpdateWatcher
             }
         }
 
+        public string AllInstallationsAreUpToDateMessage
+        {
+            get
+            {
+                return $"All {Branding.TargetProduct} installations " +
+                   (!updater.ErrorsOccuredWhileCheckingForUpdates ? "are up-to-date" : "may be up-to-date (there were errors)");
+            }
+        }
 
         #region Local GUI - checkboxes etc.
         public bool ShowAllEnabledInstallations 
@@ -212,6 +221,7 @@ namespace AJ_UpdateWatcher
                 showAllEnabledInstallations = value; 
                 OnFilterChanged();
                 OnPropertyChanged("ShowAllInstallationsAreUpToDateMessage");
+                OnPropertyChanged("AllInstallationsAreUpToDateMessage");
                 OnPropertyChanged("ShowThereMayBeNewVersionsMessage");
                 OnPropertyChanged("ThereMayBeNewVersionsMessageMargin");
                 OnPropertyChanged("InstallationCompleteMessageMargin");
