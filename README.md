@@ -113,13 +113,15 @@ Other names may be trademarks of their respective owners.
 ## ⚖ License: MIT
 
 ## 💻 Codestyle
+<details>
+  <summary>Notes</summary>
 v.1.0: Please don't judge my coding style by this project, as I developed this app in less than a working day. It just works :)
 
 v.2.0: The app was refactored. However, some codestyle issues still remain - for a single-person-maintained project, they are not a major issue. My top priority is app stability and robustness.
 
 [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)
 (`¹`) <sub>Please note that _blank-line related rules_ such as `The code must not contain multiple blank lines in a row.`, `A closing curly bracket must not be preceded by a blank line.`,  `An opening curly bracket must not be followed by a blank line` etc **are disabled** in CodeFactor.</sub>
-
+</details>
 
 ## 🔕 Known not-a-bugs
 * **JAVA_HOME** value is updated when the *app is launched* (either in configuration mode or during background check). If you change JAVA_HOME value while running configuration screen, the value will not be updated in the app. However, you can close the configuration window safely: when the next background check occurs, actual value of JAVA_HOME at that time will be used 
