@@ -26,7 +26,14 @@ Configuration window will appear only on first run or if something goes wrong or
 
 This app is designed to run on Windows startup. I recommend to turn on **Check for AdoptOpenJDK updates on Logon** setting in configuration. If you want another schedule, turn this on and press Edit task to configure it as desired.
 
-## 🔃 New in v. 2.0.1:
+### 🔃 New in v. 2.0.2.0:
+* UX: Easily override any auto-discovered instance with context menu. Disabling an auto-discovered instance is way simpler now.
+* Proxy support (#6): AJUpdateWatcher now uses HTTP proxy - if it is configured in Windows **Settings**.
+* 'Immediate check' shortcut now performs check with GUI
+* Improved command line handling 
+* Other minor changes and fixes, updated dependencies
+
+#### New in v. 2.0.1:
 * Added support for recently introduced changes in AdoptOpenJDK API and versioning scheme. This allows to receive `patch` and `AdoptBuild` updates for AdoptOpenJDK.
 * Switched to [MSI](https://github.com/tushev/aojdk-updatewatcher/wiki/MSI-Installation) for installers. *No more false positives on VirusTotal!*
 * Added support for post-install scripts/triggers (#5). 
@@ -36,7 +43,7 @@ This app is designed to run on Windows startup. I recommend to turn on **Check f
 * Fix for a bug during background check when autodiscovery was set to off
 * Other minor changes and fixes
 
-###  New in v. 2.0.0
+#### New in v. 2.0.0
 * Support for multiple AdoptOpenJDK installations
 * Automatic discovery of installations via Windows Registry
 * Redesigned UI/UX
