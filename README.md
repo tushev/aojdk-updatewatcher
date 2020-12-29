@@ -33,9 +33,11 @@ This app is designed to run on Windows startup. I recommend to turn on **Check f
 * Improved command line handling 
 * Other minor changes and fixes, updated dependencies
 
+#### Changelog:
 <details>
   <summary>New in v. 2.0.1</summary>
-  
+
+### 🔃 New in v. 2.0.1:
 * Added support for recently introduced changes in AdoptOpenJDK API and versioning scheme. This allows to receive `patch` and `AdoptBuild` updates for AdoptOpenJDK.
 * Switched to [MSI](https://github.com/tushev/aojdk-updatewatcher/wiki/MSI-Installation) for installers. *No more false positives on VirusTotal!*
 * Added support for post-install scripts/triggers (#5). 
@@ -47,7 +49,8 @@ This app is designed to run on Windows startup. I recommend to turn on **Check f
 </details>
 <details>
   <summary>New in v. 2.0.0</summary>
-  
+
+### 🔃 New in v. 2.0.0:
 * Support for multiple AdoptOpenJDK installations
 * Automatic discovery of installations via Windows Registry
 * Redesigned UI/UX
