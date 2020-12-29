@@ -11,7 +11,7 @@ Automatic update tool for AdoptOpenJDK releases                �
 ## 💡 Key ideas
 
 * The updater tries to list all AdoptOpenJDK installations on your machine - automatically
-* Every time it launches (i.e., scheduled on logon), it checks for updates in background
+* Every time it launches (i.e., on logon - if scheduled), it checks for updates in background
 * If there are new versions, you will be notified
 * **For advanced users:** It also provides a lot of manual controls - but they require some fine-tuning. Just read the tooltips, there are tons of them.
 
@@ -61,12 +61,12 @@ This app is designed to run on Windows startup. I recommend to turn on **Check f
 
 ## ℹ Requirements
 Ironically, this tool is written in C# 6 + WPF, because I am not a Java developer xD
-* Windows 10 _(earlier versions are likely to work as well, but I did not test that)_
+* Windows 10 _(earlier versions are likely to work as well, but I did not test that. Icons may be missing in EOL versions of Windows (XP/7/8)._
 * .NET Framework 4.7.2 _(must be installed beforehand)_
 
 ## 📩 Download
 There's a built-in update mechanism. 
-### 👉 [Download version 2.0.1](https://github.com/tushev/aojdk-updatewatcher/releases) 👈
+### 👉 [Download version 2.0.2](https://github.com/tushev/aojdk-updatewatcher/releases) 👈
 ### If you find this app useful, stars are appreciated :) [![GitHub stars](https://img.shields.io/github/stars/tushev/aojdk-updatewatcher.svg?style=social&label=Star&maxAge=86400)](https://GitHub.com/tushev/aojdk-updatewatcher/stargazers/)
 * ❓ [Read the wiki](https://github.com/tushev/aojdk-updatewatcher/wiki)
 
@@ -124,9 +124,10 @@ v.2.0: The app was refactored. However, some codestyle issues still remain - for
 </details>
 
 ## 🔕 Known not-a-bugs
+
 * **JAVA_HOME** value is updated when the *app is launched* (either in configuration mode or during background check). If you change JAVA_HOME value while running configuration screen, the value will not be updated in the app. However, you can close the configuration window safely: when the next background check occurs, actual value of JAVA_HOME at that time will be used 
 * ⚠ Please keep in mind that if **JAVA_HOME** installation significantly changes (i.e., 8 → 11, or JRE → JDK), you should update API parameters manually _(because the app cannot decide whether this is intended or not)._<br> You can use `Detect (reset) API settings for selected` button to do it.
 * If the configuration app **continiously** reminds you to turn on scheduled task (even if you opted out before), this happens because you have not either added some installations manually, or turned auto-discovery on. Once you set at least one of these, the app will consider itself as 'configured' and will remember your opt-out.
 * For **manually** added installations that were released prior to Sep 16 2020, it may be not always possible to detect build number. **Thus you may miss an update**, say, from `8.0.265+1` to `8.0.265+2` - but only for manually added installations _(custom path or JAVA_HOME)_. **It is highly recommended to use automatic discovery** (which detects build numbers) for releases downloaded and installed prior to 16 September 2020.
 
-[See all 🔕 Known not-a-bugs](https://github.com/tushev/aojdk-updatewatcher/wiki/Known-not-a-bugs)
+### [See all 🔕 Known not-a-bugs](https://github.com/tushev/aojdk-updatewatcher/wiki/Known-not-a-bugs)
