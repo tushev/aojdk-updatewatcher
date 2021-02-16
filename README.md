@@ -114,7 +114,7 @@ Other names may be trademarks of their respective owners.
 
 ## 💻 Codestyle
 <details>
-  <summary>Notes</summary>
+  <summary>📝 Codestyle notes</summary>
 v.1.0: Please don't judge my coding style by this project, as I developed this app in less than a working day. It just works :)
 
 v.2.0: The app was refactored. However, some codestyle issues still remain - for a single-person-maintained project, they are not a major issue. My top priority is app stability and robustness.
