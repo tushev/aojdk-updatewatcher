@@ -190,7 +190,7 @@
                                                       AncestorType={x:Type ContextMenu}}}"/>
                     <Separator/>-->
 
-                    <MenuItem Header="Remove installation" 
+                    <MenuItem Header="Remove installation from this list" 
                               Command="{Binding PlacementTarget.Tag.RemoveSelectedInstallationCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                               IsEnabled="{Binding IsEditable}" 
                               DataContext="{Binding   PlacementTarget.SelectedItem,
