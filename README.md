@@ -8,6 +8,17 @@
 
 Automatic update tool for AdoptOpenJDK releases                                                                                    [⬇ Download](#-download)
 
+# ⚠ AdoptOpenJDK 8.0.292 update loop circumvention ⚠
+### Due to an incorrect value in `release` file for `8.0.292+10` an update loop arises after you install the 8.0.292+10 update.
+
+✔ **SOLUTION:** "skip" the 8.0.292+10 release **after you've installed the update** - so no further suggestions for updating to 8.0.292+10 will appear.<br>
+Please see https://github.com/tushev/aojdk-updatewatcher/wiki/Skipping-releases on how to do it.
+
+Once a release with [another release name](https://github.com/tushev/aojdk-updatewatcher/blob/d2361e3d142aee603e557de8ace5d2b83575830a/src/Classes/Updater/Workers/UpdateChecker.cs#L71) will be released by AdoptOpenJDK, you will receive update notification for it.
+
+### Unfortunately, this issue is out of my control - only Adoptium team can resolve it.
+It's not a bug in **Update Watcher for AdoptOpenJDK**.
+
 ## 💡 Key ideas
 
 * The updater tries to list all AdoptOpenJDK installations on your machine - automatically
