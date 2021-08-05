@@ -34,8 +34,8 @@ namespace AJ_UpdateWatcher
     }
     static class AdoptiumAPI
     {
-        public const string baseDOMAIN = "api.adoptopenjdk.net";
-        public const string baseURL = "https://api.adoptopenjdk.net/v3/";
+        public const string baseDOMAIN = "api.adoptium.net";
+        public const string baseURL = "https://api.adoptium.net/v3/";
 
         static public List<string> GetReleases()
         {
