@@ -18,7 +18,7 @@ namespace AJ_UpdateWatcher
     }
     static class AdoptiumInstallationsDiscoverer
     {
-        static string AdoptiumRegistryRoot = @"SOFTWARE\AdoptOpenJDK";
+        static string[] RegistryRoots = { @"SOFTWARE\AdoptOpenJDK", @"SOFTWARE\Eclipse Foundation" };
 
         public static List<DiscoveredInstallation> DiscoverInstallationsByRegistryHKLM() { return DiscoverInstallationsByRegistry(RegistryHive.LocalMachine); }
         public static List<DiscoveredInstallation> DiscoverInstallationsByRegistryHKCU() { return DiscoverInstallationsByRegistry(RegistryHive.CurrentUser); }
@@ -27,28 +27,33 @@ namespace AJ_UpdateWatcher
             List<DiscoveredInstallation> paths = new List<DiscoveredInstallation>();
 
             var RegistryViews = new List<RegistryView> { RegistryView.Registry32, RegistryView.Registry64 };
-            foreach (var view in RegistryViews)
+
+            foreach (string AdoptiumRegistryRoot in RegistryRoots)
             {
-                var key = RegistryKey.OpenBaseKey(hive, view);
-                var level0key = key.OpenSubKey(AdoptiumRegistryRoot);
-                if (level0key != null)
-                    foreach (var image in level0key.GetSubKeyNames().AsNotNull())
-                        foreach (var version in key.OpenSubKey(AdoptiumRegistryRoot + $@"\{image}").GetSubKeyNames().AsNotNull())
-                            foreach (var JVM in key.OpenSubKey(AdoptiumRegistryRoot + $@"\{image}\{version}").GetSubKeyNames().AsNotNull())
-                                foreach (var last_el in key.OpenSubKey(AdoptiumRegistryRoot + $@"\{image}\{version}\{JVM}").GetSubKeyNames().AsNotNull())
-                                {
-                                    var path = key.OpenSubKey(AdoptiumRegistryRoot + $@"\{image}\{version}\{JVM}\{last_el}").GetValue("Path");
-                                    if (path != null)
-                                        if ((string)path != "")
-                                            paths.Add(new DiscoveredInstallation() 
-                                            { 
-                                                Path = (string)path, Version = version, 
-                                                JVM_Implementation = JVM, 
-                                                ImageType = image, 
-                                                LastElement = last_el,
-                                                x64 = view == RegistryView.Registry64
-                                            });;
-                                }
+                foreach (var view in RegistryViews)
+                {
+                    var key = RegistryKey.OpenBaseKey(hive, view);
+                    var level0key = key.OpenSubKey(AdoptiumRegistryRoot);
+                    if (level0key != null)
+                        foreach (var image in level0key.GetSubKeyNames().AsNotNull())
+                            foreach (var version in key.OpenSubKey(AdoptiumRegistryRoot + $@"\{image}").GetSubKeyNames().AsNotNull())
+                                foreach (var JVM in key.OpenSubKey(AdoptiumRegistryRoot + $@"\{image}\{version}").GetSubKeyNames().AsNotNull())
+                                    foreach (var last_el in key.OpenSubKey(AdoptiumRegistryRoot + $@"\{image}\{version}\{JVM}").GetSubKeyNames().AsNotNull())
+                                    {
+                                        var path = key.OpenSubKey(AdoptiumRegistryRoot + $@"\{image}\{version}\{JVM}\{last_el}").GetValue("Path");
+                                        if (path != null)
+                                            if ((string)path != "")
+                                                paths.Add(new DiscoveredInstallation()
+                                                {
+                                                    Path = (string)path,
+                                                    Version = version,
+                                                    JVM_Implementation = JVM,
+                                                    ImageType = image,
+                                                    LastElement = last_el,
+                                                    x64 = view == RegistryView.Registry64
+                                                }); ;
+                                    }
+                }
             }
             return paths;
         }
