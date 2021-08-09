@@ -301,9 +301,10 @@ namespace AJ_UpdateWatcher
                         string os_arch_string = match_arch.Groups[1].Value;
 
                         if (os_arch_string.IndexOf("x86_64", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                            os_arch_string.IndexOf("amd64", StringComparison.OrdinalIgnoreCase) >= 0)
+                            os_arch_string.IndexOf("amd64",  StringComparison.OrdinalIgnoreCase) >= 0)
                             installed_version.Arch = "x64";
-                        else if (os_arch_string.IndexOf("i586", StringComparison.OrdinalIgnoreCase) >= 0)
+                        else if (os_arch_string.IndexOf("i586", StringComparison.OrdinalIgnoreCase) >= 0  ||
+                                 os_arch_string.IndexOf("x86",  StringComparison.OrdinalIgnoreCase) >= 0)
                             installed_version.Arch = "x32";
                     }
 
