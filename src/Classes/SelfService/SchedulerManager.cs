@@ -42,15 +42,18 @@ namespace AJ_UpdateWatcher
                 if (!(t.Definition.Actions.Count == 1 &&  t.Definition.Actions[0].ToString().Trim() == app_path))
                 {
                     Debug.WriteLine($"ACT = [{t.Definition.Actions[0].ToString().Trim()}], comparison = [{t.Definition.Actions[0].ToString().Trim() == app_path}]");
-                    var ans = MessageBox.Show(
-                        $"There is a Task Scheduler task for {Branding.ProductName}, but it is not set exactly to run this very instance of updater." + Environment.NewLine + Environment.NewLine +
-                        $"The task has {t.Definition.Actions.Count} action(s) and the first action is set to [{t.Definition.Actions[0].ToString().Trim()}]" + Environment.NewLine + Environment.NewLine +
-                        $"This app is located at [{app_path}]" + Environment.NewLine + Environment.NewLine +
-                        $"Click Yes to delete the task and re-create it correctly," + Environment.NewLine + "No to keep things as is.",
-                        Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-                    if (ans == MessageBoxResult.Yes)
+                    if (! App.CommandLineOptions.SchedulerDoNotCheckConsistency )
                     {
-                        ForceReInstallTask(taskName);
+                        var ans = MessageBox.Show(
+                            $"There is a Task Scheduler task for {Branding.ProductName}, but it is not set exactly to run this very instance of updater." + Environment.NewLine + Environment.NewLine +
+                            $"The task has {t.Definition.Actions.Count} action(s) and the first action is set to [{t.Definition.Actions[0].ToString().Trim()}]" + Environment.NewLine + Environment.NewLine +
+                            $"This app is located at [{app_path}]" + Environment.NewLine + Environment.NewLine +
+                            $"Click Yes to delete the task and re-create it correctly," + Environment.NewLine + "No to keep things as is.",
+                            Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+                        if (ans == MessageBoxResult.Yes)
+                        {
+                            ForceReInstallTask(taskName);
+                        }
                     }
                 }
             }

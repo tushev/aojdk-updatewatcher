@@ -50,6 +50,10 @@
     {
       "Id": "1db0d6a3-f6c4-4c32-86fc-d9be025543c0",
       "Command": "-config"
+    },
+    {
+      "Id": "a3e89913-e6c5-4370-94b2-e4c675dd8071",
+      "Command": "--scheduler_donotcheckconsistency"
     }
   ]
 }

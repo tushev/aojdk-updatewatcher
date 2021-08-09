@@ -17,6 +17,7 @@ namespace AJ_UpdateWatcher
         public bool ForceSetTask { get; set; }
         public bool SetTaskAskIfNonConsistent { get; set; }
         public bool RunExplicitCheckForUpdates { get; set; }
+        public bool SchedulerDoNotCheckConsistency { get; set; }
 
         internal void EnforceConsistency()
         {
@@ -39,6 +40,7 @@ namespace AJ_UpdateWatcher
             p.Setup(a => a.ForceSetTask).As("forcesettask").SetDefault(false);
             p.Setup(a => a.SetTaskAskIfNonConsistent).As("settask_askifnonconsistent").SetDefault(false);
             p.Setup(a => a.RunExplicitCheckForUpdates).As("explicitcheck").SetDefault(false);
+            p.Setup(a => a.SchedulerDoNotCheckConsistency).As("scheduler_donotcheckconsistency").SetDefault(false);
 
             var res = p.Parse(Args);
 
