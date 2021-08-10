@@ -15,6 +15,8 @@ Automatic update tool for AdoptOpenJDK releases                �
 
 Please check [Eclipse Adoptium Slack](https://adoptium.net/slack.html) for more information.
 
+## Version 2.0.3 may be released this week
+
 ## 💡 Key ideas
 
 * The updater tries to list all AdoptOpenJDK installations on your machine - automatically
