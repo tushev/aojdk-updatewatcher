@@ -10,7 +10,7 @@ Automatic update tool for AdoptOpenJDK releases                �
 
 ## ❗ Transition from AdoptOpenJDK to Adoptium in progress, version 2.0.3 may be released this week
 * Version 2.0.2 of the updater currently relies on `api.adoptopenjdk.net`. As soon as new Adoptium builds would be available there, they will appear in the updater.
-* Version 2.0.3 that works with `api.adoptium.net` & support Eclipse Temurin binaries will be released soon
+* Version 2.0.3 ~~that works with `api.adoptium.net`~~  & support Eclipse Temurin binaries will be released soon
 * Version 2.0.2 cannot reliably work and detect Eclipse Temurin binaries. Please be patient.
 
 Please check [Eclipse Adoptium Slack](https://adoptium.net/slack.html) for more information.
