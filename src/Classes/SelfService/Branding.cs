@@ -8,8 +8,8 @@ namespace AJ_UpdateWatcher
 {
     static public class Branding
     {
-        static public readonly string MessageBoxHeader = "Update Watcher for AdoptOpenJDK";
+        static public readonly string MessageBoxHeader = "Update Watcher for AdoptOpenJDK / Eclipse Temurin™ / IBM® Semeru® Open Edition";
         static public readonly string ProductName = "Update Watcher for AdoptOpenJDK";
-        static public readonly string TargetProduct = "AdoptOpenJDK";
+        static public readonly string TargetProduct = "AdoptOpenJDK / Eclipse Temurin™ / IBM® Semeru® Open Edition";
     }
 }

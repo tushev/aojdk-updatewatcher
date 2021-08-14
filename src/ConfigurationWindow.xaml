@@ -7,8 +7,8 @@
         xmlns:properties="clr-namespace:AJ_UpdateWatcher.Properties"
         mc:Ignorable="d"
         Title="Update Watcher for AdoptOpenJDK - Configuration" 
-        Height="715" Width="1024"
-        MinHeight="715" MinWidth="1024" 
+        Height="765" Width="1280"
+        MinHeight="715" MinWidth="1250" 
         WindowStartupLocation="CenterScreen" 
         ResizeMode="CanResizeWithGrip" 
         Closing="Window_Closing" Loaded="Window_Loaded" 
@@ -43,8 +43,8 @@
             </StackPanel>
         </Button>
 
-        <Grid HorizontalAlignment="Left" Margin="28,17,0,0" VerticalAlignment="Top" x:Name="gridSchedule">
-            <CheckBox x:Name="cbSchedule" FontWeight="Bold" 
+        <Grid HorizontalAlignment="Left" Margin="24,15,0,0" VerticalAlignment="Top" x:Name="gridSchedule" Width="1070" Background="Transparent" >
+            <CheckBox x:Name="cbSchedule" FontWeight="Bold" Margin="4,2,2,2"
                   IsChecked="{Binding Path=SchedulerManagerTaskStatus, Mode=TwoWay}"                    
                   ToolTip="If you want another schedule, turn this on and press Edit task to configure it as desired." Checked="cbSchedule_Checked">
                 <CheckBox.Content>
@@ -53,12 +53,12 @@
             </CheckBox>
             <Label Content="(sets up Windows Scheduler task to run this app)" 
                   ToolTip="If you want another schedule, turn this on and press Edit task to configure it as desired."
-               HorizontalAlignment="Left" Margin="374,-6,-9,0" VerticalAlignment="Top"/>
+               HorizontalAlignment="Left" Margin="655,-4,0,0" VerticalAlignment="Top"/>
 
             <Button x:Name="btnEditTask" Style="{StaticResource LinkButton}" 
                     Command="{Binding EditTaskCommand}"
                     IsEnabled="{Binding Path=SchedulerManagerTaskStatus, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                    Content="Edit task / change schedule" HorizontalAlignment="Left" Margin="647,9,0,0" VerticalAlignment="Top"  Height="8" 
+                    Content="Edit task / change schedule" HorizontalAlignment="Left" Margin="924,11,-18,0" VerticalAlignment="Top"  Height="8" 
                     />
         </Grid>
 
@@ -154,7 +154,7 @@
 
         <Label  x:Name="lblLTS"  Content="{Binding LTSReleasesMessage}"
                        ToolTip="Long-term support (LTS) versions have a longer support timeframe and are suitable for enterprise or similar use. Click for more info." 
-                       Foreground="Gray" HorizontalAlignment="Right" Margin="0,202,422,0" VerticalAlignment="Top" MouseUp="lblLTS_MouseUp"/>
+                       Foreground="Gray" HorizontalAlignment="Right" Margin="0,202,326,0" VerticalAlignment="Top" MouseUp="lblLTS_MouseUp"/>
         <Button x:Name="btnWhatJREJDK" Content="Help on types" FontSize="10"                        
                     Style="{StaticResource LinkButton}" Margin="0,218,237,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="70" Click="btnWhatJREJDK_Click" />
         <Button x:Name="btnWhatImpl" Content="Help on JVMs"    FontSize="10"                       
@@ -245,6 +245,14 @@
                             </MultiBinding>
                         </MenuItem.Visibility>
                     </MenuItem>
+
+                    <MenuItem Header="Open in Explorer"
+                              Command="{Binding PlacementTarget.Tag.OpenPathInExplorerCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                              DataContext="{Binding   PlacementTarget.SelectedItem,
+                                                      RelativeSource={RelativeSource FindAncestor,
+                                                      AncestorType={x:Type ContextMenu}}}">
+
+                    </MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>
 
@@ -321,6 +329,7 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Binding="{Binding InstalledVersionString, Mode=OneWay}" Header="Installed version"/>
+                <DataGridTextColumn Binding="{Binding TypeString, Mode=OneWay}" Width="180"  Header="Installed: Vendor/Type/Edition"/>
 
                 <!-- FEATURE VERSION -->
                 <DataGridTemplateColumn Header="API/Major version" x:Name="lstReleasesInGrid" Width="120" SortMemberPath="WatchedRelease">
@@ -536,7 +545,7 @@
                   Content="Update this tool regularly (recommended) [via GitHub]" 
                   ToolTip="If on, this app will query GitHub API for new releases of this app every time this app starts."
                   Foreground="Gray"
-                  Margin="660,0,0,9" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Left"  
+                  Margin="660,0,9,9" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right"  
                   Style="{DynamicResource GrayCheckBox}"/>
 
 
@@ -557,7 +566,7 @@
             x:Name="imgInstallTipArrow"           
             Visibility="{Binding ThereAreNoInstallations, Converter={StaticResource BooleanToVisibilityConverter}}"
             HorizontalAlignment="Center" VerticalAlignment="Bottom"
-            Height="175" Margin="483,0,228,121" 
+            Height="173" Margin="600,0,354,122" 
             Source="assets/arrow.png"  Opacity="0.5" Stretch="Fill"/>
 
         <Button

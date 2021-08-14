@@ -68,9 +68,12 @@ namespace AJ_UpdateWatcher
                         var api_version = AdoptiumAPI.GetLatestVersion(release, i.JVM_Implementation, i.ImageType, i.HeapSize, out error_message, i.Arch, i.OS);
                         if (api_version.Found)
                         {
+                            Debug.WriteLine($"API: {api_version.ReleaseName}");
                             if (api_version.ReleaseName != i.SkippedReleaseName || force)
                                 if (api_version > i.InstalledVersion || force)
                                 {
+                                    Debug.WriteLine($"[API]{api_version.VersionString} > [Local]{i.InstalledVersion.VersionString}");
+
                                     i.NewVersion = api_version;
                                     i.MarkedForUpdate = api_version.ReleaseName != i.SkippedReleaseName; // don't mark if skipped
 
@@ -86,7 +89,9 @@ namespace AJ_UpdateWatcher
                             errors_occured = true;
                             string name = (i.NotInstalled ?  $"New installation " : $"[{i.InstalledVersionString}]@[{i.Path}]")
                                         + $"[{ i.WatchedRelease}/{ i.ImageType}/{ i.JVM_Implementation}/{ i.HeapSize}/{ i.Arch}/{ i.OS}]";
-                            ErrorsEncountered.Add($"{name} => New Version not found: {error_message}");
+                            string message = $"{name} => New Version not found: {error_message}";
+                            ErrorsEncountered.Add(message);
+                            Debug.WriteLine($"API: Not found: {message}");
                         }
                     }
 

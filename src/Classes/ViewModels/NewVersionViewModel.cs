@@ -207,7 +207,7 @@ namespace AJ_UpdateWatcher
         {
             get
             {
-                return $"All {Branding.TargetProduct} installations " +
+                return $"All {Branding.TargetProduct} {Environment.NewLine} installations " + 
                    (!updater.ErrorsOccuredWhileCheckingForUpdates ? "are up-to-date" : "may be up-to-date (there were errors)");
             }
         }
@@ -278,7 +278,7 @@ namespace AJ_UpdateWatcher
         {
             get
             {
-                return (updater.AllInstallationsAreUpToDate && InstallationsWithUpdatesCount == 0) &&
+                return ((updater.AllInstallationsAreUpToDate && InstallationsWithUpdatesCount == 0) || CheckedForUpdatesInstallationsCount == 0) &&
                         !ShowAllEnabledInstallations && !SomethingInProgress && !machine.SomethingHasBeenChangedSinceUpdateCheck;
             }
         }
@@ -305,7 +305,8 @@ namespace AJ_UpdateWatcher
 
         private int InstallationsWithUpdatesCount { get { return machine.InstallationsWithUpdatesCount; } }
         private int InstallationsWithMSIUpdatesCount { get { return machine.InstallationsWithMSIUpdatesCount; } }
-        
+        public int CheckedForUpdatesInstallationsCount { get { return machine.CheckedInstallationsCount; } }
+
         public void SaveModel()
         {
             AppDataPersistence.Save(machine);
@@ -436,8 +437,6 @@ namespace AJ_UpdateWatcher
                 OnPropertyChanged("InvokedFromUI");
             }
         }
-
-
 
     }
 }

@@ -132,6 +132,8 @@ namespace AJ_UpdateWatcher
 
                     if (RefreshAutoDiscoveredInstancesOnInstallationCompletion)
                         machine.RefreshAutoDiscoveredInstallations();
+
+                    machine.ApplyInstallationPathsToDisable();
                 }
 
                 OnPropertyChanged("State");

@@ -42,5 +42,9 @@ namespace AJ_UpdateWatcher
         {
             Process.Start("https://adoptopenjdk.net/");
         }
+        static public void OpenMovingWebPage()
+        {
+            Process.Start("https://blog.adoptium.net/2021/04/Adoptium-to-promote-broad-range-of-compatible-OpenJDK-builds/");
+        }
     }
 }

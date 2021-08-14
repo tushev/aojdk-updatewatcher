@@ -382,6 +382,7 @@ namespace AJ_UpdateWatcher
             {
                 if (SelectedItem.Path != null)
                 {
+                    //// TODO: DRY code: this is a duplicate
                     Installation new_installation = new Installation(SelectedItem.Path);
 
                     bool disable_updates = ((string)parameter??"").ToLowerInvariant() == "disableupdatescheck";
@@ -393,6 +394,42 @@ namespace AJ_UpdateWatcher
             }
         }
         private bool CanExecuteConvertToUserOverriddenInstallationCommand(object parameter) { return (SelectedItem != null && SelectedItem.IsAutodiscoveredInstance && SelectedItem.CheckForUpdatesFlag); }
+        #endregion
+
+        #region OpenPathInExplorerCommand
+        ICommand open_path_in_explorer_command;
+        public ICommand OpenPathInExplorerCommand
+        {
+            get
+            {
+                if (open_path_in_explorer_command == null)
+                {
+                    open_path_in_explorer_command = new DelegateCommand(CanExecuteOpenPathInExplorerCommand, ExecuteOpenPathInExplorerCommand);
+                }
+                return open_path_in_explorer_command;
+            }
+        }
+
+        private void ExecuteOpenPathInExplorerCommand(object parameter)
+        {
+            if (null != SelectedItem)
+            {
+                var path = SelectedItem.Path ?? "";
+                if (System.IO.Directory.Exists(path))
+                {
+                    try
+                    {
+                        System.Diagnostics.Process.Start("explorer", path);
+                    }
+                    catch (Exception) { }
+                }
+            }
+        }
+        private bool CanExecuteOpenPathInExplorerCommand(object parameter)
+        {
+            return true;
+        }
+
         #endregion
 
         #region ResetAllSkippedReleasesCommand

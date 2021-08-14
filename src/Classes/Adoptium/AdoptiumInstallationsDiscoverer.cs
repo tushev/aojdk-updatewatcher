@@ -18,7 +18,7 @@ namespace AJ_UpdateWatcher
     }
     static class AdoptiumInstallationsDiscoverer
     {
-        static string[] RegistryRoots = { @"SOFTWARE\AdoptOpenJDK", @"SOFTWARE\Eclipse Foundation" };
+        static string[] RegistryRoots = { @"SOFTWARE\AdoptOpenJDK", @"SOFTWARE\Eclipse Foundation", @"SOFTWARE\Temurin", @"SOFTWARE\Semeru" };
 
         public static List<DiscoveredInstallation> DiscoverInstallationsByRegistryHKLM() { return DiscoverInstallationsByRegistry(RegistryHive.LocalMachine); }
         public static List<DiscoveredInstallation> DiscoverInstallationsByRegistryHKCU() { return DiscoverInstallationsByRegistry(RegistryHive.CurrentUser); }

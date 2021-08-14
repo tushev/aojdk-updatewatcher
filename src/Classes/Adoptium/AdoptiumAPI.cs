@@ -34,8 +34,8 @@ namespace AJ_UpdateWatcher
     }
     static class AdoptiumAPI
     {
-        public const string baseDOMAIN = "api.adoptium.net";
-        public const string baseURL = "https://api.adoptium.net/v3/";
+        public const string baseDOMAIN = "api.adoptopenjdk.net";
+        public const string baseURL = "https://" + baseDOMAIN + "/v3/";
 
         static public List<string> GetReleases()
         {
@@ -163,6 +163,8 @@ namespace AJ_UpdateWatcher
                         string version_string = (string)o["version"]["openjdk_version"];
                         string semantic_version = (string)o["version"]["semver"];
                         string version_release = (string)o["release_name"];
+
+                        string vendor = (string)o["vendor"];
                         
                         string zip_url = (string)o["binary"]["package"]["link"];
 
@@ -186,6 +188,8 @@ namespace AJ_UpdateWatcher
                         latest.VersionString = version_string;
                         latest.ReleaseName = version_release;
                         latest.SemVerAPI = semantic_version;
+
+                        latest.ImplementorRAW = vendor;
 
                         latest.MSIURL = msi_url;
                         latest.ZIPURL = zip_url;
@@ -214,7 +218,7 @@ namespace AJ_UpdateWatcher
                 var ie = ex;
                 while (ie.InnerException != null) ie = ie.InnerException;
 
-                error_message_out += $"GetLatestVersion[{URL}]: {ex.Message}" + (ie.InnerException != null ? $" => {ie.Message}" : "");
+                error_message_out += $"GetLatestVersion[{URL}]: {ex.Message}" + (ie.Message != null ? $" => {ie.Message}" : "");
                 //if (latest.)
                 Debug.WriteLine(error_message_out);
                 //MessageBox.Show("There was an error: " + ex.Message, "Adoptium API Error", MessageBoxButton.OK, MessageBoxImage.Error);

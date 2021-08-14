@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace AJ_UpdateWatcher
@@ -71,15 +72,43 @@ namespace AJ_UpdateWatcher
             {
                 var ExecuteAndWaitForExit = new ActionBlock<Tuple<string, Installation>>(data =>
                 {
-                    var path = data.Item1;
+                    var msi_path = data.Item1;
+                    var i = data.Item2;
 
-                    var p = Process.Start(path);
+                    var p = Process.Start(msi_path);
                     p.WaitForExit();
 
-                    try { File.Delete(path); }
-                    catch (Exception _e) { Debug.WriteLine($"Cannot delete [{path}]: {_e.Message}"); }
+                    Debug.WriteLine($"Exit({p.ExitCode}) : {msi_path}");
 
-                    data.Item2.UpdateHasCompleted();
+                    // ERROR_SUCCESS	                0	    The action completed successfully.
+                    // ERROR_SUCCESS_REBOOT_INITIATED	1641	The installer has initiated a restart. This message is indicative of a success.
+                    // ERROR_SUCCESS_REBOOT_REQUIRED	3010	A restart is required to complete the install. This message is indicative of a success. This does not include installs where the ForceReboot action is run.
+                    bool success = p.ExitCode == 0 || p.ExitCode == 1641 || p.ExitCode == 3010;
+
+#if DEBUG
+                    Debug.WriteLine($"[DEBUG] Overriding success({success}) = true");
+                    success = true;
+#endif
+
+                    try { File.Delete(msi_path); }
+                    catch (Exception _e) { Debug.WriteLine($"Cannot delete [{msi_path}]: {_e.Message}"); }
+
+                    var dis = AdoptiumTransitionRouter.SuggestDisabling(data.Item2, data.Item2.NewVersion);
+                    if (success && dis.Item1)
+                    {
+                        var ans = MessageBox.Show(
+                            $"Update of " + Environment.NewLine + $"{i.DisplayPath}" + Environment.NewLine + 
+                            $"from [{i.InstalledVersion.VersionString}] to [{i.NewVersion.VersionString}] has completed successfully." + Environment.NewLine + Environment.NewLine +
+                            $"However, it is *possible* that the old version was not uninstalled correctly due to the following reason(s):" + Environment.NewLine + Environment.NewLine +
+                            dis.Item2 + Environment.NewLine +
+                            $"It is suggested to disable checking for updates for the old version to avoid duplicate update suggestion. You may also have to uninstall the old version manually." + Environment.NewLine + Environment.NewLine +
+                            $"Would you like to disable checking for updates for {i.DisplayPath}?", 
+                            Branding.MessageBoxHeader, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        if (ans == MessageBoxResult.Yes)
+                            App.Machine.InstallationPathsToDisable.Add(i.Path);
+                    }
+
+                    i.UpdateHasCompleted(success);
 
                     worker.ReportProgress(-1);                    
                 });

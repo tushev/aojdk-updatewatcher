@@ -208,7 +208,7 @@ namespace AJ_UpdateWatcher
             if (!Settings.Default.NoWarrantiesDisclaimerHasBeenDisplayed)
             {
                 var message = $"WARNING! This (independent) software does not GUARANTEE that you will always get " +
-                              $"the lastest version of AdoptOpenJDK.{Environment.NewLine + Environment.NewLine}" +
+                              $"the lastest version of {Branding.TargetProduct}.{Environment.NewLine + Environment.NewLine}" +
                               $"Normally, everything works OK, and you get timely updates.{Environment.NewLine + Environment.NewLine}" +
                               $"However, if something breaks or changes in AdoptOpenJDK API, then you may not get the latest version.{Environment.NewLine + Environment.NewLine}" +
                               //$"So, from time to time, it's recommended to check their website to ensure that everything's OK.{Environment.NewLine + Environment.NewLine}" +

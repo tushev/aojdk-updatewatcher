@@ -78,6 +78,11 @@ namespace AJ_UpdateWatcher
         public string Arch { get; set; }
         public string OS { get; set; }
 
+        public string TypeOrEdition { get { return AdoptiumTools.GetTypeOrEditionFromAdoptiumReleaseVersion(this); } }
+        public string TypeOrEditionText { get { return AdoptiumTools.GetTypeOrEditionString(TypeOrEdition); } }
+        public string ImplementorRAW { get; set; }
+        public string ImplementorVersionRAW { get; set; }
+
         public bool Found
         {
             get { return found; }

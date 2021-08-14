@@ -38,6 +38,9 @@ namespace AJ_UpdateWatcher
         private string suggested_image_type = null;
         private bool? suggested_x64 = null;
 
+        private string manufacturer;
+        private string edition;
+
 
 
         private AdoptiumReleaseVersion new_available_version;
@@ -195,15 +198,17 @@ namespace AJ_UpdateWatcher
             // we found the file - let's check its format
             if (seems_to_be_release_file)
             {
-                Regex java_version_regex        = new Regex(@"JAVA_VERSION\s*=\s*""(.+)""",     RegexOptions.IgnoreCase);
-                Regex semantic_version_regex    = new Regex(@"SEMANTIC_VERSION\s*=\s*""(.+)""", RegexOptions.IgnoreCase);
-                Regex full_version_string_regex = new Regex(@"FULL_VERSION\s*=\s*""(.+)""",     RegexOptions.IgnoreCase);
-                Regex image_type_regex          = new Regex(@"IMAGE_TYPE\s*=\s*""(.+)""",       RegexOptions.IgnoreCase);
-                Regex jvm_impl_regex            = new Regex(@"JVM_VARIANT\s*=\s*""(.+)""",      RegexOptions.IgnoreCase);
-                Regex heap_size_regex           = new Regex(@"HEAP_SIZE\s*=\s*""(.+)""",        RegexOptions.IgnoreCase);
-                Regex os_arch_regex             = new Regex(@"OS_ARCH\s*=\s*""(.+)""",          RegexOptions.IgnoreCase);
-                Regex os_name_regex             = new Regex(@"OS_NAME\s*=\s*""(.+)""",          RegexOptions.IgnoreCase);
-                Regex source_regex              = new Regex(@"SOURCE\s*=\s*""(.+)""",           RegexOptions.IgnoreCase);
+                Regex java_version_regex        = new Regex(@"JAVA_VERSION\s*=\s*""(.+)""",        RegexOptions.IgnoreCase);
+                Regex semantic_version_regex    = new Regex(@"SEMANTIC_VERSION\s*=\s*""(.+)""",    RegexOptions.IgnoreCase);
+                Regex full_version_string_regex = new Regex(@"FULL_VERSION\s*=\s*""(.+)""",        RegexOptions.IgnoreCase);
+                Regex image_type_regex          = new Regex(@"IMAGE_TYPE\s*=\s*""(.+)""",          RegexOptions.IgnoreCase);
+                Regex jvm_impl_regex            = new Regex(@"JVM_VARIANT\s*=\s*""(.+)""",         RegexOptions.IgnoreCase);
+                Regex heap_size_regex           = new Regex(@"HEAP_SIZE\s*=\s*""(.+)""",           RegexOptions.IgnoreCase);
+                Regex os_arch_regex             = new Regex(@"OS_ARCH\s*=\s*""(.+)""",             RegexOptions.IgnoreCase);
+                Regex os_name_regex             = new Regex(@"OS_NAME\s*=\s*""(.+)""",             RegexOptions.IgnoreCase);
+                Regex source_regex              = new Regex(@"SOURCE\s*=\s*""(.+)""",              RegexOptions.IgnoreCase);
+                Regex implementor_regex         = new Regex(@"IMPLEMENTOR\s*=\s*""(.+)""",         RegexOptions.IgnoreCase);
+                Regex implementor_version_regex = new Regex(@"IMPLEMENTOR_VERSION\s*=\s*""(.+)""", RegexOptions.IgnoreCase);
 
                 bool semantic_parsed_successfully = false;
                 bool full_version_processed = false;
@@ -212,6 +217,9 @@ namespace AJ_UpdateWatcher
                 installed_version.JVMImplementation = "";
                 installed_version.ImageType = "";
                 installed_version.Heap = "";
+
+                installed_version.ImplementorRAW = "";
+                installed_version.ImplementorVersionRAW = "";
 
                 StreamReader reader = File.OpenText(System.IO.Path.Combine(path, "release"));
 
@@ -326,6 +334,20 @@ namespace AJ_UpdateWatcher
                         else if (source_string.IndexOf("hotspot", StringComparison.OrdinalIgnoreCase) >= 0)
                             installed_version.JVMImplementation = "hotspot";
                     }
+
+                    // IMPLEMENTOR 
+                    Match match_implementor = implementor_regex.Match(line);
+                    if (match_implementor.Success)
+                    {
+                        installed_version.ImplementorRAW = match_implementor.Groups[1].Value;
+                    }
+
+                    // IMPLEMENTOR_VERSION 
+                    Match match_implementor_version = implementor_version_regex.Match(line);
+                    if (match_implementor_version.Success)
+                    {
+                        installed_version.ImplementorVersionRAW = match_implementor_version.Groups[1].Value;
+                    }
                 }
 
             } // if (seems_to_be_adoptopenjdk)           
@@ -388,6 +410,16 @@ namespace AJ_UpdateWatcher
                         && installed_version.Arch == "x64") // because 'default' on openj9-x32 means normal heap, not large
                         installed_version.Heap = "large";
                 }
+
+                if (installed_version.Heap == "large" && installed_version.JVMImplementation == "openj9" && installed_version.Arch == "x32")
+                {
+                    // x32 openj9 releases cannot be 'large heap', only 'normal'
+                    installed_version.Heap = "normal";
+                }
+
+                //{
+                //    installed_version.TypeOrEdition = AdoptiumTools.GetTypeOrEditionFromAdoptiumReleaseVersion(installed_version);
+                //}
 
 
             }
@@ -490,7 +522,24 @@ namespace AJ_UpdateWatcher
         {
             get { return os; }
         }
-
+        public string Manufacturer
+        {
+            get { return manufacturer; }
+            set
+            {
+                manufacturer = value;
+                OnPropertyChanged("Manufacturer");
+            }
+        }
+        public string Edition
+        {
+            get { return edition; }
+            set
+            {
+                edition = value;
+                OnPropertyChanged("Edition");
+            }
+        }
 
 
         public string SkippedReleaseName
@@ -551,6 +600,13 @@ namespace AJ_UpdateWatcher
                     return installed_version.ParsedVersionString;
             }
         }
+        public string TypeString
+        {
+            get
+            {
+                return AdoptiumTools.GetTypeOrEditionString(installed_version.TypeOrEdition);
+            }
+        }
 
         public AdoptiumReleaseVersion NewVersion
         {
@@ -587,6 +643,7 @@ namespace AJ_UpdateWatcher
             {
                 _update_progress_percentage = value;
                 OnPropertyChanged("UpdateProgressPercentage");
+                OnPropertyChanged("UpdateProgressText");
                 OnPropertyChanged("UpdateInProgress");
                 OnPropertyChanged("UpdateIsIndeterminate");
                 OnPropertyChanged("UpdateComplete");
@@ -595,11 +652,23 @@ namespace AJ_UpdateWatcher
         public bool UpdateInProgress { get { return _update_progress_percentage > (int)InstallationUpdateStatus.UpdateNotStarted; } }
         public bool UpdateIsIndeterminate { get { return _update_progress_percentage == (int)InstallationUpdateStatus.UpdateIndeterminate; } }
         public bool UpdateIsComplete { get { return _update_progress_percentage == (int)InstallationUpdateStatus.UpdateComplete; } }
-        public void UpdateHasCompleted()
+        public void UpdateHasCompleted(bool success)
         {
             UpdateProgressPercentage = (int)InstallationUpdateStatus.UpdateComplete;
-            NewVersion = null;
-            MarkedForUpdate = false;
+
+            if (success)
+            {
+                NewVersion = null;
+                MarkedForUpdate = false;
+            }
+        }
+
+        public string UpdateProgressText
+        {
+            get
+            {
+                return UpdateProgressPercentage >= 0 ? $"{UpdateProgressPercentage} %" : "Processing...";
+            }
         }
 
         public Installation() : this(false) { } // empty constructor allows to add row

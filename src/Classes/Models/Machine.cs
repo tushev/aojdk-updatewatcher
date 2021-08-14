@@ -34,8 +34,10 @@ namespace AJ_UpdateWatcher
 
         public Machine()
         {
-            Installations.CollectionChanged += (s, e) => 
+            Installations.CollectionChanged += (s, e) =>
             {
+                Debug.WriteLine("[!] Installations.CollectionChanged");
+
                 if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add && !HoldInternalReCheckForUpdateSuggested)
                 {
                     bool changesContainAtLeastOneCheckedManualElement = false;
@@ -56,6 +58,8 @@ namespace AJ_UpdateWatcher
             };
             Installations.ItemPropertyChanged += (s, e) =>
             {
+                //Debug.WriteLine($"[!] Installations.ItemPropertyChanged: {e.PropertyName} [{Installations[e.CollectionIndex].Path}]");
+
                 if (e.PropertyName == "Detected")
                     MantainNoConflictState();
 
@@ -84,15 +88,24 @@ namespace AJ_UpdateWatcher
            
         }
 
-        
-        
+
+
+
+        private ObservableCollection<string> installation_paths_to_disable = new ObservableCollection<string>();
+        public ObservableCollection<string> InstallationPathsToDisable
+        {
+            get { return installation_paths_to_disable; }
+            set
+            {
+                installation_paths_to_disable = value;
+                OnPropertyChanged("InstallationPathsToDisable");
+            }
+        }
 
 
 
 
-       
 
-       
 
         public void ActivateAutoDiscoveryOnPropertyChange() { auto_discovery_activated = true; }
 
@@ -164,7 +177,6 @@ namespace AJ_UpdateWatcher
         public bool HoldAutoReCheckForUpdateSuggested = false;
         public bool HoldInternalReCheckForUpdateSuggested = false;
 
-        
 
         private void MantainNoConflictState()
         {
@@ -250,12 +262,52 @@ namespace AJ_UpdateWatcher
 
             OnPropertyChanged("Installations");
         }
+        public void ApplyInstallationPathsToDisable()
+        {
+            Debug.WriteLine("ApplyInstallationPathsToDisable():");
+
+            List<Installation> new_overrrides = new List<Installation>();
+
+            foreach (var d in InstallationPathsToDisable)
+            {
+                var same_pathed_installations = Installations.Where(x => x.Path.TrimEnd('\\') == d.TrimEnd('\\'));
+                foreach (var i in same_pathed_installations)
+                {
+                    Debug.WriteLine($"[{i.IsAutodiscoveredInstance}] {i.Path}");
+
+                    if (i.IsAutodiscoveredInstance)
+                    {
+                        // create manual override, if there is none
+                        var same_pathed_manual = Installations.Where(x => x.Path.TrimEnd('\\') == i.Path.TrimEnd('\\') && x.IsAutodiscoveredInstance == false);
+                        if (same_pathed_manual.Count() == 0)
+                        {
+                            //// TODO: DRY code: this is a duplicate
+                            Installation new_installation = new Installation(i.Path);
+                            new_installation.CheckForUpdatesFlag = false;
+                            new_overrrides.Add(new_installation);
+                        }
+                        // otherwise we will trigger it
+                    }
+                    else
+                        i.CheckForUpdatesFlag = false;
+                }
+            }
+
+            foreach (var o in new_overrrides)
+                Installations.Add(o);
+
+            InstallationPathsToDisable.Clear();
+
+            OnPropertyChanged("Installations");
+        }
+
         private int InstallationsWithSkippedReleasesCount { get { return Installations.Count(x => x.HasSkippedRelease); } }
 
         
 
         public bool ThereAreInstallationsWithSkippedReleases { get { return InstallationsWithSkippedReleasesCount > 0; } }
         public int InstallationsWithUpdatesCount { get { return Installations.Count(x => x.HasNewVersion); } }
+        public int CheckedInstallationsCount { get { return Installations.Count(x => x.CheckForUpdatesFlag); } }
         public int InstallationsWithMSIUpdatesCount { get { return Installations.Count(x => x.HasMSIInNewVersion); } }
         public string StringListOfAvailableUpdates 
         { 

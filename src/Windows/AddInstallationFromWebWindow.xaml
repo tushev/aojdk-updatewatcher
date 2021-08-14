@@ -29,14 +29,14 @@
             <Run Text="Download new package"/>
         </TextBlock>
 
-        <Path 
+        <!--<Path 
                 Fill="#152935" 
                 Data="{StaticResource AdoptLogo}"
                 HorizontalAlignment="Right" VerticalAlignment="Top"
                 Width="290"
                 Height="52"
                 Stretch="Uniform" Margin="0,22,18,0" MouseLeftButtonUp="Path_MouseLeftButtonUp"
-                />
+                />-->
 
         <TextBlock 
             FontFamily="Segoe MDL2 Assets" 
@@ -129,5 +129,70 @@
         </Button>
         <CheckBox Content="Start check/download immediately" IsChecked="{Binding DownloadImmediately}" Opacity="0.8" HorizontalAlignment="Right" Margin="0,0,258,20" VerticalAlignment="Bottom" />
 
+        <Button x:Name="btnMovingToAdoptium" Style="{StaticResource LinkButton}" 
+                    Content="AdoptOpenJDK is moving to the Eclipse Foundation"
+                    Foreground="#ff1464"
+                
+                    Margin="382,40,0,0" Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" Width="276" Click="btnMovingToAdoptium_Click" >
+            <ToolTipService.InitialShowDelay>10</ToolTipService.InitialShowDelay>
+            <ToolTipService.ShowDuration>90000</ToolTipService.ShowDuration>
+            <ToolTipService.Placement>Bottom</ToolTipService.Placement>
+            <ToolTipService.HorizontalOffset>-367</ToolTipService.HorizontalOffset>
+            <Button.ToolTip>
+                <StackPanel Orientation="Vertical" Width="640">
+                    <TextBlock Text="The AdoptOpenJDK project is moving to the Eclipse Foundation." FontSize="22" Foreground="#ff1464"/>
+                    <TextBlock> 
+                            <Run Text="The"/>
+                            <Run Text="AdoptOpenJDK project" Foreground="#ff9800"/>
+                            <Run Text="itself" FontStyle="Italic"/>
+                            <Run Text="becomes"/>
+                            <Run Text="Adoptium project." FontSize="16" Foreground="#ff1464"/>
+                    </TextBlock>
+                    <TextBlock Text="AdoptOpenJDK binaries that you were using, now are:"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="24,0,0,0">
+                        <TextBlock VerticalAlignment="Center" Margin="0,-2,0,0" Text="* hotspot builds"/>
+                        <Label FontFamily="Segoe MDL2 Assets" Content="&#xE72A;" FontSize="18" VerticalAlignment="Center"/>
+                        <TextBlock Text="Eclipse Temurin™"  VerticalAlignment="Center" Margin="0,0,0,0"/>
+                        <TextBlock Text="(built by Eclipse™ Adoptium project)" Foreground="Gray" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="12"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="24,0,0,0">
+                        <TextBlock VerticalAlignment="Center" Margin="0,-2,0,0" Text="* openj9 builds "/>
+                        <Label FontFamily="Segoe MDL2 Assets" Content="&#xE72A;" FontSize="18" VerticalAlignment="Center"/>
+                        <TextBlock Text="IBM® Semeru® Open Edition"  VerticalAlignment="Center" Margin="0,-2,0,0"/>
+                        <TextBlock Text="(built by IBM® Corporation)" Foreground="Gray" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="12"/>
+                    </StackPanel>
+                    <TextBlock Text="Click on the header/link for more information about the transition." Foreground="#ff9800"/>
+                    <TextBlock Margin="0,20,0,0">
+                            <Run Text="For now, I'm going to support"/>
+                            <Run Text="both" Foreground="#ff1464"/>
+                            <Run Text="Eclipse Temurin™ and IBM® Semeru® builds in this updater."/>
+                    </TextBlock>
+                    <!--<TextBlock Text="(this, however, may change in the future)." HorizontalAlignment="Right" FontSize="12" FontStyle="Italic" Margin="0,0,5.5,0" />-->
+                    <TextBlock HorizontalAlignment="Right" FontSize="12" FontStyle="Italic" Margin="0,0,5,0">
+                            <Run Text="( for some time it will remain branded as" Foreground="Gray"/>
+                            <Run Text="{Binding ProductName, Mode=OneWay}"/>
+                            <Run Text=")." Foreground="Gray"/>
+                    </TextBlock>
+
+
+                </StackPanel>
+            </Button.ToolTip>
+            <Button.Resources>
+                <Style TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
+                    <Setter Property="Background" Value="#152935" />
+                    <Setter Property="BorderBrush" Value="#dadada"/>
+                    <Setter Property="Foreground" Value="#f5f5f5"/>
+                    <Setter Property="FontSize" Value="14"/>
+                </Style>
+                <Style TargetType="Label" >
+                    <Setter Property="Foreground" Value="#dadada"/>
+                </Style>
+                <Style TargetType="TextBlock" >
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                    <Setter Property="Margin" Value="4"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        
     </Grid>
 </Window>

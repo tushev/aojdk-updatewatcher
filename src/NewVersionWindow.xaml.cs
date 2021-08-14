@@ -63,6 +63,9 @@ namespace AJ_UpdateWatcher
             Close();
         }
 
-
+        private void btnMovingToAdoptium_Click(object sender, RoutedEventArgs e)
+        {
+            AdoptiumHelpMessagesActions.OpenMovingWebPage();
+        }
     }
 }

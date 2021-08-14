@@ -10,7 +10,7 @@
         x:Name="_this"
         Background="#152935"
         Foreground="White"
-        Title="Update Watcher for AdoptOpenJDK" Height="625" Width="1138" Icon="assets/logo.ico"
+        Title="Update Watcher for AdoptOpenJDK" Height="625" Width="1200" Icon="assets/logo.ico"
         ResizeMode="CanMinimize" Topmost="False" WindowStartupLocation="CenterScreen" Closing="NewVersionWindow_Closing" WindowStyle="None">
 
     <Window.Resources>
@@ -34,7 +34,7 @@
 
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo 
-            Description="An app with a taskbar info description" 
+            Description="Update Watcher for AdoptOpenJDK" 
             ProgressValue="{Binding Path=TotalProgress1, Mode=OneWay}" 
             ProgressState="{Binding TaskbarItemProgressState}"/>
     </Window.TaskbarItemInfo>
@@ -86,7 +86,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
 
-                        <Grid Margin="0,0,22,30" Height="105" Width="500">
+                        <Grid Margin="0,0,23,30" Height="115" Width="540">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="29"/>
                                 <ColumnDefinition Width="75"/>
@@ -96,6 +96,7 @@
                                 <RowDefinition Height="55"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="10"/>
+                                <RowDefinition Height="20"/>
                             </Grid.RowDefinitions>
 
                             <Grid Grid.Column="0" Grid.Row="0">
@@ -124,11 +125,11 @@
                                     <TextBlock>
                                         <Run Text="You have previously chosen to skip"/>
                                         <Run FontWeight="Bold" FontSize="14" Text="{Binding Path=SkippedReleaseName}" />
-                                        <Run Text="release of this branch."/>
+                                        <Run Text="release for this installation."/>
                                         <LineBreak/>
                                         <Run Text="You will receive no update notifications until any other release will become available."/>
                                         <LineBreak/>
-                                        <Run Text="You can reset that in configuration window or by right-clicking on this bell icon."/>
+                                        <Run Text="You can reset that in configuration window, by right-clicking on this bell icon, or by using 'Do not ignore release' link on the right."/>
                                     </TextBlock>
                                 </Label.ToolTip>
                                 <Label.ContextMenu>
@@ -219,6 +220,10 @@
                                 <Label Content="{Binding Path=InstallationTypeText, Converter={StaticResource ShowUnderscoreConverter}}" FontSize="12" VerticalAlignment="Center" Foreground="#888" Margin="-5,0,0,0"  />
                                 <Label Content="Branch:" FontSize="12" VerticalAlignment="Center" Foreground="#777" Margin="5,0,0,0" />
                                 <Label Content="{Binding Path=WatchedRelease}" FontSize="12" VerticalAlignment="Center" Foreground="#888" Margin="-5,0,0,0"  />
+                                <Label Content="Vendor:" FontSize="12" VerticalAlignment="Center" Foreground="#777" Margin="5,0,0,0" />
+                                <Label Content="{Binding Path=NewVersion.ImplementorRAW}" 
+                                       ToolTip="{Binding Path=NewVersion.TypeOrEditionText}"
+                                       FontSize="12" VerticalAlignment="Center" Margin="-5,0,0,0"  />
                             </StackPanel>
 
                             <ProgressBar
@@ -226,9 +231,86 @@
                                 Visibility="{Binding Path=UpdateInProgress, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
                                 Value="{Binding Path=UpdateProgressPercentage}"
                                 IsIndeterminate="{Binding Path=UpdateIsIndeterminate}"
+                                ToolTip="{Binding Path=UpdateProgressText}"
                                 Height="5"
-                                Margin="23,0,75,0"
+                                Margin="23,0,35,0"
                                 />
+
+                            <StackPanel  Orientation="Horizontal"
+                                Grid.Row="3" Grid.Column="2" 
+                                Visibility="{Binding Path=UpdateInProgress, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=negate, UpdateSourceTrigger=PropertyChanged}"
+                                >
+                                <Button Style="{StaticResource LinkButton}" Margin="6,0,0,0"
+                                        Content="Skip this release"
+                                        Visibility="{Binding Path=HasSkippedRelease, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=negate}"
+                                        Command="{Binding DataContext.SkipReleaseCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
+                                        CommandParameter="{Binding}"
+                                    >
+                                    <Button.ToolTip>
+                                        <TextBlock >
+                                            <Run Text="You will not receive update suggestions for"/>
+                                            <Run Text="{Binding Path=NewVersion.ReleaseName}" FontWeight="Bold"/>
+                                            <Run Text="release for"/>
+                                            <Run Text="this" FontWeight="Bold"/>
+                                            <Run Text="installation"/>
+                                            <LineBreak/>
+                                            <Run Text="(other installations will be not affected)."/>
+                                            <LineBreak/>
+                                            <LineBreak/>
+                                            <Run Text="When"/>
+                                            <Run Text="any other" FontWeight="Bold"/>
+                                            <Run Text="release will become available in the API, you will be notified."/>
+                                            <LineBreak/>
+                                            <Run Text="You can reset that in configuration window, by right-clicking on the bell icon,"/>
+                                            <LineBreak/>
+                                            <Run Text="or by using the corresponding link in the installation entry"/>
+                                            <LineBreak/>
+                                            <Run Text="(make sure you have 'Show installations without updates' checked)."/>
+                                            <LineBreak/>
+                                            <LineBreak/>
+                                            <Run Text="This may be useful in case of `update loop`." FontWeight="Bold"/>
+                                            <LineBreak/>
+                                            <Run Text="(if you are receiving repeating update notifications due to the error in metadata)."/>
+                                        </TextBlock>
+                                    </Button.ToolTip>
+                                </Button>
+                                <Button Style="{StaticResource LinkButton}" Margin="6,0,0,0"
+                                        Visibility="{Binding Path=HasSkippedRelease, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                        Command="{Binding DataContext.RemoveSkippedReleaseCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
+                                        CommandParameter="{Binding}"
+                                    >
+                                    <Button.Content>
+                                        <TextBlock Text="{Binding Path=SkippedReleaseName, StringFormat='Do not ignore `{0}` release', Converter={StaticResource ShowUnderscoreConverter}}"/>
+                                    </Button.Content>
+                                    <Button.ToolTip>
+                                        <TextBlock>
+                                        <Run Text="You have previously chosen to skip"/>
+                                        <Run FontWeight="Bold" FontSize="14" Text="{Binding Path=SkippedReleaseName}" />
+                                        <Run Text="release for this installation."/>
+                                        <LineBreak/>
+                                        <Run Text="You will receive no update notifications until any other release will become available."/>
+                                        <LineBreak/>
+                                        <Run Text="You can reset that by using this link, or in the configuration window."/>
+                                        </TextBlock>
+                                    </Button.ToolTip>
+                                </Button>
+                                <Label Height="25" Margin="15,-24,0,0" 
+                                       Visibility="{Binding Path=HasSkippedRelease, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=negate}"
+                                       >
+                                    <Label.Content>
+                                        <TextBlock>
+                                            <Run Text="New release: " Foreground="#555"/>
+                                            <Run Text="{Binding Path=NewVersion.ReleaseName}"  Foreground="#777"/>
+                                        </TextBlock>
+                                    </Label.Content>
+                                    <Label.ToolTip>
+                                        <TextBlock >
+                                            <Run Text="New release name (as specified in the API): "/>
+                                            <Run Text="{Binding Path=NewVersion.ReleaseName}" FontWeight="Bold"/>
+                                        </TextBlock>
+                                    </Label.ToolTip>
+                                </Label>
+                            </StackPanel>
 
                         </Grid>
 
@@ -346,15 +428,18 @@
 
 
             <CheckBox IsChecked="{Binding ShowAllEnabledInstallations}"
-                      Content="Show installations without updates as well" 
+                      Content="Show installations without updates" 
                       ToolTip="Those installations that were disabled in config will not be shown anyway. Open configuration window for a list of all installations."
                       HorizontalAlignment="Left" Margin="25,0,0,19" VerticalAlignment="Bottom"/>
-
+            <Label Content="(or with skipped releases)"
+                   Foreground="#777"
+                   Margin="229,0,0,14"
+                   HorizontalAlignment="Left"  VerticalAlignment="Bottom"/>
 
             <Button Command="{Binding RefreshUpdatesCommand}"                    
                     IsEnabled="{Binding SomethingInProgress, Converter={StaticResource InverseBooleanConverter}}"
                     Style="{StaticResource LinkButton}"
-                    Margin="525,0,0,16" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="142">
+                    Margin="50,0,0,16" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="142">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Label FontFamily="Segoe MDL2 Assets" Content="&#xE895;" FontSize="15" VerticalAlignment="Center"/>
                     <Label Content="Refresh list" />
@@ -395,6 +480,70 @@
                 Value="{Binding Path=TotalProgress100, Mode=OneWay}" 
                 BorderBrush="Transparent" />
 
+            <Button x:Name="btnMovingToAdoptium" Style="{StaticResource LinkButton}" 
+                    Content="AdoptOpenJDK is moving to the Eclipse Foundation"
+                    Foreground="#ff1464"
+                    Margin="0,-13,252,593" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Width="276" Click="btnMovingToAdoptium_Click" >
+                <ToolTipService.InitialShowDelay>10</ToolTipService.InitialShowDelay>
+                <ToolTipService.ShowDuration>90000</ToolTipService.ShowDuration>
+                <ToolTipService.Placement>Bottom</ToolTipService.Placement>
+                <ToolTipService.HorizontalOffset>-350</ToolTipService.HorizontalOffset>
+                <Button.ToolTip>
+                    <StackPanel Orientation="Vertical" Width="640">
+                        <TextBlock Text="The AdoptOpenJDK project is moving to the Eclipse Foundation." FontSize="22" Foreground="#ff1464"/>
+                        <TextBlock> 
+                            <Run Text="The"/>
+                            <Run Text="AdoptOpenJDK project" Foreground="#ff9800"/>
+                            <Run Text="itself" FontStyle="Italic"/>
+                            <Run Text="becomes"/>
+                            <Run Text="Adoptium project." FontSize="16" Foreground="#ff1464"/>
+                        </TextBlock>
+                        <TextBlock Text="AdoptOpenJDK binaries that you were using, now are:"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="24,0,0,0">
+                            <TextBlock VerticalAlignment="Center" Margin="0,-2,0,0" Text="* hotspot builds"/>
+                            <Label FontFamily="Segoe MDL2 Assets" Content="&#xE72A;" FontSize="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="Eclipse Temurin™"  VerticalAlignment="Center" Margin="0,0,0,0"/>
+                            <TextBlock Text="(built by Eclipse™ Adoptium project)" Foreground="Gray" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="12"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="24,0,0,0">
+                            <TextBlock VerticalAlignment="Center" Margin="0,-2,0,0" Text="* openj9 builds "/>
+                            <Label FontFamily="Segoe MDL2 Assets" Content="&#xE72A;" FontSize="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="IBM® Semeru® Open Edition"  VerticalAlignment="Center" Margin="0,-2,0,0"/>
+                            <TextBlock Text="(built by IBM® Corporation)" Foreground="Gray" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="12"/>
+                        </StackPanel>
+                        <TextBlock Text="Click on the header/link for more information about the transition." Foreground="#ff9800"/>
+                        <TextBlock Margin="0,20,0,0">
+                            <Run Text="For now, I'm going to support"/>
+                            <Run Text="both" Foreground="#ff1464"/>
+                            <Run Text="Eclipse Temurin™ and IBM® Semeru® builds in this updater."/>
+                        </TextBlock>
+                        <!--<TextBlock Text="(this, however, may change in the future)." HorizontalAlignment="Right" FontSize="12" FontStyle="Italic" Margin="0,0,5.5,0" />-->
+                        <TextBlock HorizontalAlignment="Right" FontSize="12" FontStyle="Italic" Margin="0,0,5,0">
+                            <Run Text="( for some time it will remain branded as" Foreground="Gray"/>
+                            <Run Text="{Binding ProductName, Mode=OneWay}"/>
+                            <Run Text=")." Foreground="Gray"/>
+                        </TextBlock>
+                       
+
+                    </StackPanel>
+                </Button.ToolTip>
+                <Button.Resources>
+                    <Style TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
+                        <Setter Property="Background" Value="#152935" />
+                        <Setter Property="BorderBrush" Value="#dadada"/>
+                        <Setter Property="Foreground" Value="#f5f5f5"/>
+                        <Setter Property="FontSize" Value="14"/>
+                    </Style>
+                    <Style TargetType="Label" >                       
+                        <Setter Property="Foreground" Value="#dadada"/>
+                    </Style>
+                    <Style TargetType="TextBlock" >
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                        <Setter Property="Margin" Value="4"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            
             <Button Style="{StaticResource LinkButton}" 
                     Content="Why do I see +NUM at the end?"
                     Foreground="#777"
@@ -445,16 +594,14 @@
                     Style="{DynamicResource LoadingIndicatorArcsStyle}"
                     Foreground="#dadada"
                     VerticalAlignment="Center"/>
-                <TextBlock FontFamily="Segoe UI" FontSize="28" Margin="20" VerticalAlignment="Center">
-                    <Run Text="Checking for"/>
-                    <Run Text="{Binding TargetProduct, Mode=OneWay}"/>
-                    <Run Text="updates"/>
+                <TextBlock FontFamily="Segoe UI" FontSize="28" Margin="20" VerticalAlignment="Center" >
+                    <Run Text="Checking for updates"/>
                 </TextBlock>
             </StackPanel>
             <!-- ALL UP-TO-DATE -->
             <TextBlock FontFamily="Segoe UI" FontSize="28"                       
                        Visibility="{Binding ShowAllInstallationsAreUpToDateMessage, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
-                       Margin="0,-30,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Margin="0,-30,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
                        Text="{Binding AllInstallationsAreUpToDateMessage, Mode=OneWay}">
             </TextBlock>
             <!-- Installation of selected updates has been complete -->
@@ -485,6 +632,7 @@
                             <Run Text="  * Internet connection issues" /><LineBreak/>
                             <Run Text="  * " /><Run Text="{Binding APIBaseDomain, Mode=OneWay}" /><Run Text=" may be down" /><LineBreak/>
                             <Run Text="  * API says that there is no such release that you are asking for :)" /><LineBreak/>
+                            <Run Text="    (this is likely to happen during the transition process from AdoptOpenJDK to Adoptium." /><LineBreak/>
                             <LineBreak/>
                             <Run Text="Re-check that API parameters are set correctly and the required release exists on project's website." /><LineBreak/>
                         </TextBlock>

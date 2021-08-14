@@ -154,6 +154,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Adoptium\AdoptiumHelpMessagesActions.cs" />
+    <Compile Include="Classes\Adoptium\AdoptiumTools.cs" />
+    <Compile Include="Classes\Adoptium\AdoptiumTransitionRouter.cs" />
     <Compile Include="Classes\SelfService\ProxyConfigurator.cs" />
     <Compile Include="Classes\SelfService\Startup\CommandLine.cs" />
     <Compile Include="Classes\SelfService\Startup\AppStartup.cs" />
