@@ -73,7 +73,7 @@ namespace AJ_UpdateWatcher.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2.0.2.0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2.0.3.0")]
         public string SettingsFormatVersion {
             get {
                 return ((string)(this["SettingsFormatVersion"]));
