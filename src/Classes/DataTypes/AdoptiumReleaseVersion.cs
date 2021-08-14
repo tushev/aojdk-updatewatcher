@@ -199,29 +199,17 @@ namespace AJ_UpdateWatcher
             if (a.HasMSIRevision && b.HasMSIRevision)
             {
                 if (a.MSIRevision > b.MSIRevision) return true;
-                if (a.MSIRevision < b.MSIRevision) return false;
+                // ! if result is < , we MUST continue comparing (otherwise we would get 8.0.308+8 == 8.0.308+8.1 )
             }
-            else
-            {
-                //if (a.HasPatch)
-                //
-                    if (a.Patch > b.Patch) return true;
-                    if (a.Patch < b.Patch) return false;
-                //}
 
-                //if (a.HasBuild)
-                //{
-                    if (a.Build > b.Build) return true;
-                    if (a.Build < b.Build) return false;
-                //}
+            if (a.Patch > b.Patch) return true;
+            if (a.Patch < b.Patch) return false;
 
-                //if (a.HasAdoptBuild)
-                //{
-                    if (a.AdoptBuild > b.AdoptBuild) return true;
-                    if (a.AdoptBuild < b.AdoptBuild) return false;
-                //}
+            if (a.Build > b.Build) return true;
+            if (a.Build < b.Build) return false;
 
-            }
+            if (a.AdoptBuild > b.AdoptBuild) return true;
+            if (a.AdoptBuild < b.AdoptBuild) return false;
 
             return false;
         }
