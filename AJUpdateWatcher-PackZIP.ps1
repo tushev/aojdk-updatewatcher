@@ -1,6 +1,6 @@
 ﻿Add-Type -AssemblyName System.IO.Compression
 
-$archive_filename = "$(get-location)\SetupOutput\AJUpdateWatcher-2.X.X.0-no-installer-latest.zip";
+$archive_filename = "$(get-location)\SetupOutput\AJUpdateWatcher-2.X.X.0-no-installer-latest-x64.zip";
 
 Remove-Item -Path $archive_filename -ErrorAction SilentlyContinue -Confirm:$false
 
