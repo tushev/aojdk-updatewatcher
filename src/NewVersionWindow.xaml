@@ -10,7 +10,7 @@
         x:Name="_this"
         Background="#152935"
         Foreground="White"
-        Title="Update Watcher for AdoptOpenJDK" Height="625" Width="1200" Icon="assets/logo.ico"
+        Title="Update Watcher for AdoptOpenJDK" Height="675" Width="1200" Icon="assets/logo.ico"
         ResizeMode="CanMinimize" Topmost="False" WindowStartupLocation="CenterScreen" Closing="NewVersionWindow_Closing" WindowStyle="None">
 
     <Window.Resources>
@@ -72,7 +72,7 @@
             <ListView x:Name="UIInstallationsToUpdate"
                 ItemsSource="{Binding InstallationsToUpdateSourceCollection}"
                 Visibility="{Binding ShowUIInstallationsToUpdate, Converter={StaticResource BooleanToVisibilityConverter}}"
-                Margin="25,109,25,77" 
+                Margin="25,109,25,97" 
                 Background="Transparent" 
                 BorderBrush="Transparent"
                 >
@@ -169,7 +169,7 @@
 
                             <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="0" Margin="5,10,0,0">
                                 <TextBlock Text="{Binding Path=DisplayPath, Converter={StaticResource ShowUnderscoreConverter}}" FontSize="12" Foreground="#bbb"/>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="-5,-2,0,0">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="-5,-2,0,0" Height="37">
                                     <Label 
                                            Content="{Binding Path=InstalledVersionString, Converter={StaticResource ShowUnderscoreConverter}}" 
                                            ToolTip="{Binding Path=InstalledVersion.VersionString}" 
@@ -240,7 +240,7 @@
                                 Grid.Row="3" Grid.Column="2" 
                                 Visibility="{Binding Path=UpdateInProgress, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=negate, UpdateSourceTrigger=PropertyChanged}"
                                 >
-                                <Button Style="{StaticResource LinkButton}" Margin="6,0,0,0"
+                                <Button Style="{StaticResource LinkButton}" Margin="7,1,0,0"
                                         Content="Skip this release"
                                         Visibility="{Binding Path=HasSkippedRelease, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=negate}"
                                         Command="{Binding DataContext.SkipReleaseCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
@@ -274,7 +274,7 @@
                                         </TextBlock>
                                     </Button.ToolTip>
                                 </Button>
-                                <Button Style="{StaticResource LinkButton}" Margin="6,0,0,0"
+                                <Button Style="{StaticResource LinkButton}" Margin="7,1,0,0"
                                         Visibility="{Binding Path=HasSkippedRelease, Converter={StaticResource BooleanToVisibilityConverter}}"
                                         Command="{Binding DataContext.RemoveSkippedReleaseCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
                                         CommandParameter="{Binding}"
@@ -294,7 +294,7 @@
                                         </TextBlock>
                                     </Button.ToolTip>
                                 </Button>
-                                <Label Height="25" Margin="15,-24,0,0" 
+                                <Label Height="25" Margin="15,-23,0,0" 
                                        Visibility="{Binding Path=HasSkippedRelease, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=negate}"
                                        >
                                     <Label.Content>
@@ -481,16 +481,22 @@
                 BorderBrush="Transparent" />
 
             <Button x:Name="btnMovingToAdoptium" Style="{StaticResource LinkButton}" 
-                    Content="AdoptOpenJDK is moving to the Eclipse Foundation"
+                    FontSize="13"
+                    Content="⚠ AdoptOpenJDK is moving to the Eclipse Foundation"
                     Foreground="#ff1464"
-                    Margin="0,-13,252,593" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Width="276" Click="btnMovingToAdoptium_Click" >
+                    Margin="0,0,10,43" Height="15"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                    Width="320" Click="btnMovingToAdoptium_Click" >
                 <ToolTipService.InitialShowDelay>10</ToolTipService.InitialShowDelay>
                 <ToolTipService.ShowDuration>90000</ToolTipService.ShowDuration>
-                <ToolTipService.Placement>Bottom</ToolTipService.Placement>
+                <ToolTipService.Placement>Top</ToolTipService.Placement>
                 <ToolTipService.HorizontalOffset>-350</ToolTipService.HorizontalOffset>
+                <ToolTipService.VerticalOffset>-15</ToolTipService.VerticalOffset>
                 <Button.ToolTip>
-                    <StackPanel Orientation="Vertical" Width="640">
-                        <TextBlock Text="The AdoptOpenJDK project is moving to the Eclipse Foundation." FontSize="22" Foreground="#ff1464"/>
+                    <StackPanel Orientation="Vertical" Width="640" Margin="10">
+                        <TextBlock Text="The AdoptOpenJDK project is moving to the Eclipse Foundation." 
+                                   FontSize="22" Margin="0,0,0,15"
+                                   Foreground="#ff1464"/>
                         <TextBlock> 
                             <Run Text="The"/>
                             <Run Text="AdoptOpenJDK project" Foreground="#ff9800"/>
@@ -511,7 +517,7 @@
                             <TextBlock Text="IBM® Semeru® Open Edition"  VerticalAlignment="Center" Margin="0,-2,0,0"/>
                             <TextBlock Text="(built by IBM® Corporation)" Foreground="Gray" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="12"/>
                         </StackPanel>
-                        <TextBlock Text="Click on the header/link for more information about the transition." Foreground="#ff9800"/>
+                        <TextBlock Text="Click on the link for more information about the transition." Foreground="#ff9800"/>
                         <TextBlock Margin="0,20,0,0">
                             <Run Text="For now, I'm going to support"/>
                             <Run Text="both" Foreground="#ff1464"/>

@@ -254,15 +254,15 @@ namespace AJ_UpdateWatcher
         public Thickness ThereMayBeNewVersionsMessageMargin
         {
             get { return (ShowErrorsOccuredWhileCheckingForUpdatesMessage && ShowThereMayBeNewVersionsMessage) ? 
-                    new Thickness(0, 0, 0, 67)  :
-                    new Thickness(0, 0, 0, 47); 
+                    new Thickness(0, 0, 0, 70)  :
+                    new Thickness(0, 0, 0, 50); 
             }
         }
         public Thickness InstallationCompleteMessageMargin
         {
             get
             {
-                int base_margin = 47;
+                int base_margin = 50;
 
                 if (ShowErrorsOccuredWhileCheckingForUpdatesMessage) base_margin += 20;
                 if (ShowThereMayBeNewVersionsMessage) base_margin += 20;
