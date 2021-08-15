@@ -11,7 +11,7 @@ assignees: ''
 A clear and concise description of what the bug is.
 
 **I'm sure that it's not a 'known-not-a-bug'**
-**See**: https://github.com/tushev/aojdk-updatewatcher/wiki/Known-not-a-bugs
+**Check** https://github.com/tushev/aojdk-updatewatcher/wiki/Known-not-a-bugs
 [X] Yes
 
 **To Reproduce**
@@ -28,8 +28,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
- - App Version [e.g. 2.0.0.0]
-
+ - App Version [e.g. 2.0.3.0]
+ - Windows Version [e.g. Windows 10 20H2]
+ - JDKs/JREs [e.g. Temurin 8.0.302+8.1]
 
 **Additional context**
 Add any other context about the problem here.
