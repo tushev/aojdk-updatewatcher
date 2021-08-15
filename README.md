@@ -6,14 +6,20 @@
 [![GitHub release](https://img.shields.io/github/release/tushev/aojdk-updatewatcher.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/releases/)
 [![Github all releases](https://img.shields.io/github/downloads/tushev/aojdk-updatewatcher/total.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/releases/)
 
-Automatic update tool for AdoptOpenJDK releases                                                                                    [⬇ Download](#-download)
+Automatic update tool for **Eclipse Temurin™**, **IBM® Semeru® Open Edition**                                            [⬇ Download](#-download)<br>and **AdoptOpenJDK** releases
 
-## ❗ Transition from AdoptOpenJDK to Adoptium in progress, version 2.0.3 may be released this week
-* Version 2.0.2 of the updater currently relies on `api.adoptopenjdk.net`. As soon as new Adoptium builds would be available there, they will appear in the updater.
-* Version 2.0.3 ~~that works with `api.adoptium.net`~~  & support Eclipse Temurin binaries will be released soon
-* Version 2.0.2 cannot reliably work and detect Eclipse Temurin binaries. Please be patient.
+##
 
-Please check [Eclipse Adoptium Slack](https://adoptium.net/slack.html) for more information.
+#### ℹ The AdoptOpenJDK project is moving to the Eclipse Foundation
+* [As you may know](https://blog.adoptium.net/2021/04/Adoptium-to-promote-broad-range-of-compatible-OpenJDK-builds/), AdoptOpenJDK project is moving to the Eclipse Foundation and rebranding:<br>**hotspot** builds are now **Eclipse Temurin™**, while **openj9** builds have become **IBM® Semeru® Open Edition**.
+* Version 2.0.3 of the updater currently still relies on `api.adoptopenjdk.net`.<br>This is a '**hotfix**' release, that brings support for Eclipse Temurin™ and IBM® Semeru® builds.<br>All other changes, such as rebranding and/or API change, will (possibly) happen in the future.
+
+Please check [Eclipse Adoptium Slack](https://adoptium.net/slack.html) for more information about the transition.<br>
+Please do not hesitate to [open an issue](https://github.com/tushev/aojdk-updatewatcher/issues/new/choose) if you've encountered a problem or have a suggestion.
+
+> ⚠ Unfortunately, if you install Eclipse Temurin™ `8.0.302+8.1`, you may experience an update loop.<br>**This is not a bug in Update Watcher**, this is caused by a bug in release metadata.<br>
+✔ SOLUTION: "skip" the 8.0.302+8.1 release after you've installed it - so no further suggestions for updating to 8.0.302+8.1 will appear. Please see https://github.com/tushev/aojdk-updatewatcher/wiki/Skipping-releases on how to do it.
+
 
 
 ## 💡 Key ideas
@@ -34,14 +40,29 @@ Configuration window will appear only on first run or if something goes wrong or
 
 This app is designed to run on Windows startup. I recommend to turn on **Check for AdoptOpenJDK updates on Logon** setting in configuration. If you want another schedule, turn this on and press Edit task to configure it as desired.
 
-## 🔃 New in v. 2.0.2:
+## 🔃 New in v. 2.0.3:
+* Adds support for Eclipse Temurin™ and IBM® Semeru® Open Edition builds, especially auto-detection (#28)
+* NEW! The updater detects whether the old installation was not removed during the update (can be caused by 4-th digit MSI updates, vendor change etc) and suggests to disable checking for updates for that entry.  Fixes #9 :)
+* Makes **skip release** functionality more easy-to-find - this may be useful in case you encounter an update loop.
+* If MSI's installation process was cancelled or interrupted, the corresponding entry will remain in 'New versions available' window
+* Bugfix for version comparison algorithm (versions with the same MSI revisions could be compared incorrectly)
+* Release name and vendor are now available in the UI (update dialog)
+* Improved auto-detection algorithms
+* Updated dependencies
+* Added 'Open in Explorer' context menu:
+![image](https://user-images.githubusercontent.com/18406797/128934782-ff6f450c-9975-4157-88a5-e14fcfb66b69.png)
+
+#### Changelog:
+<details>
+  <summary>New in v. 2.0.2</summary>
+
+### 🔃 New in v. 2.0.2:
 * **UX: Easily override any auto-discovered instance with context menu**. Disabling an auto-discovered instance is way simpler now.
 * **Proxy support**: AJUpdateWatcher now uses HTTP proxy - if it is configured in Windows **Settings**.
 * 'Immediate check' shortcut now performs check with GUI
 * Improved command line handling 
 * Other minor changes and fixes, updated dependencies
-
-#### Changelog:
+</details>
 <details>
   <summary>New in v. 2.0.1</summary>
 
