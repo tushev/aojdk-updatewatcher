@@ -14,8 +14,8 @@ Automatic update tool for **Eclipse Temurin™**, **IBM® Semeru® Open Edition*
 * [As you may know](https://blog.adoptium.net/2021/04/Adoptium-to-promote-broad-range-of-compatible-OpenJDK-builds/), AdoptOpenJDK project is moving to the Eclipse Foundation and rebranding:<br>**hotspot** builds are now **Eclipse Temurin™**, while **openj9** builds have become **IBM® Semeru® Open Edition**.
 * Version 2.0.3 of the updater currently still relies on `api.adoptopenjdk.net`.<br>This is a '**hotfix**' release, that brings support for Eclipse Temurin™ and IBM® Semeru® builds.<br>All other changes, such as rebranding and/or API change, will (possibly) happen in the future.
 
-Please check [Eclipse Adoptium Slack](https://adoptium.net/slack.html) for more information about the transition.<br>
-Please do not hesitate to [open an issue](https://github.com/tushev/aojdk-updatewatcher/issues/new/choose) if you've encountered a problem or have a suggestion.
+Please check [Eclipse Adoptium Slack](https://adoptium.net/slack.html) for more information about the transition or Adoptium project in general.<br>
+Please do not hesitate to [open an issue](https://github.com/tushev/aojdk-updatewatcher/issues/new/choose) if you've encountered a problem with the updater or have a suggestion.
 
 > ⚠ Unfortunately, if you install Eclipse Temurin™ `8.0.302+8.1`, you may experience an update loop.<br>**This is not a bug in Update Watcher**, this is caused by a bug in release metadata.<br>
 ✔ SOLUTION: "skip" the 8.0.302+8.1 release after you've installed it - so no further suggestions for updating to 8.0.302+8.1 will appear. Please see https://github.com/tushev/aojdk-updatewatcher/wiki/Skipping-releases on how to do it.
@@ -133,11 +133,14 @@ For support, please visit https://github.com/AdoptOpenJDK/openjdk-support/issues
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.**
 
-The author is not affiliated with or endorsed by AdoptOpenJDK project.
-'AdoptOpenJDK' part of the name is used on fair use conditions, as this app updates AdoptOpenJDK releases.
+The author is not affiliated with or endorsed by AdoptOpenJDK project, Eclipse.org Foundation, Inc. and/or IBM Corporation.<br>
+'AdoptOpenJDK' part of the name is used on fair use conditions, as this app uses AdoptOpenJDK API for updating AdoptOpenJDK releases & its successors.
 
-Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.
+Java™ and OpenJDK™ are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+Eclipse™ and Eclipse Temurin™ are trademarks of Eclipse Foundation, Inc.<br>
+IBM® and IBM® Semeru® are registered trademarks of IBM Corporation in the United States, other countries, or both.<br>
 Other names may be trademarks of their respective owners.
+
 
 ## ⚖ License: MIT
 
