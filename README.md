@@ -90,12 +90,13 @@ This app is designed to run on Windows startup. I recommend to turn on **Check f
 
 ## ℹ Requirements
 Ironically, this tool is written in C# 6 + WPF, because I am not a Java developer xD
-* Windows 10 _(earlier versions are likely to work as well, but I did not test that. Icons may be missing in EOL versions of Windows (XP/7/8)._
+* Windows 10 x64 _(earlier versions are likely to work as well, but I did not test that. Icons may be missing in EOL versions of Windows (XP/7/8)._
 * .NET Framework 4.7.2 _(must be installed beforehand)_
+* At least 1280x1024 or 1366x768 screen. 
 
 ## 📩 Download
 There's a built-in update mechanism. 
-### 👉 [Download version 2.0.2](https://github.com/tushev/aojdk-updatewatcher/releases) 👈
+### 👉 [Download version 2.0.3](https://github.com/tushev/aojdk-updatewatcher/releases) 👈
 ### If you find this app useful, stars are appreciated :) [![GitHub stars](https://img.shields.io/github/stars/tushev/aojdk-updatewatcher.svg?style=social&label=Star&maxAge=86400)](https://GitHub.com/tushev/aojdk-updatewatcher/stargazers/)
 * ❓ [Read the wiki](https://github.com/tushev/aojdk-updatewatcher/wiki)
 
@@ -123,11 +124,12 @@ If you don't have any JDKs/JREs installed, click on **Download and install new i
 * I'm not going to actively develop this app, it's mostly 'fire-and-forget' thing. However, some functionality may be added in future, there's a built-in update mechanism.
 
 ## ℹ Disclaimer
-The author does not provide any support related to AdoptOpenJDK. 
+The author does not provide any support related to AdoptOpenJDK / Eclipse Temurin™ / IBM® Semeru® Open Edition. 
 
-For support, please visit https://github.com/AdoptOpenJDK/openjdk-support/issues or their corresponding website - https://adoptopenjdk.net
+For support, please visit their corresponding websites: https://adoptopenjdk.net / https://adoptium.net / https://developer.ibm.com/languages/java/semeru-runtimes/
 
-⚠ This *(independent)* software does not GUARANTEE that you will always get the lastest version of AdoptOpenJDK.<br>**Normally, everything works OK, and you get timely updates.**<br>However, if something breaks or changes in AdoptOpenJDK API, then you may not get the latest version.<br>*No warranties provided (see [LICENSE](https://github.com/tushev/aojdk-updatewatcher/blob/master/LICENSE.txt)), use at your own risk*.
+
+⚠ This *(independent)* software does not GUARANTEE that you will always get the lastest version of AdoptOpenJDK, Eclipse Temurin™ and/or IBM® Semeru® Open Edition.<br>**Normally, everything works OK, and you get timely updates.**<br>However, if something breaks or changes in AdoptOpenJDK API (api.adoptopenjdk.net), then you may or may not get the latest version.<br>*No warranties provided (see [LICENSE](https://github.com/tushev/aojdk-updatewatcher/blob/master/LICENSE.txt)), use at your own risk*.
 
 **THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
