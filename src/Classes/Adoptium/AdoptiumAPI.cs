@@ -74,9 +74,7 @@ namespace AJ_UpdateWatcher
                 //hch.UseProxy = ProxyConfigurator.UseProxy;
 
                 var httpClient = new HttpClient(hch);
-
                 httpClient.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
 
                 var response = httpClient.GetStringAsync(new Uri(URL)).Result;
 
@@ -134,10 +132,19 @@ namespace AJ_UpdateWatcher
                 //hch.UseProxy = ProxyConfigurator.UseProxy;
 
                 var httpClient = new HttpClient(hch);
-                Debug.WriteLine($"Querying API: {URL}");
-
                 httpClient.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+
+#if DEBUG
+                Debug.WriteLine($"Querying API: {URL}");
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+#endif
                 var response = httpClient.GetStringAsync(new Uri(URL)).Result;
+#if DEBUG
+                watch.Stop();
+                Debug.WriteLine($"Response received in {watch.ElapsedMilliseconds} ms.");
+#endif
+
 
                 JArray a = JArray.Parse(response);
                 //MessageBox.Show(a.ToString());
