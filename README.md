@@ -1,5 +1,5 @@
 
-# Update Watcher for AdoptOpenJDK                        [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)[¹](#-codestyle)		
+# Update Watcher for AdoptOpenJDK*                       [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)[¹](#-codestyle)		
 [![GitHub license](https://img.shields.io/github/license/tushev/aojdk-updatewatcher)](https://github.com/tushev/aojdk-updatewatcher/blob/master/LICENSE.txt) 
 [![Maintenance](https://img.shields.io/badge/maintained%3F-yes-brightgreen.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/graphs/commit-activity)
 ![Language](https://img.shields.io/badge/lang-c%23-blue)
