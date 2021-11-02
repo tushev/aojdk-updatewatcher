@@ -12,7 +12,11 @@ namespace AJ_UpdateWatcher
         {
             switch (id)
             {
+                case "Eclipse Adoptium":
+                case "Eclipse Temurin":
+                case "Eclipse Foundation":
                 case "Temurin":
+                case "Adoptium":
                     return "Eclipse Temurin™";
                 case "AdoptOpenJDK":
                     return "AdoptOpenJDK";
