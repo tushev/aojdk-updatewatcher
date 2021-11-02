@@ -1,24 +1,22 @@
 
-# Update Watcher for AdoptOpenJDK *                      [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)[¹](#-codestyle)		
+# Update Watcher for AdoptOpenJDK *                    [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)[¹](#-codestyle)		
 [![GitHub license](https://img.shields.io/github/license/tushev/aojdk-updatewatcher)](https://github.com/tushev/aojdk-updatewatcher/blob/master/LICENSE.txt) 
 [![Maintenance](https://img.shields.io/badge/maintained%3F-yes-brightgreen.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/graphs/commit-activity)
 ![Language](https://img.shields.io/badge/lang-c%23-blue)
 [![GitHub release](https://img.shields.io/github/release/tushev/aojdk-updatewatcher.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/releases/)
 [![Github all releases](https://img.shields.io/github/downloads/tushev/aojdk-updatewatcher/total.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/releases/)
 
-Automatic update tool for **Eclipse Temurin™**, **IBM® Semeru® Open Edition**                                            [⬇ Download](#-download)<br>and **AdoptOpenJDK** releases
+Automatic update tool for **Eclipse Temurin™**, **IBM® Semeru® Open Edition**                                         [⬇ Download](#-download)<br>and **AdoptOpenJDK** releases
 
 ##
 
 #### ℹ The AdoptOpenJDK project is moving to the Eclipse Foundation
 * [As you may know](https://blog.adoptium.net/2021/04/Adoptium-to-promote-broad-range-of-compatible-OpenJDK-builds/), AdoptOpenJDK project is moving to the Eclipse Foundation and rebranding:<br>**hotspot** builds are now **Eclipse Temurin™**, while **openj9** builds have become **IBM® Semeru® Open Edition**.
-* Version 2.0.3 of the updater currently still relies on `api.adoptopenjdk.net`.<br>This is a '**hotfix**' release, that brings support for Eclipse Temurin™ and IBM® Semeru® builds.<br>All other changes, such as rebranding and/or API change, will (possibly) happen in the future.
+* Version **2.0.4** of the updater currently still relies on `api.adoptopenjdk.net`.<br>This is a '**hotfix**' release, that brings support for Eclipse Temurin™ and IBM® Semeru® builds.<br>All other changes, such as rebranding and/or API change, will (possibly) happen in the future.
 
 Please check [Eclipse Adoptium Slack](https://adoptium.net/slack.html) for more information about the transition or Adoptium project in general.<br>
 Please do not hesitate to [open an issue](https://github.com/tushev/aojdk-updatewatcher/issues/new/choose) if you've encountered a problem with the updater or have a suggestion.
 
-> ⚠ Unfortunately, if you install Eclipse Temurin™ `8.0.302+8.1`, you may experience an update loop.<br>**This is not a bug in Update Watcher**, this is caused by a bug in release metadata.<br>
-✔ SOLUTION: "skip" the 8.0.302+8.1 release after you've installed it - so no further suggestions for updating to 8.0.302+8.1 will appear. Please see https://github.com/tushev/aojdk-updatewatcher/wiki/Skipping-releases on how to do it.
 
 
 
@@ -40,7 +38,19 @@ Configuration window will appear only on first run or if something goes wrong or
 
 This app is designed to run on Windows startup. I recommend to turn on **Check for AdoptOpenJDK updates on Logon** setting in configuration. If you want another schedule, turn this on and press Edit task to configure it as desired.
 
-## 🔃 New in v. 2.0.3:
+## 🔃 New in v. 2.0.4:
+* Fix for recent changes in Temurin that affected auto-detection:
+  * Added "Eclipse Adoptium" registry root (thanks to @mcpower for #35 !)
+  * Added more supported values to `IMPLEMENTOR` field in `RELEASE` file
+* Updated dependencies
+
+
+#### Changelog:
+
+<details>
+  <summary>New in v. 2.0.3</summary>
+
+### 🔃 New in v. 2.0.3:
 * Adds support for Eclipse Temurin™ and IBM® Semeru® Open Edition builds, especially auto-detection (#28)
 * NEW! The updater detects whether the old installation was not removed during the update (can be caused by 4-th digit MSI updates, vendor change etc) and suggests to disable checking for updates for that entry.  Fixes #9 :)
 * Makes **skip release** functionality more easy-to-find - this may be useful in case you encounter an update loop.
@@ -51,8 +61,7 @@ This app is designed to run on Windows startup. I recommend to turn on **Check f
 * Updated dependencies
 * Added 'Open in Explorer' context menu:
 ![image](https://user-images.githubusercontent.com/18406797/128934782-ff6f450c-9975-4157-88a5-e14fcfb66b69.png)
-
-#### Changelog:
+</details>
 <details>
   <summary>New in v. 2.0.2</summary>
 
@@ -96,7 +105,7 @@ Ironically, this tool is written in C# 6 + WPF, because I am not a Java develope
 
 ## 📩 Download
 There's a built-in update mechanism. 
-### 👉 [Download version 2.0.3](https://github.com/tushev/aojdk-updatewatcher/releases) 👈
+### 👉 [Download version 2.0.4](https://github.com/tushev/aojdk-updatewatcher/releases) 👈
 ### If you find this app useful, stars are appreciated :) [![GitHub stars](https://img.shields.io/github/stars/tushev/aojdk-updatewatcher.svg?style=social&label=Star&maxAge=86400)](https://GitHub.com/tushev/aojdk-updatewatcher/stargazers/)
 * ❓ [Read the wiki](https://github.com/tushev/aojdk-updatewatcher/wiki)
 
