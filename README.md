@@ -108,7 +108,7 @@ There's a built-in update mechanism.
 ### 👉 [Download version 2.0.4](https://github.com/tushev/aojdk-updatewatcher/releases) 👈
 #### Or, install using winget:
 ```
-winget install --id=SimonTushev.UpdateWatcherforAdoptOpenJDK -e
+winget install --id=tushev.org.AJUpdateWatcher -e
 ```
 ### If you find this app useful, stars are appreciated :) [![GitHub stars](https://img.shields.io/github/stars/tushev/aojdk-updatewatcher.svg?style=social&label=Star&maxAge=86400)](https://GitHub.com/tushev/aojdk-updatewatcher/stargazers/)
 * ❓ [Read the wiki](https://github.com/tushev/aojdk-updatewatcher/wiki)
