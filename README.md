@@ -110,6 +110,9 @@ There's a built-in update mechanism.
 ```
 winget install --id=tushev.org.AJUpdateWatcher -e
 ```
+```
+winget install ajupdatewatcher
+```
 ### If you find this app useful, stars are appreciated :) [![GitHub stars](https://img.shields.io/github/stars/tushev/aojdk-updatewatcher.svg?style=social&label=Star&maxAge=86400)](https://GitHub.com/tushev/aojdk-updatewatcher/stargazers/)
 * ❓ [Read the wiki](https://github.com/tushev/aojdk-updatewatcher/wiki)
 
