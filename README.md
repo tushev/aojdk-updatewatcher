@@ -110,6 +110,7 @@ There's a built-in update mechanism.
 ```
 winget install --id=tushev.org.AJUpdateWatcher -e
 ```
+#### = OR =
 ```
 winget install ajupdatewatcher
 ```
