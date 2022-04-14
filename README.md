@@ -105,16 +105,12 @@ Ironically, this tool is written in C# 6 + WPF, because I am not a Java develope
 
 ## 📩 Download
 There's a built-in update mechanism. 
-### 👉 [Download version 2.0.4](https://github.com/tushev/aojdk-updatewatcher/releases) 👈
-#### Or, install using winget:
-```
-winget install --id=tushev.org.AJUpdateWatcher -e
-```
-#### = OR =
+### 👉 [📥 Download version 2.0.4](https://github.com/tushev/aojdk-updatewatcher/releases) 👈 from here OR install using winget:
 ```
 winget install ajupdatewatcher
 ```
 ### If you find this app useful, stars are appreciated :) [![GitHub stars](https://img.shields.io/github/stars/tushev/aojdk-updatewatcher.svg?style=social&label=Star&maxAge=86400)](https://GitHub.com/tushev/aojdk-updatewatcher/stargazers/)
+
 * ❓ [Read the wiki](https://github.com/tushev/aojdk-updatewatcher/wiki)
 
 
