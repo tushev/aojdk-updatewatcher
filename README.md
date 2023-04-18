@@ -1,6 +1,6 @@
-
 # Update Watcher for AdoptOpenJDK *                  [![CodeFactor](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher/badge)](https://www.codefactor.io/repository/github/tushev/aojdk-updatewatcher)[¹](#-codestyle)		
-[![GitHub license](https://img.shields.io/github/license/tushev/aojdk-updatewatcher)](https://github.com/tushev/aojdk-updatewatcher/blob/master/LICENSE.txt) 
+[![GitHub license](https://img.shields.io/github/license/tushev/aojdk-updatewatcher)](https://github.com/tushev/aojdk-updatewatcher/blob/master/LICENSE.txt) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftushev%2Faojdk-updatewatcher.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftushev%2Faojdk-updatewatcher?ref=badge_shield)
+
 [![Maintenance](https://img.shields.io/badge/maintained%3F-yes-brightgreen.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/graphs/commit-activity)
 ![Language](https://img.shields.io/badge/lang-c%23-blue)
 [![GitHub release](https://img.shields.io/github/release/tushev/aojdk-updatewatcher.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/releases/)
@@ -158,6 +158,9 @@ Other names may be trademarks of their respective owners.
 
 
 ## ⚖ License: MIT
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftushev%2Faojdk-updatewatcher.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftushev%2Faojdk-updatewatcher?ref=badge_large)
 
 ## 💻 Codestyle
 <details>
