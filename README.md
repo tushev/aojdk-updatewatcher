@@ -12,7 +12,7 @@ Automatic update tool for **Eclipse Temurin™**, **IBM® Semeru® Open Edition*
 
 #### ℹ The AdoptOpenJDK project is moving to the Eclipse Foundation
 * [As you may know](https://blog.adoptium.net/2021/04/Adoptium-to-promote-broad-range-of-compatible-OpenJDK-builds/), AdoptOpenJDK project is moving to the Eclipse Foundation and rebranding:<br>**hotspot** builds are now **Eclipse Temurin™**, while **openj9** builds have become **IBM® Semeru® Open Edition**.
-* Version **2.0.4** of the updater currently still relies on `api.adoptopenjdk.net`.<br>This is a '**hotfix**' release, that brings support for Eclipse Temurin™ and IBM® Semeru® builds.<br>All other changes, such as rebranding and/or API change, will (possibly) happen in the future.
+* Version **2.0.5** of the updater currently still relies on `api.adoptopenjdk.net`.<br>This is a '**hotfix**' release, that brings support for Eclipse Temurin™ and IBM® Semeru® builds.<br>All other changes, such as rebranding and/or API change, will (possibly) happen in the future.
 
 Please check [Eclipse Adoptium Slack](https://adoptium.net/slack.html) for more information about the transition or Adoptium project in general.<br>
 Please do not hesitate to [open an issue](https://github.com/tushev/aojdk-updatewatcher/issues/new/choose) if you've encountered a problem with the updater or have a suggestion.
@@ -38,17 +38,24 @@ Configuration window will appear only on first run or if something goes wrong or
 
 This app is designed to run on Windows startup. I recommend to turn on **Check for AdoptOpenJDK updates on Logon** setting in configuration. If you want another schedule, turn this on and press Edit task to configure it as desired.
 
-## 🔃 New in v. 2.0.4:
-* Fix for recent changes in Temurin that affected auto-detection:
-  * Added "Eclipse Adoptium" registry root (thanks to @mcpower for #35 !)
-  * Added more supported values to `IMPLEMENTOR` field in `RELEASE` file
+## 🔃 New in v. 2.0.5:
+* bugfix: API semver parsing is more reliable now
 * Updated dependencies
 
 
 #### Changelog:
 
 <details>
-  <summary>New in v. 2.0.3</summary>
+  <summary>New in v. 2.0.4</summary>
+
+### 🔃 New in v. 2.0.4:
+* Fix for recent changes in Temurin that affected auto-detection:
+  * Added "Eclipse Adoptium" registry root (thanks to @mcpower for #35 !)
+  * Added more supported values to `IMPLEMENTOR` field in `RELEASE` file
+* Updated dependencies
+</details>
+<details>
+  <summary>New in v. 2.0.4</summary>
 
 ### 🔃 New in v. 2.0.3:
 * Adds support for Eclipse Temurin™ and IBM® Semeru® Open Edition builds, especially auto-detection (#28)
@@ -105,7 +112,7 @@ Ironically, this tool is written in C# 6 + WPF, because I am not a Java develope
 
 ## 📩 Download
 There's a built-in update mechanism. 
-### 👉 [📥 Download version 2.0.4](https://github.com/tushev/aojdk-updatewatcher/releases) 👈 from here OR install using winget:
+### 👉 [📥 Download version 2.0.5](https://github.com/tushev/aojdk-updatewatcher/releases) 👈 from here OR install using winget:
 ```
 winget install ajupdatewatcher
 ```
