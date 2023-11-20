@@ -203,7 +203,6 @@ namespace AJ_UpdateWatcher
                         latest.ImageType = image_type;
 
                         // see https://github.com/AdoptOpenJDK/TSC/issues/185#issuecomment-724696068
-                        latest.MSIRevision = Convert.ToInt32(semantic_version.Split('+').Last());
                         /*
                          * semver = major.minor.security + ((patch * 100) + build)
                          * MSI product version = major.minor.security.((patch * 100) + build)
@@ -211,6 +210,13 @@ namespace AJ_UpdateWatcher
                          * => semver = 11.0.9 + 101
                          * => MSI product version = 11.0.9.101
                          */
+                        // valid for older releases, should consult vendors for newer releases
+                        try 
+                        {
+                            string after_plus = semantic_version.Split('+').Last();
+                            latest.MSIRevision = GetLeadingInt(after_plus.Split('.').First()); 
+                        }
+                        catch (Exception) { Debug.WriteLine($"[PARSE_ERROR] Error parsing semantic_version: {semantic_version}"); }
 
                         latest.Found = true;
                         break;
@@ -225,13 +231,18 @@ namespace AJ_UpdateWatcher
                 var ie = ex;
                 while (ie.InnerException != null) ie = ie.InnerException;
 
-                error_message_out += $"GetLatestVersion[{URL}]: {ex.Message}" + (ie.Message != null ? $" => {ie.Message}" : "");
+                error_message_out += $"GetLatestVersion[{URL}]: {ex.Message}" + (ie.Message != null ? $" => {ie.Message}" : "") + " " + ex.TargetSite ?? "";
                 //if (latest.)
                 Debug.WriteLine(error_message_out);
                 //MessageBox.Show("There was an error: " + ex.Message, "Adoptium API Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             return latest;
+        }
+
+        static int GetLeadingInt(string input)
+        {
+            return Int32.Parse(new string(input.Trim().TakeWhile(c => char.IsDigit(c) || c == '.').ToArray()));
         }
     }
 }
