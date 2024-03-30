@@ -2,7 +2,9 @@
 
 ## Supported Versions
 
-:white_check_mark: Only the most recent version is supported. Currently, it's `2.0.4`
+[![GitHub release](https://img.shields.io/github/release/tushev/aojdk-updatewatcher.svg)](https://GitHub.com/tushev/aojdk-updatewatcher/releases/)
+
+:white_check_mark: Only the most recent version (displayed above) is supported. 
 
 ## Reporting a Vulnerability
 
