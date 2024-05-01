@@ -121,11 +121,13 @@
     <Reference Include="LoadingIndicators.WPF, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\LoadingIndicators.WPF.0.0.1\lib\LoadingIndicators.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.9.0.0, Culture=neutral, PublicKeyToken=e25603a88b3aa7da, processorArchitecture=MSIL">
-      <HintPath>packages\TaskScheduler.2.9.0\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
+    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.11.0.0, Culture=neutral, PublicKeyToken=e25603a88b3aa7da">
+      <HintPath>../packages/TaskScheduler.2.11.0/lib/net45/Microsoft.Win32.TaskScheduler.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Win32.TaskSchedulerEditor, Version=2.9.0.0, Culture=neutral, PublicKeyToken=e25603a88b3aa7da, processorArchitecture=MSIL">
-      <HintPath>packages\TaskSchedulerEditor.2.9.0\lib\net452\Microsoft.Win32.TaskSchedulerEditor.dll</HintPath>
+    <Reference Include="Microsoft.Win32.TaskSchedulerEditor, Version=2.11.0.0, Culture=neutral, PublicKeyToken=e25603a88b3aa7da">
+      <HintPath>../packages/TaskSchedulerEditor.2.11.0/lib/net45/Microsoft.Win32.TaskSchedulerEditor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.WindowsAPICodePack-Core.1.1.0.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
@@ -168,6 +170,10 @@
     </Reference>
     <Reference Include="TimeSpan2, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0f30172e1249faac, processorArchitecture=MSIL">
       <HintPath>packages\TimeSpan2.2.3.0\lib\net45\TimeSpan2.dll</HintPath>
+    </Reference>
+    <Reference Include="TimeSpan2.Core, Version=2.4.3.0, Culture=neutral, PublicKeyToken=0f30172e1249faac">
+      <HintPath>../packages/TimeSpan2.Core.2.4.3/lib/net462/TimeSpan2.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
