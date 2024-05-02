@@ -109,8 +109,9 @@
       <HintPath>packages\AeroWizard.2.2.8\lib\net45\AeroWizard.dll</HintPath>
     </Reference>
     <Reference Include="CustomMarshalers" />
-    <Reference Include="DotNetProjects.Wpf.Extended.Toolkit, Version=4.6.96.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>packages\DotNetProjects.Extended.Wpf.Toolkit.4.6.96\lib\net40\DotNetProjects.Wpf.Extended.Toolkit.dll</HintPath>
+    <Reference Include="DotNetProjects.Wpf.Extended.Toolkit, Version=5.0.115.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
+      <HintPath>../packages/DotNetProjects.Extended.Wpf.Toolkit.5.0.115/lib/net40/DotNetProjects.Wpf.Extended.Toolkit.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
